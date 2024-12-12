@@ -1,4 +1,4 @@
-package com.dp.adslib
+package com.dp.ads.lib
 
 import org.junit.Test
 

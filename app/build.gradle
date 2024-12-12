@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.dp.adslib'
+    namespace 'com.dp.main'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.dp.adslib"
+        applicationId "com.dp.main"
         minSdk 23
         targetSdk 34
         versionCode 1

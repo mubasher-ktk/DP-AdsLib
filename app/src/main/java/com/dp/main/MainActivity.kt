@@ -1,4 +1,4 @@
-package com.dp.adslib
+package com.dp.main
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
