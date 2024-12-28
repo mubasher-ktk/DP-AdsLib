@@ -1,12 +1,15 @@
 [versions]
 agp = "8.1.4"
 appUpdateKtx = "2.1.0"
+audienceNetworkSdk = "6.11.0"
+glide = "4.16.0"
 kotlin = "1.9.25"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+lifecycleProcess = "2.8.7"
 material = "1.12.0"
 activity = "1.9.2"
 constraintlayout = "2.1.4"
@@ -14,6 +17,7 @@ constraintlayout = "2.1.4"
 gms = "4.4.2"
 crashlytics = "3.0.2"
 navigation = "2.8.0"
+navigationUiKtx = "2.8.5"
 perf = "1.4.2"
 
 firebaseBom = "33.2.0"
@@ -23,12 +27,19 @@ firebaseMessaging = "24.0.1"
 firebasePerf = "21.0.1"
 playServicesAds = "23.3.0"
 sdpAndroid = "1.1.1"
+shimmer = "0.5.0"
 sspAndroid = "1.1.1"
 userMessagingPlatform = "3.0.0"
+vungleAds = "7.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycleProcess" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationUiKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdateKtx" }
+audience-network-sdk = { module = "com.facebook.android:audience-network-sdk", version.ref = "audienceNetworkSdk" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -44,8 +55,10 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging", versio
 firebase-perf = { module = "com.google.firebase:firebase-perf", version.ref = "firebasePerf" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
+vungle-ads = { module = "com.vungle:vungle-ads", version.ref = "vungleAds" }
 
 
 [plugins]

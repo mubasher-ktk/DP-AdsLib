@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">भाषा चुनें</string>
+    <string name="label_all_languages">सभी भाषाएँ</string>
+    <string name="label_country_name">देश का नाम</string>
+    <string name="des_country_flag">देश का झंडा</string>
+    <string name="des_selection_state">चयन की स्थिति</string>
+    <string name="label_start">शुरू करें</string>
+    <string name="ad_is_loading">विज्ञापन लोड हो रहा है…</string>
+    <string name="label_ad">विज्ञापन</string>
+    <string name="ad_label_install">इंस्टॉल करें</string>
+    <string name="label_next">अगला</string>
+</resources>

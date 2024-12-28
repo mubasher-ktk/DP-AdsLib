@@ -1,0 +1,12 @@
+<resources>
+    <string name="label_select_language">Select Language</string>
+    <string name="label_all_languages">All Languages</string>
+    <string name="label_country_name">Country Name</string>
+    <string name="des_country_flag">Country Flag</string>
+    <string name="des_selection_state">Selection State</string>
+    <string name="label_start">Start</string>
+    <string name="ad_is_loading">Ad is Loading…</string>
+    <string name="label_ad">Ad</string>
+    <string name="ad_label_install">Install</string>
+    <string name="label_next">next</string>
+</resources>

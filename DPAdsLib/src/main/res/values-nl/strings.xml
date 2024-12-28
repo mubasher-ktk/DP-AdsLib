@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">Taal selecteren</string>
+    <string name="label_all_languages">Alle talen</string>
+    <string name="label_country_name">Landsnaam</string>
+    <string name="des_country_flag">Vlag van het land</string>
+    <string name="des_selection_state">Selectiestatus</string>
+    <string name="label_start">Start</string>
+    <string name="ad_is_loading">Advertentie wordt geladen…</string>
+    <string name="label_ad">Advertentie</string>
+    <string name="ad_label_install">Installeren</string>
+    <string name="label_next">Volgende</string>
+</resources>
