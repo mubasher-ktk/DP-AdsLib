@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:elevation="@dimen/_30sdp"
-    app:cardBackgroundColor="#CDFFFFFF">
+    app:cardBackgroundColor="#e1e1e1">
 
     <LinearLayout
         android:layout_width="wrap_content"
