@@ -9,16 +9,20 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven { url  "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        jcenter()
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
     }
 }
 
 rootProject.name = "DP-AdsLib"
-include ':app'
+//include ':app'
 include ':DPAdsLib'

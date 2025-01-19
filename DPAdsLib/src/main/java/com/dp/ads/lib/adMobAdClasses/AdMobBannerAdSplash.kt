@@ -25,7 +25,6 @@ class AdMobBannerAdSplash(
     private val onAdClicked: (() -> Unit)? = null) {
     private var adView: AdView? = null
     private var currentActivity: Activity? = activity
-    var isBannerLoaded = false
 
     init {
         currentActivity?.let {
@@ -38,10 +37,6 @@ class AdMobBannerAdSplash(
     }
 
     private fun loadBannerAd(onAdFailed: (() -> Unit)? = null, onAdLoaded: (() -> Unit)? = null, onAdClicked: (() -> Unit)? = null) {
-        if (isBannerLoaded) {
-            return
-        }
-
         adView = AdView(currentActivity!!.baseContext).apply {
             adUnitId = placementID
             setAdSize(getAdSizeTest())
@@ -50,7 +45,6 @@ class AdMobBannerAdSplash(
                     Log.i("DP_ADS_TAG", "AdMob: BannerAd : onAdLoaded()")
                     shimmerContainer.visibility = View.INVISIBLE
                     bannerContainer.addView(this@apply)
-                    isBannerLoaded = true
                     onAdLoaded?.invoke()
                 }
 

@@ -84,13 +84,7 @@ object AdmobNativeAdManager {
                     adLoadingState[adName] = true
                     if (populateView) {
                         adContainer?.let { container ->
-                            if (isMedia) {
-                                Log.i("DP_ADS_TAG", "Admob: Native : $adName : populateWithMediaViewAdmob()")
-                                populateWithMediaViewAdmob(isMediumAd, nativeAd, adView)
-                            } else {
-                                Log.i("DP_ADS_TAG", "Admob: Native : $adName : populateSimpleNativeAdmob()")
-                                populateSimpleNativeAdmob(isMediumAd, nativeAd, adView)
-                            }
+                            populateNativeAd(isMediumAd, nativeAd, adView, isMedia)
                             container.removeAllViews()
                             container.addView(adView)
                         }
@@ -110,7 +104,7 @@ object AdmobNativeAdManager {
                         onAdFailed?.invoke()
                         mContext.let {
                             if (BuildConfig.DEBUG) {
-                                Toast.makeText(mContext,"Admob: Native : onAdFailedToLoad() $adName \n$errorCode", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(mContext,"Admob: Native : onAdFailedToLoad() $adName", Toast.LENGTH_SHORT).show()
                             }
                         }
                         Log.i("DP_ADS_TAG", "Admob: Native : $adName : onAdFailedToLoad()\n$errorCode")
@@ -153,7 +147,7 @@ object AdmobNativeAdManager {
         }
     }
 
-    fun showCachedAd(adName: String, isMedia: Boolean, adContainer: CardView?, isMediumAd: Boolean) {
+    private fun showCachedAd(adName: String, isMedia: Boolean, adContainer: CardView?, isMediumAd: Boolean) {
         adContainer?.context?.let { context ->
             nativeAdCache[adName]?.let { cachedAd ->
                 val adView = LayoutInflater.from(context).inflate(
@@ -166,12 +160,7 @@ object AdmobNativeAdManager {
                     null
                 ) as? NativeAdView ?: return
 
-                if (isMedia) {
-                    populateWithMediaViewAdmob(isMediumAd, cachedAd, adView)
-                } else {
-                    populateSimpleNativeAdmob(isMediumAd, cachedAd, adView)
-                }
-
+                populateNativeAd(isMediumAd, cachedAd, adView, isMedia)
                 adContainer.removeAllViews()
                 adContainer.addView(adView)
             } ?: run {
@@ -180,14 +169,64 @@ object AdmobNativeAdManager {
         } ?: Log.i("DP_ADS_TAG", "Ad container or context is null; cannot load ad.")
     }
 
-    private fun populateWithMediaViewAdmob(isMediumAd: Boolean, nativeAd: NativeAd, adView: NativeAdView) {
+
+    private fun populateNativeAd(
+        isMediumAd: Boolean,
+        nativeAd: NativeAd,
+        adView: NativeAdView,
+        hasMediaView: Boolean
+    ) {
         adView.headlineView = adView.findViewById(R.id.adHeadline)
         adView.bodyView = adView.findViewById(R.id.adBody)
         adView.callToActionView = adView.findViewById(R.id.adCallToAction)
         adView.iconView = adView.findViewById(R.id.adAppIcon)
-        adView.mediaView = adView.findViewById<View>(R.id.adMedia) as MediaView
+
         (adView.headlineView as TextView).text = nativeAd.headline
-        (adView.findViewById<View>(R.id.adMedia) as MediaView).setOnHierarchyChangeListener(object : ViewGroup.OnHierarchyChangeListener {
+
+        if (nativeAd.body == null) {
+            adView.bodyView?.visibility = View.INVISIBLE
+        } else {
+            adView.bodyView?.visibility = View.VISIBLE
+            (adView.bodyView as TextView).text = nativeAd.body
+        }
+
+        if (nativeAd.callToAction == null) {
+            adView.callToActionView?.visibility = View.INVISIBLE
+        } else {
+            adView.callToActionView?.visibility = View.VISIBLE
+            (adView.callToActionView as Button).text = nativeAd.callToAction
+        }
+
+        if (nativeAd.icon == null) {
+            handleIconVisibility(isMediumAd, adView, false)
+        } else {
+            handleIconVisibility(isMediumAd, adView, true)
+            (adView.iconView as ImageView).setImageDrawable(nativeAd.icon!!.drawable)
+            adView.iconView?.visibility = View.VISIBLE
+        }
+
+        if (hasMediaView) {
+            configureMediaView(nativeAd, adView)
+        }
+
+        adView.setNativeAd(nativeAd)
+        adView.visibility = View.VISIBLE
+    }
+
+    private fun handleIconVisibility(isMediumAd: Boolean, adView: NativeAdView, isVisible: Boolean) {
+        val guidelineId = if (isMediumAd) R.id.glNativeAdmobMedium1 else R.id.glNativeAdmobBannerNormal1
+        val guidelinePercent = if (isVisible) if (isMediumAd) 0.17f else 0.15f else 0f
+
+        adView.findViewById<Guideline>(guidelineId).setGuidelinePercent(guidelinePercent)
+        adView.findViewById<CardView>(R.id.adIconCard).visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    private fun configureMediaView(nativeAd: NativeAd, adView: NativeAdView) {
+        adView.mediaView = adView.findViewById<View>(R.id.adMedia) as MediaView
+        adView.mediaView?.mediaContent = nativeAd.mediaContent!!
+
+        (adView.findViewById<View>(R.id.adMedia) as MediaView).setOnHierarchyChangeListener(object :
+            ViewGroup.OnHierarchyChangeListener {
             override fun onChildViewAdded(parent: View, child: View) {
                 if (child is ImageView) {
                     child.scaleType = ImageView.ScaleType.FIT_XY
@@ -197,91 +236,11 @@ object AdmobNativeAdManager {
             override fun onChildViewRemoved(view: View, view1: View) {}
         })
 
-        adView.mediaView!!.mediaContent = nativeAd.mediaContent!!
+        val videoController = nativeAd.mediaContent!!.videoController
+        if (videoController.hasVideoContent()) {
+            videoController.videoLifecycleCallbacks = object : VideoController.VideoLifecycleCallbacks() {
 
-        if (nativeAd.body == null) {
-            adView.bodyView!!.visibility = View.INVISIBLE
-        } else {
-            adView.bodyView!!.visibility = View.VISIBLE
-            (adView.bodyView as TextView).text = nativeAd.body
-        }
-
-        if (nativeAd.callToAction == null) {
-            adView.callToActionView!!.visibility = View.INVISIBLE
-        } else {
-            adView.callToActionView!!.visibility = View.VISIBLE
-            (adView.callToActionView as Button).text = nativeAd.callToAction
-        }
-
-        if (nativeAd.icon == null) {
-            if (isMediumAd) {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobMedium1).setGuidelinePercent(0f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.GONE
-            } else {
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.GONE
             }
-        } else {
-            if (isMediumAd) {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobMedium1).setGuidelinePercent(0.17f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.VISIBLE
-            } else {
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.VISIBLE
-            }
-            (adView.iconView as ImageView).setImageDrawable(nativeAd.icon!!.drawable)
-            adView.iconView!!.visibility = View.VISIBLE
         }
-
-        adView.setNativeAd(nativeAd)
-        adView.visibility = View.VISIBLE
-        val vc: VideoController = nativeAd.mediaContent!!.videoController
-        if (vc.hasVideoContent()) {
-            vc.videoLifecycleCallbacks = object : VideoController.VideoLifecycleCallbacks() {}
-        }
-    }
-
-    private fun populateSimpleNativeAdmob(isMediumAd: Boolean, nativeAd: NativeAd, adView: NativeAdView) {
-        adView.headlineView = adView.findViewById(R.id.adHeadline)
-        adView.bodyView = adView.findViewById(R.id.adBody)
-        adView.callToActionView = adView.findViewById(R.id.adCallToAction)
-        adView.iconView = adView.findViewById(R.id.adAppIcon)
-        (adView.headlineView as TextView).text = nativeAd.headline
-
-        if (nativeAd.body == null) {
-            adView.bodyView!!.visibility = View.INVISIBLE
-        } else {
-            adView.bodyView!!.visibility = View.VISIBLE
-            (adView.bodyView as TextView).text = nativeAd.body
-        }
-
-        if (nativeAd.callToAction == null) {
-            adView.callToActionView!!.visibility = View.INVISIBLE
-        } else {
-            adView.callToActionView!!.visibility = View.VISIBLE
-            (adView.callToActionView as Button).text = nativeAd.callToAction
-        }
-
-        if (nativeAd.icon == null) {
-            if (isMediumAd) {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobSmall1).setGuidelinePercent(0f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.GONE
-            } else {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobBannerNormal1)
-                    .setGuidelinePercent(0f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.GONE
-            }
-        } else {
-            if (isMediumAd) {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobSmall1).setGuidelinePercent(0.17f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.VISIBLE
-            } else {
-                adView.findViewById<Guideline>(R.id.glNativeAdmobBannerNormal1)
-                    .setGuidelinePercent(0.15f)
-                adView.findViewById<CardView>(R.id.adIconCard).visibility = View.VISIBLE
-            }
-            (adView.iconView as ImageView).setImageDrawable(nativeAd.icon!!.drawable)
-            adView.iconView!!.visibility = View.VISIBLE
-        }
-        adView.setNativeAd(nativeAd)
-        adView.visibility = View.VISIBLE
     }
 }

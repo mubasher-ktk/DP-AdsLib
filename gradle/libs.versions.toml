@@ -16,21 +16,23 @@ constraintlayout = "2.1.4"
 
 gms = "4.4.2"
 crashlytics = "3.0.2"
-navigation = "2.8.0"
+mbridge_android_sdk = "16.9.21"
+unityAds = "4.12.5"
+navigation = "2.8.5"
 navigationUiKtx = "2.8.5"
 perf = "1.4.2"
 
 firebaseBom = "33.2.0"
 firebaseCore = "21.1.1"
-firebaseCrashlytics = "19.0.3"
-firebaseMessaging = "24.0.1"
-firebasePerf = "21.0.1"
-playServicesAds = "23.3.0"
+firebaseCrashlytics = "19.3.0"
+firebaseMessaging = "24.1.0"
+firebasePerf = "21.0.3"
+playServicesAds = "23.6.0"
 sdpAndroid = "1.1.1"
 shimmer = "0.5.0"
+lottie = "6.5.1"
 sspAndroid = "1.1.1"
-userMessagingPlatform = "3.0.0"
-vungleAds = "7.4.0"
+userMessagingPlatform = "3.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -54,11 +56,13 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", ve
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-perf = { module = "com.google.firebase:firebase-perf", version.ref = "firebasePerf" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+mbridge_android_sdk = { module = "com.mbridge.msdk.oversea:mbridge_android_sdk", version.ref = "mbridge_android_sdk" }
+unity-ads = { module = "com.unity3d.ads:unity-ads", version.ref = "unityAds" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
-vungle-ads = { module = "com.vungle:vungle-ads", version.ref = "vungleAds" }
 
 
 [plugins]

@@ -140,13 +140,20 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
                 }
             }
             appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
-            isShowDialog = true
-            showWaitDialog()
-
             Handler(Looper.getMainLooper()).postDelayed({
-                appOpenAd!!.show(currentActivity!!)
-                dismissWaitDialog()
-            },1500)
+                currentActivity?.let {
+                    isShowDialog = true
+                    showWaitDialog()
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        currentActivity?.let {
+
+                        }
+                        appOpenAd!!.show(currentActivity!!)
+                        dismissWaitDialog()
+                    },1500)
+                }
+            },7000)
         }
     }
 

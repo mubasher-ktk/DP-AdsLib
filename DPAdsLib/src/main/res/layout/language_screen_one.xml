@@ -24,7 +24,7 @@
             android:text="@string/label_select_language"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
-            app:fontFamily="@font/lexend_semibold"
+            app:fontFamily="@font/poppins_extrabold"
             app:layout_constraintBottom_toTopOf="@+id/txtAllLanguages"
             app:layout_constraintEnd_toStartOf="@+id/imvDone"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +50,25 @@
             android:text="@string/label_all_languages"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
-            app:fontFamily="@font/lexend_semibold"
+            android:fontFamily="@font/poppins_medium"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewLanguage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtSelectKeyboard" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/handAnimActive"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:elevation="@dimen/_10sdp"
+            app:lottie_rawRes="@raw/hand_anim"
+            app:lottie_autoPlay="true"
+            app:lottie_repeatCount="999999"
+            app:lottie_repeatMode="reverse"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:translationY="-15dp"
+            android:translationX="-20dp"
+            app:layout_constraintTop_toTopOf="@+id/recyclerViewLanguage"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewLanguage"
@@ -80,12 +94,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainLayout">
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/admob_native_media_view_shimmer" />
-        </com.facebook.shimmer.ShimmerFrameLayout>
+            <FrameLayout
+                android:id="@+id/bannerAdMint"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:background="#D9D9D9"
+                app:layout_constraintStart_toStartOf="@+id/shimmerLayout"
+                app:layout_constraintEnd_toEndOf="@+id/shimmerLayout"
+                app:layout_constraintTop_toTopOf="@+id/shimmerLayout"
+                app:layout_constraintBottom_toBottomOf="@+id/shimmerLayout"/>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <include layout="@layout/admob_native_media_view_shimmer" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

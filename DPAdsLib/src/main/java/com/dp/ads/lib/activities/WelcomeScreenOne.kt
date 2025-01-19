@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import com.dp.ads.lib.R
 import com.dp.ads.lib.adMobAdClasses.AdmobNativeAdManager
@@ -14,18 +15,21 @@ import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.callingClasses.WelcomeScreensConfiguration
 import com.dp.ads.lib.interfaces.WelcomeInterface
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.utils.hideSystemUI
+import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
+import com.dp.ads.lib.utils.hideSystemUIUpdated
+import com.facebook.shimmer.ShimmerFrameLayout
 
 class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
 
-    private var DPAdsConfigurations: DPAdsConfigurations? = null
+    private var dpAdsConfigurations: DPAdsConfigurations? = null
     private var myView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(0, 0)
         supportActionBar?.hide()
-        hideSystemUI()
-        DPAdsConfigurations = DPAdsManager.getConfigurations()
+        hideSystemUIUpdated()
+        dpAdsConfigurations = DPAdsManager.getConfigurations()
 
         WelcomeScreensConfiguration.welcomeInstance?.let { config ->
             config.setWelcomeInterface(this)
@@ -37,27 +41,21 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
             }
             setContentView(myView)
         }
-
-        val nativeSurvey2Enabled = DPAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_2") as? Boolean ?: false
-        if (nativeSurvey2Enabled) {
-            when (DPAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_2_MED")) {
-                "ADMOB" -> loadAdmobSurveyDupNatives()
-                "META" -> loadMetaSurveyDupNatives()
-            }
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        val nativeSurvey1Enabled = DPAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1") as? Boolean ?: false
+        val nativeSurvey1Enabled = dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1") as? Boolean ?: false
         if (nativeSurvey1Enabled) {
-            when (DPAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1_MED")) {
-                "ADMOB" -> showAdmobLanguageScreenOneNatives()
-                "META" -> showMetaLanguageScreenOneNatives()
+            when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1_MED")) {
+                "ADMOB" -> showAdmobSurveyOneNatives()
+                "META" -> showMetaSurveyOneNatives()
+                "MINTEGRAL" -> showMintegralSurveyOneBanner()
             }
         } else {
             myView?.let {
-                myView?.findViewById<CardView>(R.id.nativeAdContainerAd)?.visibility = View.GONE
+                myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
+                myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             }
         }
     }
@@ -69,44 +67,22 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
         overridePendingTransition(0, 0)
     }
 
-    private fun showMetaLanguageScreenOneNatives() {
+    private fun showAdmobSurveyOneNatives() {
         myView?.let {
-            DPAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_1")?.let { adId ->
-                MetaNativeAdManager.requestAd(
-                    mContext = this,
-                    adId = adId,
-                    adName = "NATIVE_SURVEY_1",
-                    isMedia = true,
-                    isMediumAd = true,
-                    remoteConfig = DPAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
-                    populateView = true,
-                    nativeAdLayout = myView?.findViewById(R.id.nativeAdContainerAd),
-                    onAdFailed = {
-                        myView?.findViewById<CardView>(R.id.nativeAdContainerAd)?.visibility = View.GONE
-                        Log.i("DP_ADS_TAG","WelcomeScreenOne: Meta: onAdFailed()")
-                    },
-                    onAdLoaded = {
-                        Log.i("DP_ADS_TAG","WelcomeScreenOne: Meta: onAdLoaded()")
-                    }
-                )
-            } ?: Log.w("WelcomeScreenOne", "META_NATIVE_SURVEY_1 ad ID is missing.")
-        }
-    }
-
-    private fun showAdmobLanguageScreenOneNatives() {
-        myView?.let {
-            DPAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")?.let { adId ->
+            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
+            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
+            dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")?.let { adId ->
                 AdmobNativeAdManager.requestAd(
                     mContext = this,
                     adId = adId,
                     adName = "NATIVE_SURVEY_1",
                     isMedia = true,
                     isMediumAd = true,
-                    remoteConfig = DPAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
+                    remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
                     populateView = true,
-                    adContainer = myView?.findViewById(R.id.nativeAdContainerAd),
+                    adContainer = myView?.findViewById(R.id.nativeAdContainerAdmob),
                     onAdFailed = {
-                        myView?.findViewById<CardView>(R.id.nativeAdContainerAd)?.visibility = View.GONE
+                        myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
                         Log.i("DP_ADS_TAG","WelcomeScreenOne: Admob: onAdFailed()")
                     },
                     onAdLoaded = {
@@ -116,36 +92,55 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
             } ?: Log.w("WelcomeScreenOne", "ADMOB_NATIVE_SURVEY_1 ad ID is missing.")
         }
     }
-
-    private fun loadMetaSurveyDupNatives() {
-        val adId = DPAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_2")
-        if (adId != null) {
-            MetaNativeAdManager.requestAd(
-                mContext = this,
-                adId = adId,
-                adName = "NATIVE_SURVEY_2",
-                isMedia = true,
-                isMediumAd = true,
-                populateView = false
-            )
-        } else {
-            Log.e("DP_ADS_TAG", "Meta ad ID not found for NATIVE_SURVEY_2")
+    private fun showMetaSurveyOneNatives() {
+        myView?.let {
+            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
+            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
+            dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_1")?.let { adId ->
+                MetaNativeAdManager.requestAd(
+                    mContext = this,
+                    adId = adId,
+                    adName = "NATIVE_SURVEY_1",
+                    isMedia = true,
+                    isMediumAd = true,
+                    remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
+                    populateView = true,
+                    nativeAdLayout = myView?.findViewById(R.id.nativeAdContainerAdmob),
+                    onAdFailed = {
+                        myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
+                        Log.i("DP_ADS_TAG","WelcomeScreenOne: Meta: onAdFailed()")
+                    },
+                    onAdLoaded = {
+                        Log.i("DP_ADS_TAG","WelcomeScreenOne: Meta: onAdLoaded()")
+                    }
+                )
+            } ?: Log.w("WelcomeScreenOne", "META_NATIVE_SURVEY_1 ad ID is missing.")
         }
     }
-
-    private fun loadAdmobSurveyDupNatives() {
-        val adId = DPAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_2")
-        if (adId != null) {
-            AdmobNativeAdManager.requestAd(
-                mContext = this,
-                adId = adId,
-                adName = "NATIVE_SURVEY_2",
-                isMedia = true,
-                isMediumAd = true,
-                populateView = false
+    private fun showMintegralSurveyOneBanner() {
+        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")?.split("-")?.size == 2) {
+            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.VISIBLE
+            MintegralBannerAdManager.requestBannerAd(
+                activity = this,
+                placementId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[0],
+                unitId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[1],
+                adName = "NATIVE_SURVEY_1",
+                populateView = true,
+                bannerContainer = myView?.findViewById(R.id.bannerAdMint),
+                shimmerContainer = myView?.findViewById(R.id.shimmerLayoutMint),
+                onAdFailed = {
+                    myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
+                    Log.i("DP_ADS_TAG", "SURVEY_1: MINTEGRAL: onAdFailed()")
+                },
+                onAdLoaded = {
+                    myView?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayoutMint)?.stopShimmer()
+                    myView?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayoutMint)?.visibility = View.INVISIBLE
+                    myView?.findViewById<FrameLayout>(R.id.bannerAdMint)?.visibility = View.VISIBLE
+                    Log.i("DP_ADS_TAG", "SURVEY_1: MINTEGRAL: onAdLoaded()")
+                }
             )
         } else {
-            Log.e("DP_ADS_TAG", "Admob ad ID not found for NATIVE_SURVEY_2")
+            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY SURVEY_1 Incorrect ID Format (placementID-unitID)")
         }
     }
 }

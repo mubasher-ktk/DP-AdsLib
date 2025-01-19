@@ -10,31 +10,32 @@ import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.ActivityWalkThroughConfigBinding
 import com.dp.ads.lib.utils.NetworkCheck
 import com.dp.ads.lib.utils.hideSystemUI
+import com.dp.ads.lib.utils.hideSystemUIUpdated
 
 class WalkThroughConfigActivity : AppCompatBaseActivity() {
 
     lateinit var binding: ActivityWalkThroughConfigBinding
-    private var DPAdsConfigurations: DPAdsConfigurations? = null
+    private var dpAdsConfigurations: DPAdsConfigurations? = null
     private lateinit var viewPager: ViewPager2
     private var previousPosition: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        hideSystemUI()
+//        hideSystemUI()
         binding = ActivityWalkThroughConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        DPAdsConfigurations = DPAdsManager.getConfigurations()
+        dpAdsConfigurations = DPAdsManager.getConfigurations()
         viewPager = findViewById(R.id.viewPager)
 
-        val myNoOfFrag = DPAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR")
+        val myNoOfFrag = dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR")
         val noOfFragment = if (NetworkCheck.isNetworkAvailable(this) && myNoOfFrag == true) {
             4
         } else {
             3
         }
 
-        viewPager.adapter = WalkThroughAdapter(fragmentActivity = this, DPAdsConfigurations?.walkThroughScreensConfiguration?.walkThroughList!!, noOfFragment)
+        viewPager.adapter = WalkThroughAdapter(fragmentActivity = this, dpAdsConfigurations?.walkThroughScreensConfiguration?.walkThroughList!!, noOfFragment)
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -57,5 +58,10 @@ class WalkThroughConfigActivity : AppCompatBaseActivity() {
                 previousPosition = position
             }
         })
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideSystemUIUpdated()
     }
 }

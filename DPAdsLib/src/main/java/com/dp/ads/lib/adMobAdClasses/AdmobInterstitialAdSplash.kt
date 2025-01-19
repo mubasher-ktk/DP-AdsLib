@@ -19,21 +19,21 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 class AdmobInterstitialAdSplash(
     activity: Activity? = null,
     val adId: String,
-    onAdDismissed: (() -> Unit)? = null,
-    onAdFailed: (() -> Unit)? = null,
-    onAdTimeout: (() -> Unit)? = null,
-    onAdShowed: (() -> Unit)? = null
+    var onAdDismissed: (() -> Unit)? = null,
+    var onAdFailed: (() -> Unit)? = null,
+    var onAdTimeout: (() -> Unit)? = null,
+    var onAdShowed: (() -> Unit)? = null
 ) {
     private var interstitialAd: InterstitialAd? = null
     private var currentActivity: Activity? = activity
     private var isShowingAd = false
-    private var isShowDialog = true
     private var isShowingDialog = false
     private val timeoutHandler = Handler(Looper.getMainLooper())
 
     private val timeoutRunnable = Runnable {
         if (interstitialAd == null) {
             onAdTimeout?.invoke()
+            nullAllTheListeners()
             dismissWaitDialog()
             Log.i("DP_ADS_TAG", "Admob: Interstitial : Timeout()")
             currentActivity?.let {
@@ -42,6 +42,13 @@ class AdmobInterstitialAdSplash(
                 }
             }
         }
+    }
+
+    private fun nullAllTheListeners() {
+        onAdDismissed = null
+        onAdFailed = null
+        onAdTimeout = null
+        onAdShowed = null
     }
 
     init {
@@ -75,13 +82,19 @@ class AdmobInterstitialAdSplash(
 
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 Log.i("DP_ADS_TAG", "Admob: Interstitial : onAdFailedToLoad()")
-                timeoutHandler.removeCallbacks(timeoutRunnable)
-                dismissWaitDialog()
-                onAdFailed?.invoke()
-                currentActivity?.let {
-                    if (BuildConfig.DEBUG) {
-                        Toast.makeText(currentActivity, "Admob: Interstitial : Failed To Load", Toast.LENGTH_SHORT).show()
+                if (interstitialAd == null) {
+                    Log.i("DP_ADS_TAG", "Admob: Interstitial : onAdFailedToLoad(): interstitialAd == null")
+                } else {
+                    timeoutHandler.removeCallbacks(timeoutRunnable)
+                    dismissWaitDialog()
+                    onAdFailed?.invoke()
+                    nullAllTheListeners()
+                    currentActivity?.let {
+                        if (BuildConfig.DEBUG) {
+                            Toast.makeText(currentActivity, "Admob: Interstitial : Failed To Load", Toast.LENGTH_SHORT).show()
+                        }
                     }
+                    Log.i("DP_ADS_TAG", "Admob: Interstitial : onAdFailedToLoad(): interstitialAd != null")
                 }
             }
         }
@@ -104,6 +117,7 @@ class AdmobInterstitialAdSplash(
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                     dismissWaitDialog()
                     onAdDismissed?.invoke()
+                    nullAllTheListeners()
                     interstitialAd = null
                 }
 
@@ -112,7 +126,9 @@ class AdmobInterstitialAdSplash(
                     isShowingAd = false
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                     dismissWaitDialog()
+                    interstitialAd = null
                     onAdFailed?.invoke()
+                    nullAllTheListeners()
                 }
 
                 override fun onAdShowedFullScreenContent() {
@@ -121,14 +137,25 @@ class AdmobInterstitialAdSplash(
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                     dismissWaitDialog()
                     onAdShowed?.invoke()
+                    nullAllTheListeners()
                 }
             }
 
-            showWaitDialog()
-
             Handler(Looper.getMainLooper()).postDelayed({
-                interstitialAd?.show(currentActivity!!)
-            }, 1500)
+                currentActivity?.let {
+                    if (interstitialAd != null) {
+                        showWaitDialog()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            currentActivity?.let {
+                                if (interstitialAd != null) {
+                                    interstitialAd?.show(currentActivity!!)
+                                }
+                            }
+                        }, 1500)
+                    }
+                }
+            },7000)
         }
     }
 
@@ -137,12 +164,10 @@ class AdmobInterstitialAdSplash(
     }
 
     private fun showWaitDialog() {
-        if (isShowDialog) {
-            currentActivity?.let {
-                val view = it.layoutInflater.inflate(R.layout.dialog_adloading, null, false)
-                isShowingDialog = true
-                AdLoadingDialog.setContentView(it, view = view, isCancelable = false).showDialogInterstitial()
-            }
+        currentActivity?.let {
+            val view = it.layoutInflater.inflate(R.layout.dialog_adloading, null, false)
+            isShowingDialog = true
+            AdLoadingDialog.setContentView(it, view = view, isCancelable = false).showDialogInterstitial()
         }
     }
 

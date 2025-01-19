@@ -52,11 +52,11 @@ dependencies {
 
     implementation libs.user.messaging.platform
 
-    // Admob
+    // Ads Network
     implementation libs.play.services.ads
+    implementation libs.mbridge.android.sdk
+    implementation libs.unity.ads
     implementation libs.androidx.lifecycle.process
-    implementation libs.vungle.ads
-//    implementation 'com.vungle:publisher-sdk-android:6.12.1'
     implementation libs.audience.network.sdk
 
     implementation libs.androidx.navigation.fragment.ktx
@@ -64,6 +64,7 @@ dependencies {
     implementation libs.glide
 
     implementation libs.shimmer
+    implementation libs.lottie
 }
 
 
@@ -75,7 +76,7 @@ afterEvaluate {
 
                 groupId = 'com.github.mubasher-ktk'
                 artifactId = 'DP-AdsLib'
-                version = '1.1.2'
+                version = '1.1.3'
             }
         }
     }
