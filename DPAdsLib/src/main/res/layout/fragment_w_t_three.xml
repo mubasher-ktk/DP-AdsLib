@@ -27,10 +27,10 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="@dimen/_14ssp"
-        app:layout_constraintTop_toBottomOf="@+id/main"
         app:layout_constraintBottom_toTopOf="@+id/txtDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main" />
 
     <TextView
         android:id="@+id/txtDescription"
