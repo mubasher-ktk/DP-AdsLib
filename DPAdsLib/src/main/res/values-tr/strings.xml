@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">Dil Seç</string>
+    <string name="label_all_languages">Tüm Diller</string>
+    <string name="label_country_name">Ülke Adı</string>
+    <string name="des_country_flag">Ülke Bayrağı</string>
+    <string name="des_selection_state">Seçim Durumu</string>
+    <string name="label_start">Başla</string>
+    <string name="ad_is_loading">Reklam Yükleniyor…</string>
+    <string name="label_ad">Reklam</string>
+    <string name="ad_label_install">Yükle</string>
+    <string name="label_next">Sonraki</string>
+</resources>

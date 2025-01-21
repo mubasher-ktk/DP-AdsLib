@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">Selecionar Idioma</string>
+    <string name="label_all_languages">Todos os Idiomas</string>
+    <string name="label_country_name">Nome do País</string>
+    <string name="des_country_flag">Bandeira do País</string>
+    <string name="des_selection_state">Estado de Seleção</string>
+    <string name="label_start">Iniciar</string>
+    <string name="ad_is_loading">O anúncio está carregando…</string>
+    <string name="label_ad">Anúncio</string>
+    <string name="ad_label_install">Instalar</string>
+    <string name="label_next">Próximo</string>
+</resources>

@@ -15,6 +15,17 @@
         android:orientation="vertical"
         android:padding="@dimen/_14sdp">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/handAnimActive"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:elevation="@dimen/_10sdp"
+            app:lottie_rawRes="@raw/loading_anim"
+            app:lottie_autoPlay="true"
+            android:layout_gravity="center_horizontal"
+            app:lottie_repeatCount="999999"
+            app:lottie_repeatMode="reverse"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

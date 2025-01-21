@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">言語を選択</string>
+    <string name="label_all_languages">すべての言語</string>
+    <string name="label_country_name">国名</string>
+    <string name="des_country_flag">国旗</string>
+    <string name="des_selection_state">選択状態</string>
+    <string name="label_start">開始</string>
+    <string name="ad_is_loading">広告を読み込み中…</string>
+    <string name="label_ad">広告</string>
+    <string name="ad_label_install">インストール</string>
+    <string name="label_next">次へ</string>
+</resources>

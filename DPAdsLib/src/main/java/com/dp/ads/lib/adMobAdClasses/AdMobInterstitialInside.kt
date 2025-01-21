@@ -135,20 +135,20 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
     private fun showWaitDialog() {
         if (isShowDialog) {
             mContextAdmob?.let {
-                val view = (it as Activity).layoutInflater.inflate(
-                    R.layout.dialog_adloading,
-                    null,
-                    false
-                )
-                AdLoadingDialog.setContentView(it, view = view, isCancelable = false)
-                    .showDialogInterstitial()
+                if (!(it as Activity).isFinishing && !it.isDestroyed) {
+                    val view = it.layoutInflater.inflate(R.layout.dialog_adloading,null,false)
+                    AdLoadingDialog.setContentView(it, view = view, isCancelable = false)
+                        .showDialogInterstitial()
+                }
             }
         }
     }
 
     private fun dismissWaitDialog() {
         mContextAdmob?.let {
-            AdLoadingDialog.dismissDialog(it as Activity)
+            if (!(it as Activity).isFinishing && !it.isDestroyed) {
+                AdLoadingDialog.dismissDialog(it)
+            }
         }
     }
 }

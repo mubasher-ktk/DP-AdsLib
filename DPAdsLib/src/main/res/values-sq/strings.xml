@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_select_language">Zgjidh Gjuhën</string>
+    <string name="label_all_languages">Të Gjitha Gjuhët</string>
+    <string name="label_country_name">Emri i Vendit</string>
+    <string name="des_country_flag">Flamuri i Vendit</string>
+    <string name="des_selection_state">Gjendja e Përzgjedhjes</string>
+    <string name="label_start">Fillo</string>
+    <string name="ad_is_loading">Reklama po Ngarkohet…</string>
+    <string name="label_ad">Reklamë</string>
+    <string name="ad_label_install">Instalo</string>
+    <string name="label_next">Tjetër</string>
+</resources>
