@@ -489,7 +489,7 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean(RemoteConfigConstTest.NATIVE_WALKTHROUGH_3, true)
         editor.putBoolean(RemoteConfigConstTest.INTERSTITIAL_LETS_START, true)
 
-        // SOT-Ads-Mediation-Config
+        // DP-Ads-Mediation-Config
         editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH_MED, "ADMOB")
         editor.putString(RemoteConfigConstTest.RESUME_OVERALL_MED, "ADMOB")
         editor.putString(RemoteConfigConstTest.BANNER_SPLASH_MED, "ADMOB")

@@ -1,7 +1,7 @@
 package com.urdu_keyboard.utilityClasses
 
 object RemoteConfigConstTest {
-    // SOT-Ads-Visibility-Config
+    // DP-Ads-Visibility-Config
     const val RESUME_INTER_SPLASH = "RESUME_INTER_SPLASH"
     const val RESUME_OVERALL = "RESUME_OVERALL"
     const val BANNER_SPLASH = "BANNER_SPLASH"
@@ -15,7 +15,7 @@ object RemoteConfigConstTest {
     const val NATIVE_WALKTHROUGH_3 = "NATIVE_WALKTHROUGH_3"
     const val INTERSTITIAL_LETS_START = "INTERSTITIAL_LETS_START"
 
-    // SOT-Ads-Mediation-Config
+    // DP-Ads-Mediation-Config
     const val RESUME_INTER_SPLASH_MED = "RESUME_INTER_SPLASH_MED"
     const val RESUME_OVERALL_MED = "RESUME_OVERALL_MED"
     const val BANNER_SPLASH_MED = "BANNER_SPLASH_MED"

@@ -142,13 +142,13 @@ class AdmobInterstitialAdSplash(
             }
 
             Handler(Looper.getMainLooper()).postDelayed({
-                currentActivity?.let {
-                    if (interstitialAd != null) {
+                currentActivity?.let { it1 ->
+                    if (!it1.isFinishing && !it1.isDestroyed && interstitialAd != null) {
                         showWaitDialog()
 
                         Handler(Looper.getMainLooper()).postDelayed({
-                            currentActivity?.let {
-                                if (interstitialAd != null) {
+                            currentActivity?.let { it2 ->
+                                if (!it2.isFinishing && !it2.isDestroyed && interstitialAd != null) {
                                     interstitialAd?.show(currentActivity!!)
                                 }
                             }
@@ -165,16 +165,20 @@ class AdmobInterstitialAdSplash(
 
     private fun showWaitDialog() {
         currentActivity?.let {
-            val view = it.layoutInflater.inflate(R.layout.dialog_adloading, null, false)
-            isShowingDialog = true
-            AdLoadingDialog.setContentView(it, view = view, isCancelable = false).showDialogInterstitial()
+            if (!it.isFinishing && !it.isDestroyed) {
+                val view = it.layoutInflater.inflate(R.layout.dialog_adloading, null, false)
+                isShowingDialog = true
+                AdLoadingDialog.setContentView(it, view = view, isCancelable = false).showDialogInterstitial()
+            }
         }
     }
 
     private fun dismissWaitDialog() {
         if (isShowingDialog) {
             currentActivity?.let {
-                AdLoadingDialog.dismissDialog(it)
+                if (!it.isFinishing && !it.isDestroyed) {
+                    AdLoadingDialog.dismissDialog(it)
+                }
             }
             isShowingDialog = false
         }
