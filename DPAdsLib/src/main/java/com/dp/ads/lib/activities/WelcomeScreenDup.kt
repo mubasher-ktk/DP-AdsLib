@@ -118,6 +118,7 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
     }
     private fun showMintegralSurveyDupBanner() {
         if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_2")?.split("-")?.size == 2) {
+            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.VISIBLE
             MintegralBannerAdManager.requestBannerAd(
                 activity = this,
