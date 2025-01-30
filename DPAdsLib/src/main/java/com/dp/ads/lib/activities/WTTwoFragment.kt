@@ -114,12 +114,10 @@ class WTTwoFragment(val item: WalkThroughItem) : Fragment() {
 
     private fun loadAdmobWTThreeNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_3")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_3",
-                isMedia = true,
-                isMediumAd = true,
                 populateView = false
             )
         } ?: Log.i("WTTwoFragment","ADMOB_NATIVE_WALKTHROUGH_3 ad ID is missing.")
@@ -151,12 +149,11 @@ class WTTwoFragment(val item: WalkThroughItem) : Fragment() {
 
     private fun showAdmobWTTwoNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_2")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_2").toString().toBoolean(),
                 populateView = true,
                 adContainer = binding.nativeAdContainerAd,

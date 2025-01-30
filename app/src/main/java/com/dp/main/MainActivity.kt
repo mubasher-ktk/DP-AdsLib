@@ -112,11 +112,7 @@ class MainActivity : AppCompatActivity() {
             .setTestDeviceHashedIdList(
                 arrayListOf(
                     "6564773B830B9F95AC0BE3E2A535B28A",
-                    "3F8FB4EE64D851EDBA704E705EC63A62",
-                    "84C3994693FB491110A5A4AEF8C5561B",
-                    "CB2F3812ACAA2A3D8C0B31682E1473EB",
-                    "F02B044F22C917805C3DF6E99D3B8800"
-                )
+                    "63AD3B7607632FF4E6693BF74FE883FC")
             )
             .setOnConsentGatheredCallback {
                 Log.i("ConsentMessage", "DPStartActivity: setOnConsentGatheredCallback")
@@ -124,8 +120,8 @@ class MainActivity : AppCompatActivity() {
                     remoteConfigOperationsCompleted = {
                         dpAdsConfigurations.setRemoteConfigData(
                             activityContext = this@MainActivity,
-                            myRemoteConfigData = it
-                        )
+                            myRemoteConfigData = it/*,
+                            firstOpenFlowAdIds*/)
 
                         if (NetworkCheck.isNetworkAvailable(this)) {
                             if (it.getValue(RemoteConfigConstTest.BANNER_SPLASH) == true) {

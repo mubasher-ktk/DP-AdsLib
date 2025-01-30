@@ -28,8 +28,10 @@ class DPAdsConfigurations private constructor() {
     private lateinit var mintegralInterstitialAdSplash: MintegralInterstitialAdSplash
     private lateinit var metaInterstitialAdSplash: MetaInterstitialAdSplash
 
-    fun setRemoteConfigData(activityContext: Activity, myRemoteConfigData: HashMap<String, Any>) {
+    fun setRemoteConfigData(activityContext: Activity, myRemoteConfigData: HashMap<String, Any>/*, firstOpenFlowAdIdsRefreshed: HashMap<String, String>*/) {
         this.remoteConfigData = myRemoteConfigData
+/*        this.firstOpenFlowAdIds.clear()
+        this.firstOpenFlowAdIds = firstOpenFlowAdIdsRefreshed*/
         this.remoteConfigData?.forEach { value ->
             Log.i("RemoteConfigFetches","DPAdsConfigurations : setRemoteConfigData() "+value.key + " : " + value.value)
         }
@@ -98,12 +100,11 @@ class DPAdsConfigurations private constructor() {
     }
 
     private fun loadAdmobLanguageScreenOneNatives(mContext: Activity) {
-        AdmobNativeAdManager.requestAd(
+        AdmobNativeAdManager.requestOrShowAd(
             mContext = mContext,
             adId = firstOpenFlowAdIds.getValue("ADMOB_NATIVE_LANGUAGE_1"),
             adName = "NATIVE_LANGUAGE_1",
-            isMedia = true,
-            isMediumAd = true,
+            isMediaWithCtaOnBottom = true,
             populateView = false
         )
     }
@@ -131,12 +132,11 @@ class DPAdsConfigurations private constructor() {
     }
 
     private fun loadAdmobLanguageScreenDupNatives(mContext: Activity) {
-        AdmobNativeAdManager.requestAd(
+        AdmobNativeAdManager.requestOrShowAd(
             mContext = mContext,
             adId = firstOpenFlowAdIds.getValue("ADMOB_NATIVE_LANGUAGE_2"),
             adName = "NATIVE_LANGUAGE_2",
-            isMedia = true,
-            isMediumAd = true,
+            isMediaWithCtaOnBottom = true,
             populateView = false
         )
     }

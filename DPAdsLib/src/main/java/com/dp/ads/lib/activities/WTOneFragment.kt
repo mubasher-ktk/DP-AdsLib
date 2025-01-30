@@ -139,12 +139,11 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
     private fun loadAdmobWTTwoNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_2")
         if (adId != null) {
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 populateView = false
             )
         } else {
@@ -268,12 +267,11 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
     }
     private fun showAdmobWTOneNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_1")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_1").toString().toBoolean(),
                 populateView = true,
                 adContainer = binding.nativeAdContainerAd,

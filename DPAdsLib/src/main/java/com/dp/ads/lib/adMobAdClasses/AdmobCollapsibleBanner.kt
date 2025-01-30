@@ -25,16 +25,19 @@ object AdmobCollapsibleBanner {
         adID: String,
         remoteConfig: Boolean,
         adName: String,
+        setShimmerToInvisible: Boolean,
         shimmerLayoutBanner: ShimmerFrameLayout,
         adSize: AdSize
     ) {
-        if (NetworkCheck.isNetworkAvailable(activity)
-            && remoteConfig
-        ) {
+        if (NetworkCheck.isNetworkAvailable(activity) && remoteConfig) {
             if (collapsibleBannerAdMobHashMap!!.containsKey(adName)) {
                 val collapsibleAdView: AdView? = collapsibleBannerAdMobHashMap!![adName]
                 shimmerLayoutBanner.stopShimmer()
-                shimmerLayoutBanner.visibility = View.GONE
+                if (setShimmerToInvisible) {
+                    shimmerLayoutBanner.visibility = View.INVISIBLE
+                } else {
+                    shimmerLayoutBanner.visibility = View.GONE
+                }
                 adViewContainer.removeView(shimmerLayoutBanner)
 
                 val parent = collapsibleAdView?.parent as? ViewGroup
@@ -49,6 +52,7 @@ object AdmobCollapsibleBanner {
                     remoteConfig,
                     adName,
                     shimmerLayoutBanner,
+                    setShimmerToInvisible,
                     adSize
                 )
             }
@@ -66,8 +70,8 @@ object AdmobCollapsibleBanner {
         remoteConfig: Boolean,
         adName: String,
         shimmerLayoutBanner: ShimmerFrameLayout,
-        adSize: AdSize
-    ) {
+        setShimmerToInvisible: Boolean,
+        adSize: AdSize) {
         val adView = AdView(activity).apply {
             setAdSize(adSize)
             adUnitId = adID
@@ -88,12 +92,20 @@ object AdmobCollapsibleBanner {
                     collapsibleBannerAdMobHashMap!![adName] = adView
                 }
                 shimmerLayoutBanner.stopShimmer()
-                shimmerLayoutBanner.visibility = View.GONE
+                if (setShimmerToInvisible) {
+                    shimmerLayoutBanner.visibility = View.INVISIBLE
+                } else {
+                    shimmerLayoutBanner.visibility = View.GONE
+                }
             }
 
             override fun onAdFailedToLoad(error: LoadAdError) {
                 shimmerLayoutBanner.stopShimmer()
-                shimmerLayoutBanner.visibility = View.GONE
+                if (setShimmerToInvisible) {
+                    shimmerLayoutBanner.visibility = View.INVISIBLE
+                } else {
+                    shimmerLayoutBanner.visibility = View.GONE
+                }
             }
         }
     }

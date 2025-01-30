@@ -97,12 +97,11 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
             myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
             dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_2")?.let { adId ->
-                AdmobNativeAdManager.requestAd(
+                AdmobNativeAdManager.requestOrShowAd(
                     mContext = this,
                     adId = adId,
                     adName = "NATIVE_SURVEY_2",
-                    isMedia = true,
-                    isMediumAd = true,
+                    isMediaWithCtaOnBottom = true,
                     remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_2").toString().toBoolean(),
                     populateView = true,
                     adContainer = myView?.findViewById(R.id.nativeAdContainerAdmob),
@@ -162,12 +161,11 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
     private fun loadAdmobWTOneNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_1")
         if (adId != null) {
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "WALKTHROUGH_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 populateView = false
             )
         } else {

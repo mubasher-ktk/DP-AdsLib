@@ -72,12 +72,11 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
             myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
             dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")?.let { adId ->
-                AdmobNativeAdManager.requestAd(
+                AdmobNativeAdManager.requestOrShowAd(
                     mContext = this,
                     adId = adId,
                     adName = "NATIVE_SURVEY_1",
-                    isMedia = true,
-                    isMediumAd = true,
+                    isMediaWithCtaOnBottom = true,
                     remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
                     populateView = true,
                     adContainer = myView?.findViewById(R.id.nativeAdContainerAdmob),

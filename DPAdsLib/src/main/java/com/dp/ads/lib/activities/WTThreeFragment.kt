@@ -185,12 +185,11 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
     }
     private fun showAdmobWTThreeNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_3")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_3",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_3").toString().toBoolean(),
                 populateView = true,
                 adContainer = binding.nativeAdContainerAd,

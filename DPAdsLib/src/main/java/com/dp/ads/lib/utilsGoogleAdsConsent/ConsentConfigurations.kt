@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.AdSettings
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.mbridge.msdk.MBridgeSDK
 import com.mbridge.msdk.out.MBridgeSDKFactory
 import com.mbridge.msdk.out.SDKInitStatusListener
 import com.unity3d.ads.IUnityAdsInitializationListener
 import com.unity3d.ads.UnityAds
+import java.util.Arrays
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ConsentConfigurations private constructor(
@@ -36,7 +38,7 @@ class ConsentConfigurations private constructor(
     private fun consentInitializationSetup() {
         Log.i("ConsentMessage", "ConsentConfigurations: consentInitializationSetup called")
         slowInternetHandler.postDelayed(kotlinx.coroutines.Runnable { onConsentGathered.invoke() },15000)
-
+        RequestConfiguration.Builder().setTestDeviceIds(listOf("63AD3B7607632FF4E6693BF74FE883FC"))
         googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(activityContext)
         googleMobileAdsConsentManager.gatherConsent(
             activity = activityContext,
@@ -44,7 +46,7 @@ class ConsentConfigurations private constructor(
             removeSlowInternetCallBack = {
             Log.i("ConsentMessage", "ConsentConfigurations: removeSlowInternetCallBack")
             slowInternetHandler.removeCallbacksAndMessages(null)
-                                         },
+            },
             errorMakingRequest = {
                 Log.i("ConsentMessage","ConsentConfigurations: ")
                     initializeMobileAdsSdk(initializeMobileAds = {

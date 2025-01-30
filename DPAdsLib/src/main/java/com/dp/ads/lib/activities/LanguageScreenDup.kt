@@ -127,12 +127,11 @@ class LanguageScreenDup: AppCompatBaseActivity() {
 
     private fun showAdmobLanguageScreenDupNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_LANGUAGE_2")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_LANGUAGE_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_LANGUAGE_2").toString().toBoolean(),
                 populateView = true,
                 adContainer = findViewById(R.id.nativeAdContainerAd),
@@ -196,12 +195,11 @@ class LanguageScreenDup: AppCompatBaseActivity() {
     private fun loadAdmobSurveyOneNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")
         if (adId != null) {
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_SURVEY_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 populateView = false
             )
         } else {
@@ -239,12 +237,11 @@ class LanguageScreenDup: AppCompatBaseActivity() {
     private fun loadAdmobSurveyDupNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_2")
         if (adId != null) {
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_SURVEY_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 populateView = false
             )
         } else {

@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.Guideline
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
 import com.dp.ads.lib.utils.NetworkCheck
@@ -24,14 +23,17 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 
 object AdmobNativeAdManager {
-    private val nativeAdCache = HashMap<String, NativeAd?>()
-    private val adLoadingState = HashMap<String, Boolean>()
+    val nativeAdCache = HashMap<String, NativeAd?>()
+    val adLoadingState = HashMap<String, Boolean>()
 
-    fun requestAd(
+    fun requestOrShowAd(
         mContext: Activity?,
         adId: String,
         adName: String = "",
-        isMedia: Boolean,
+        saveAdsToCache: String = "SAVE",
+        isMediaWithCtaOnTop: Boolean = false,
+        isMediaWithCtaOnBottom: Boolean = false,
+        isMediaOnRight: Boolean = false,
         isMediumAd: Boolean = false,
         remoteConfig: Boolean = true,
         populateView: Boolean = false,
@@ -61,7 +63,7 @@ object AdmobNativeAdManager {
 
         if (adLoadingState[adName] == true && nativeAdCache[adName] != null) {
             Log.i("DP_ADS_TAG", "Admob: Native : $adName : showCachedAd()")
-            showCachedAd(adName, isMedia, adContainer, isMediumAd)
+            showCachedAd(adName, adContainer, isMediaWithCtaOnTop, isMediaWithCtaOnBottom , isMediaOnRight, isMediumAd)
             return
         }
 
@@ -69,8 +71,9 @@ object AdmobNativeAdManager {
 
         val adView = mContext.layoutInflater.inflate(
             when {
-                isMedia && isMediumAd -> R.layout.admob_native_mediaview_large
-                isMedia -> R.layout.admob_native_mediaview_medium
+                isMediaWithCtaOnTop -> R.layout.admob_native_large_cta_top
+                isMediaWithCtaOnBottom -> R.layout.admob_native_large_cta_bottom
+                isMediaOnRight -> R.layout.admob_native_media_right_side
                 isMediumAd -> R.layout.admob_native_simple_large
                 else -> R.layout.admob_native_simple_small
             },
@@ -80,11 +83,13 @@ object AdmobNativeAdManager {
         if (NetworkCheck.isNetworkAvailable(mContext)) {
             val adLoader = AdLoader.Builder(mContext, adId)
                 .forNativeAd { nativeAd ->
-                    nativeAdCache[adName] = nativeAd
-                    adLoadingState[adName] = true
+                    if (saveAdsToCache.equals("SAVE")) {
+                        nativeAdCache[adName] = nativeAd
+                        adLoadingState[adName] = true
+                    }
                     if (populateView) {
                         adContainer?.let { container ->
-                            populateNativeAd(isMediumAd, nativeAd, adView, isMedia)
+                            populateNativeAd(nativeAd, adView, isMediaWithCtaOnTop, isMediaWithCtaOnBottom, isMediaOnRight)
                             container.removeAllViews()
                             container.addView(adView)
                         }
@@ -147,20 +152,21 @@ object AdmobNativeAdManager {
         }
     }
 
-    private fun showCachedAd(adName: String, isMedia: Boolean, adContainer: CardView?, isMediumAd: Boolean) {
+    private fun showCachedAd(adName: String, adContainer: CardView?, isMediaWithCtaOnTop: Boolean, isMediaWithCtaOnBottom: Boolean, isMediaOnRight: Boolean, isMediumAd: Boolean) {
         adContainer?.context?.let { context ->
             nativeAdCache[adName]?.let { cachedAd ->
                 val adView = LayoutInflater.from(context).inflate(
                     when {
-                        isMedia && isMediumAd -> R.layout.admob_native_mediaview_large
-                        isMedia -> R.layout.admob_native_mediaview_medium
+                        isMediaWithCtaOnTop -> R.layout.admob_native_large_cta_top
+                        isMediaWithCtaOnBottom -> R.layout.admob_native_large_cta_bottom
+                        isMediaOnRight -> R.layout.admob_native_media_right_side
                         isMediumAd -> R.layout.admob_native_simple_large
                         else -> R.layout.admob_native_simple_small
                     },
                     null
                 ) as? NativeAdView ?: return
 
-                populateNativeAd(isMediumAd, cachedAd, adView, isMedia)
+                populateNativeAd(cachedAd, adView, isMediaWithCtaOnTop, isMediaWithCtaOnBottom, isMediaOnRight)
                 adContainer.removeAllViews()
                 adContainer.addView(adView)
             } ?: run {
@@ -171,10 +177,11 @@ object AdmobNativeAdManager {
 
 
     private fun populateNativeAd(
-        isMediumAd: Boolean,
         nativeAd: NativeAd,
         adView: NativeAdView,
-        hasMediaView: Boolean
+        isMediaWithCtaOnTop: Boolean,
+        isMediaWithCtaOnBottom: Boolean,
+        isMediaOnRight: Boolean
     ) {
         adView.headlineView = adView.findViewById(R.id.adHeadline)
         adView.bodyView = adView.findViewById(R.id.adBody)
@@ -198,14 +205,14 @@ object AdmobNativeAdManager {
         }
 
         if (nativeAd.icon == null) {
-            handleIconVisibility(isMediumAd, adView, false)
+            handleIconVisibility(adView,false)
         } else {
-            handleIconVisibility(isMediumAd, adView, true)
+            handleIconVisibility(adView,true)
             (adView.iconView as ImageView).setImageDrawable(nativeAd.icon!!.drawable)
             adView.iconView?.visibility = View.VISIBLE
         }
 
-        if (hasMediaView) {
+        if (isMediaWithCtaOnTop || isMediaWithCtaOnBottom || isMediaOnRight) {
             configureMediaView(nativeAd, adView)
         }
 
@@ -213,12 +220,12 @@ object AdmobNativeAdManager {
         adView.visibility = View.VISIBLE
     }
 
-    private fun handleIconVisibility(isMediumAd: Boolean, adView: NativeAdView, isVisible: Boolean) {
-        val guidelineId = if (isMediumAd) R.id.glNativeAdmobMedium1 else R.id.glNativeAdmobBannerNormal1
-        val guidelinePercent = if (isVisible) if (isMediumAd) 0.17f else 0.15f else 0f
-
-        adView.findViewById<Guideline>(guidelineId).setGuidelinePercent(guidelinePercent)
-        adView.findViewById<CardView>(R.id.adIconCard).visibility = if (isVisible) View.VISIBLE else View.GONE
+    private fun handleIconVisibility(adView: NativeAdView, isVisible: Boolean) {
+        if (isVisible) {
+            adView.findViewById<CardView>(R.id.adIconCard).visibility = View.VISIBLE
+        } else {
+            adView.findViewById<CardView>(R.id.adIconCard).visibility = View.GONE
+        }
     }
 
     private fun configureMediaView(nativeAd: NativeAd, adView: NativeAdView) {
@@ -242,5 +249,10 @@ object AdmobNativeAdManager {
 
             }
         }
+    }
+
+    fun allowNativeReloading() {
+        nativeAdCache.clear()
+        adLoadingState.clear()
     }
 }

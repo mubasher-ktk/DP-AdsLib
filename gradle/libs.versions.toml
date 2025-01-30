@@ -2,6 +2,7 @@
 agp = "8.1.4"
 appUpdateKtx = "2.1.0"
 audienceNetworkSdk = "6.11.0"
+dexterVersion = "6.2.3"
 glide = "4.16.0"
 kotlin = "1.9.25"
 coreKtx = "1.13.1"
@@ -46,6 +47,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+karumi-dexter = { module = "com.karumi:dexter", version.ref = "dexterVersion" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }

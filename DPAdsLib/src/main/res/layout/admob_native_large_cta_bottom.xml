@@ -16,15 +16,15 @@
             android:id="@+id/adIconCard"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_margin="@dimen/_2sdp"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
             android:adjustViewBounds="true"
             android:elevation="0dp"
             android:visibility="visible"
             app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/_15sdp"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/glNativeAdmobMedium3"
-            app:layout_constraintEnd_toStartOf="@+id/glNativeAdmobMedium1"
+            app:layout_constraintBottom_toTopOf="@+id/adMedia"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -34,23 +34,16 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="image description"
-                android:padding="@dimen/_2sdp"
                 android:visibility="visible" />
 
         </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glNativeAdmobMedium1"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.17" />
 
         <TextView
             android:id="@+id/ad_attribute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
+            android:layout_marginVertical="@dimen/_2sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:background="@drawable/ad_att_bg"
             android:fontFamily="@font/poppins_extrabold"
             android:paddingStart="3dp"
@@ -58,7 +51,7 @@
             android:text="@string/label_ad"
             android:textColor="@color/White"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/glNativeAdmobMedium1"
+            app:layout_constraintStart_toEndOf="@+id/adIconCard"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -66,7 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:ellipsize="marquee"
             android:fontFamily="@font/poppins_extrabold"
             android:marqueeRepeatLimit="marquee_forever"
@@ -77,25 +70,24 @@
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ad_attribute"
-            app:layout_constraintEnd_toStartOf="@+id/glNativeAdmobMedium2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ad_attribute"
             app:layout_constraintTop_toTopOf="@+id/ad_attribute" />
 
         <TextView
             android:id="@+id/adBody"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_3sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             android:ellipsize="marquee"
+            android:lines="2"
             android:fontFamily="@font/poppins_medium"
-            android:text="Ad Body"
+            android:text="Ad Body\nhh"
             android:textColor="#D8000000"
             android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/glNativeAdmobMedium3"
-            app:layout_constraintEnd_toStartOf="@+id/glNativeAdmobMedium2"
-            app:layout_constraintStart_toEndOf="@+id/glNativeAdmobMedium1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/adIconCard"
             app:layout_constraintTop_toBottomOf="@+id/ad_attribute" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -105,29 +97,23 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/glNativeAdmobMedium3"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.23" />
-
         <com.google.android.gms.ads.nativead.MediaView
             android:id="@+id/adMedia"
             android:layout_width="0dp"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_3sdp"
-            android:background="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/adCallToAction"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/glNativeAdmobMedium3" />
+            app:layout_constraintTop_toBottomOf="@+id/adBody" />
 
         <Button
             android:id="@+id/adCallToAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:fontFamily="@font/poppins_extrabold"
             android:background="@drawable/ad_att_btn_bg"

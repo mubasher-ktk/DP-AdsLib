@@ -94,12 +94,11 @@ class LanguageScreenOne : AppCompatBaseActivity(), LanguageInterface {
 
     private fun showAdmobLanguageScreenOneNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_LANGUAGE_1")?.let { adId ->
-            AdmobNativeAdManager.requestAd(
+            AdmobNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_LANGUAGE_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_LANGUAGE_1").toString().toBoolean(),
                 populateView = true,
                 adContainer = findViewById(R.id.nativeAdContainerAd),
