@@ -19,6 +19,7 @@ import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.FragmentWTOneBinding
 import com.dp.ads.lib.data.WalkThroughItem
+import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerFullScreen
@@ -64,6 +65,9 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("INTERSTITIAL_LETS_START_MED")) {
                 "ADMOB" -> {
                     loadAdmobWTThreeInterstitial()
+                }
+                "META" -> {
+                    loadMetaWTThreeInterstitial()
                 }
                 "MINTEGRAL" -> {
                     loadMintegralWTThreeInterstitial()
@@ -114,6 +118,21 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
                 adId = adId,
                 onAdLoadedCallAdmob = {
                     Log.i("DP_ADS_TAG","Admob: Interstitial : WALKTHROUGH_3 : adLoaded()")
+                }
+            )
+        } else {
+            Log.e("DP_ADS_TAG","Admob: Interstitial ad ID not found for WALKTHROUGH_3")
+        }
+    }
+    private fun loadMetaWTThreeInterstitial() {
+        val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_INTERSTITIAL_LETS_START")
+        if (adId != null) {
+            MetaInterstitialInside.checkAndLoadMetaInterstitial(
+                context = requireActivity(),
+                nameFragment = "WALKTHROUGH_3",
+                adId = adId,
+                onAdLoadedCallMeta = {
+                    Log.i("DP_ADS_TAG","META: Interstitial : WALKTHROUGH_3 : adLoaded()")
                 }
             )
         } else {

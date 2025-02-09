@@ -19,6 +19,7 @@ import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.FragmentWTThreeBinding
 import com.dp.ads.lib.data.WalkThroughItem
+import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralInterstitialInside
@@ -78,6 +79,9 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     "ADMOB" -> {
                         showAdmobWTThreeInterstitial()
                     }
+                    "Meta" -> {
+                        showMetaWTThreeInterstitial()
+                    }
                     "MINTEGRAL" -> {
                         showMintegralWTThreeInterstitial()
                     }
@@ -132,6 +136,22 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
             }
         )
     }
+    private fun showMetaWTThreeInterstitial() {
+        MetaInterstitialInside.showIfAvailableOrLoadMetaInterstitial(
+            context = requireActivity(),
+            nameFragment = "WALKTHROUGH_3",
+            adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_INTERSTITIAL_LETS_START")!!,
+            onAdClosedCallBackMeta = {
+                Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackAdmob()")
+                Handler(Looper.getMainLooper()).postDelayed({
+                    onNextClick()
+                },300)
+            },
+            onAdShowedCallBackMeta = {
+                Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackAdmob()")
+            }
+        )
+    }
 
     override fun onResume() {
         super.onResume()
@@ -162,7 +182,7 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
     }
 
     private fun showMetaWTThreeNatives() {
-        dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("NATIVE_WALKTHROUGH_3")?.let { adId ->
+        dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_3")?.let { adId ->
             MetaNativeAdManager.requestAd(
                 mContext = requireActivity(),
                 adId = adId,
