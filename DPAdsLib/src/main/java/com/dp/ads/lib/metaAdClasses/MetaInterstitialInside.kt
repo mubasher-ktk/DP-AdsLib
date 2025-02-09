@@ -67,6 +67,8 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
                                 "DP_ADS_TAG",
                                 "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}"
                             )
+                            onAdClosedCallBackMeta?.invoke()
+                            interstitialMetaHashMap.remove(nameFragment)
                         }
 
                         override fun onAdLoaded(ad: Ad) {

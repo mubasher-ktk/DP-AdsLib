@@ -66,6 +66,9 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
                             "DP_ADS_TAG",
                             "AdMob Interstitial Failed to Load: $nameFragment. Error: ${loadAdError.message}"
                         )
+
+                        onAdClosedCallBackAdmob?.invoke()
+                        interstitialAdMobHashMap.remove(nameFragment)
                     }
                 }
             )
