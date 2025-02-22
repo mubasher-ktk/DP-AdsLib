@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@id/nativeAdSocialContext" />
 
         <Button
-            android:id="@+id/adCallToAction"
+            android:id="@+id/nativeAdCallToAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
