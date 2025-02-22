@@ -109,12 +109,11 @@ class DPAdsConfigurations private constructor() {
         )
     }
     private fun loadMetaLanguageScreenOneNatives(mContext: Activity) {
-        MetaNativeAdManager.requestAd(
+        MetaNativeAdManager.requestOrShowAd(
             mContext = mContext,
             adId = firstOpenFlowAdIds.getValue("META_NATIVE_LANGUAGE_1"),
             adName = "NATIVE_LANGUAGE_1",
-            isMedia = true,
-            isMediumAd = true,
+            isMediaWithCtaOnBottom = true,
             populateView = false
         )
     }
@@ -141,12 +140,11 @@ class DPAdsConfigurations private constructor() {
         )
     }
     private fun loadMetaLanguageScreenDupNatives(mContext: Activity) {
-        MetaNativeAdManager.requestAd(
+        MetaNativeAdManager.requestOrShowAd(
             mContext = mContext,
             adId = firstOpenFlowAdIds.getValue("META_NATIVE_LANGUAGE_2"),
             adName = "NATIVE_LANGUAGE_2",
-            isMedia = true,
-            isMediumAd = true,
+            isMediaWithCtaOnBottom = true,
             populateView = false
         )
     }

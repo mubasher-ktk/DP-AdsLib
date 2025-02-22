@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.ads.NativeAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fbNativeAdContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#D9D9D9"
+    android:visibility="visible">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/nativeAdCallToAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="3dp"
+            android:background="@drawable/ad_att_btn_bg"
+            android:backgroundTint="@color/lightTransparent"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:textColor="@color/White"
+            app:layout_constraintBottom_toTopOf="@+id/nativeAdMedia"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.facebook.ads.MediaView
+            android:id="@+id/nativeAdMedia"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginVertical="3dp"
+            android:gravity="center"
+            android:background="@color/lightTransparent"
+            app:layout_constraintBottom_toTopOf="@+id/adInfoContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nativeAdCallToAction" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/adInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nativeAdMedia">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/adIconCard"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="2dp"
+                app:cardCornerRadius="15dp"
+                app:cardBackgroundColor="@color/lightTransparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.ads.MediaView
+                    android:id="@+id/nativeAdIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/lightTransparent" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/nativeAdTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@font/poppins_extrabold"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxLines="1"
+                android:background="@color/lightTransparent"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/adIconCard"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nativeAdSponsoredLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_2sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:background="@drawable/ad_att_bg"
+                android:backgroundTint="@color/lightTransparent"
+                android:fontFamily="@font/poppins_extrabold"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
+                android:text="Sponsored"
+                android:textColor="@color/White"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/adIconCard"
+                app:layout_constraintTop_toBottomOf="@+id/nativeAdTitle" />
+
+            <TextView
+                android:id="@+id/nativeAdSocialContext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:background="@color/lightTransparent"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/adIconCard"
+                app:layout_constraintTop_toBottomOf="@+id/nativeAdSponsoredLabel" />
+
+            <TextView
+                android:id="@+id/nativeAdBody"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:background="@color/lightTransparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/nativeAdTitle"
+                app:layout_constraintTop_toBottomOf="@+id/nativeAdSocialContext" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.facebook.ads.NativeAdLayout>

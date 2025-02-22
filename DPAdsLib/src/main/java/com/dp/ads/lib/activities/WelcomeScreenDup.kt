@@ -67,31 +67,6 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
         }
     }
 
-    private fun showMetaLanguageScreenOneNatives() {
-        myView?.let {
-            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
-            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
-            dpAdsConfigurations?.firstOpenFlowAdIds?.get("META_NATIVE_SURVEY_2")?.let { adId ->
-                MetaNativeAdManager.requestAd(
-                    mContext = this,
-                    adId = adId,
-                    adName = "NATIVE_SURVEY_2",
-                    isMedia = true,
-                    isMediumAd = true,
-                    remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_2").toString().toBoolean(),
-                    populateView = true,
-                    nativeAdLayout = myView?.findViewById(R.id.nativeAdContainerAdmob),
-                    onAdFailed = {
-                        myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
-                        Log.i("DP_ADS_TAG","WelcomeScreenDup: Meta: onAdFailed()")
-                    },
-                    onAdLoaded = {
-                        Log.i("DP_ADS_TAG","WelcomeScreenDup: Meta: onAdLoaded()")
-                    }
-                )
-            } ?: Log.w("WelcomeScreenDup", "META_NATIVE_SURVEY_2 ad ID is missing.")
-        }
-    }
     private fun showAdmobLanguageScreenOneNatives() {
         myView?.let {
             myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
@@ -114,6 +89,30 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
                     }
                 )
             } ?: Log.w("WelcomeScreenDup", "ADMOB_NATIVE_SURVEY_2 ad ID is missing.")
+        }
+    }
+    private fun showMetaLanguageScreenOneNatives() {
+        myView?.let {
+            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
+            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
+            dpAdsConfigurations?.firstOpenFlowAdIds?.get("META_NATIVE_SURVEY_2")?.let { adId ->
+                MetaNativeAdManager.requestOrShowAd(
+                    mContext = this,
+                    adId = adId,
+                    adName = "NATIVE_SURVEY_2",
+                    isMediaWithCtaOnBottom = true,
+                    remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_2").toString().toBoolean(),
+                    populateView = true,
+                    adContainer = myView?.findViewById(R.id.nativeAdContainerAdmob),
+                    onAdFailed = {
+                        myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
+                        Log.i("DP_ADS_TAG","WelcomeScreenDup: Meta: onAdFailed()")
+                    },
+                    onAdLoaded = {
+                        Log.i("DP_ADS_TAG","WelcomeScreenDup: Meta: onAdLoaded()")
+                    }
+                )
+            } ?: Log.w("WelcomeScreenDup", "META_NATIVE_SURVEY_2 ad ID is missing.")
         }
     }
     private fun showMintegralSurveyDupBanner() {
@@ -147,12 +146,11 @@ class WelcomeScreenDup: AppCompatBaseActivity(), WelcomeDupInterface {
     private fun loadMetaWTOneNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_1")
         if (adId != null) {
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "WALKTHROUGH_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 populateView = false
             )
         } else {

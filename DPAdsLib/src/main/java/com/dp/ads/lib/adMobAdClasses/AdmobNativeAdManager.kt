@@ -251,7 +251,7 @@ object AdmobNativeAdManager {
         }
     }
 
-    fun allowNativeReloading() {
+    fun clearNativeCache() {
         nativeAdCache.clear()
         adLoadingState.clear()
     }

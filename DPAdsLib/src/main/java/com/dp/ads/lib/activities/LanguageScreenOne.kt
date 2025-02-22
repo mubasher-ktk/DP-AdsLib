@@ -114,15 +114,14 @@ class LanguageScreenOne : AppCompatBaseActivity(), LanguageInterface {
     }
     private fun showMetaLanguageScreenOneNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_LANGUAGE_1")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_LANGUAGE_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_LANGUAGE_1").toString().toBoolean(),
                 populateView = true,
-                nativeAdLayout = findViewById(R.id.nativeAdContainerAd),
+                adContainer = findViewById(R.id.nativeAdContainerAd),
                 onAdFailed = {
                     findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.GONE
                     Log.i("LanguageScreenOne", "Language: onAdFailed()")

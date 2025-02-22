@@ -66,18 +66,18 @@ class MainActivity : AppCompatActivity() {
             this["ADMOB_NATIVE_WALKTHROUGH_3"] = "ca-app-pub-3940256099942544/2247696110"
             this["ADMOB_INTERSTITIAL_LETS_START"] = "ca-app-pub-3940256099942544/1033173712"
 
-            this["META_SPLASH_INTERSTITIAL"] = ""
+            this["META_SPLASH_INTERSTITIAL"] = "VID_HD_9_16_39S_APP_INSTALL#YOUR_PLACEMENT_ID"
             this["META_SPLASH_RESUME"] = ""
-            this["META_BANNER_SPLASH"] = ""
-            this["META_NATIVE_LANGUAGE_1"] = ""
-            this["META_NATIVE_LANGUAGE_2"] = ""
-            this["META_NATIVE_SURVEY_1"] = ""
-            this["META_NATIVE_SURVEY_2"] = ""
-            this["META_NATIVE_WALKTHROUGH_1"] = ""
-            this["META_NATIVE_WALKTHROUGH_2"] = ""
-            this["META_NATIVE_WALKTHROUGH_FULLSCR"] = ""
-            this["META_NATIVE_WALKTHROUGH_3"] = ""
-            this["META_INTERSTITIAL_LETS_START"] = ""
+            this["META_BANNER_SPLASH"] = "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_LANGUAGE_1"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_LANGUAGE_2"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_SURVEY_1"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_SURVEY_2"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_WALKTHROUGH_1"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_WALKTHROUGH_2"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_WALKTHROUGH_FULLSCR"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_NATIVE_WALKTHROUGH_3"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
+            this["META_INTERSTITIAL_LETS_START"] = "VID_HD_9_16_39S_APP_INSTALL#YOUR_PLACEMENT_ID"
 
             // Ad PlacementID-UnitID
             this["MINTEGRAL_SPLASH_INTERSTITIAL"] = "290653-462374"
@@ -495,9 +495,9 @@ class MainActivity : AppCompatActivity() {
         editor.putString(RemoteConfigConstTest.NATIVE_SURVEY_2_MED, "ADMOB")
         editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_1_MED, "ADMOB")
         editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_2_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_FULLSCR_MED, "ADMOB")
+        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_FULLSCR_MED, "META")
         editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_3_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.INTERSTITIAL_LETS_START_MED, "ADMOB")
+        editor.putString(RemoteConfigConstTest.INTERSTITIAL_LETS_START_MED, "META")
 
         editor.putString(RemoteConfigConstTest.TIMER_NATIVE_F_SRC, "5")
 

@@ -147,15 +147,14 @@ class LanguageScreenDup: AppCompatBaseActivity() {
     }
     private fun showMetaLanguageScreenDupNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_LANGUAGE_2")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_LANGUAGE_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_LANGUAGE_2").toString().toBoolean(),
                 populateView = true,
-                nativeAdLayout = findViewById(R.id.nativeAdContainerAd),
+                adContainer = findViewById(R.id.nativeAdContainerAd),
                 onAdFailed = {
                     findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.GONE
                     Log.i("DP_ADS_TAG", "LanguageScreenDup: Meta: onAdFailed()")
@@ -209,12 +208,11 @@ class LanguageScreenDup: AppCompatBaseActivity() {
     private fun loadMetaSurveyOneNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_1")
         if (adId != null) {
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_SURVEY_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 populateView = false
             )
         } else {
@@ -251,12 +249,11 @@ class LanguageScreenDup: AppCompatBaseActivity() {
     private fun loadMetaSurveyDupNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_2")
         if (adId != null) {
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = this,
                 adId = adId,
                 adName = "NATIVE_SURVEY_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnBottom = true,
                 populateView = false
             )
         } else {

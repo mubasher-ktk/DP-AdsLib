@@ -14,6 +14,7 @@ import com.dp.ads.lib.adMobAdClasses.AdmobNativeAdFullScreen
 import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.FragmentWalkThroughFullScreenAdBinding
+import com.dp.ads.lib.metaAdClasses.MetaNativeAdFullScreen
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerFullScreen
 
 class WTFullScreenAdFragment : Fragment() {
@@ -62,13 +63,19 @@ class WTFullScreenAdFragment : Fragment() {
 
         val nativeWalkThroughFullScrEnabled = dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR") as? Boolean ?: false
         if (nativeWalkThroughFullScrEnabled) {
-            binding.shimmerLayoutF.root.visibility = View.VISIBLE
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR_MED")) {
                 "ADMOB" -> {
+                    binding.shimmerLayoutFAdmob.root.visibility = View.VISIBLE
                     showAdmobWTFullNatives()
                 }
 
+                "META" -> {
+                    binding.shimmerLayoutFMeta.root.visibility = View.VISIBLE
+                    showMetaWTFullNatives()
+                }
+
                 "MINTEGRAL" -> {
+                    binding.shimmerLayoutFAdmob.root.visibility = View.VISIBLE
                     showMintegralWTFullBanner()
                 }
             }
@@ -93,12 +100,36 @@ class WTFullScreenAdFragment : Fragment() {
                         Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: Admob: onAdFailed()")
                     },
                     onAdLoaded = {
-                        binding.shimmerLayoutF.root.visibility = View.GONE
+                        binding.shimmerLayoutFAdmob.root.visibility = View.GONE
                         binding.nativeAdViewAdmob.visibility = View.VISIBLE
                         Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: Admob: onAdLoaded()")
                     }
                 )
             } ?: Log.w("WTOneFragment", "ADMOB_NATIVE_WALKTHROUGH_FULL_SCREEN ad ID is missing.")
+    }
+
+    private fun showMetaWTFullNatives() {
+        dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_FULLSCR")
+            ?.let { adId ->
+                MetaNativeAdFullScreen.requestAd(
+                    mContext = requireActivity(),
+                    adId = adId,
+                    adName = "WALKTHROUGH_FULL_SCREEN",
+                    remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_FULLSCR").toString().toBoolean(),
+                    populateView = true,
+                    adContainer = binding.fbNativeAdContainer,
+                    onAdFailed = {
+                        binding.fbNativeAdContainer.visibility = View.GONE
+                        binding.ivClose.performClick()
+                        Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: Meta: onAdFailed()")
+                    },
+                    onAdLoaded = {
+                        binding.shimmerLayoutFMeta.root.visibility = View.GONE
+                        binding.fbNativeAdContainer.visibility = View.VISIBLE
+                        Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: Meta: onAdLoaded()")
+                    }
+                )
+            } ?: Log.w("WTOneFragment", "Meta_NATIVE_WALKTHROUGH_FULL_SCREEN ad ID is missing.")
     }
 
     private fun showMintegralWTFullBanner() {
@@ -111,14 +142,14 @@ class WTFullScreenAdFragment : Fragment() {
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_FULLSCR").toString().toBoolean(),
                 populateView = true,
                 bannerContainer = binding.bannerAdF,
-                shimmerContainer = binding.shimmerLayoutF.root,
+                shimmerContainer = binding.shimmerLayoutFAdmob.root,
                 onAdFailed = {
                     binding.bannerAdF.visibility = View.GONE
                     binding.ivClose.performClick()
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: MINTEGRAL: onAdFailed()")
                 },
                 onAdLoaded = {
-                    binding.shimmerLayoutF.root.visibility = View.GONE
+                    binding.shimmerLayoutFAdmob.root.visibility = View.GONE
                     binding.bannerAdF.visibility = View.VISIBLE
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: MINTEGRAL: onAdLoaded()")
                 }

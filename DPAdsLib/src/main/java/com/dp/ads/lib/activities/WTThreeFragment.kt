@@ -79,7 +79,7 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     "ADMOB" -> {
                         showAdmobWTThreeInterstitial()
                     }
-                    "Meta" -> {
+                    "META" -> {
                         showMetaWTThreeInterstitial()
                     }
                     "MINTEGRAL" -> {
@@ -142,13 +142,13 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
             nameFragment = "WALKTHROUGH_3",
             adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_INTERSTITIAL_LETS_START")!!,
             onAdClosedCallBackMeta = {
-                Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackAdmob()")
+                Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackMeta()")
                 Handler(Looper.getMainLooper()).postDelayed({
                     onNextClick()
                 },300)
             },
             onAdShowedCallBackMeta = {
-                Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackAdmob()")
+                Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackMeta()")
             }
         )
     }
@@ -183,15 +183,14 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
 
     private fun showMetaWTThreeNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_3")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_3",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_3").toString().toBoolean(),
                 populateView = true,
-                nativeAdLayout = binding.nativeAdContainerAd,
+                adContainer = binding.nativeAdContainerAd,
                 onAdFailed = {
                     binding.nativeAdContainerAd.visibility = View.GONE
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_3: Meta: onAdFailed()")

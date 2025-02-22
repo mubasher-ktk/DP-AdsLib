@@ -96,15 +96,14 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
             myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
             dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_1")?.let { adId ->
-                MetaNativeAdManager.requestAd(
+                MetaNativeAdManager.requestOrShowAd(
                     mContext = this,
                     adId = adId,
                     adName = "NATIVE_SURVEY_1",
-                    isMedia = true,
-                    isMediumAd = true,
+                    isMediaWithCtaOnBottom = true,
                     remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_SURVEY_1").toString().toBoolean(),
                     populateView = true,
-                    nativeAdLayout = myView?.findViewById(R.id.nativeAdContainerAdmob),
+                    adContainer = myView?.findViewById(R.id.nativeAdContainerAdmob),
                     onAdFailed = {
                         myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
                         Log.i("DP_ADS_TAG","WelcomeScreenOne: Meta: onAdFailed()")

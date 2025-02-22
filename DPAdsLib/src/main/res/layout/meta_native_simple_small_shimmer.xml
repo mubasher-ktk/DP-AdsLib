@@ -31,13 +31,30 @@
                 app:layout_constraintStart_toEndOf="@+id/nativeAdTitle"
                 app:layout_constraintTop_toTopOf="@+id/nativeAdTitle" />
 
-            <com.facebook.ads.MediaView
-                android:id="@+id/nativeAdIcon"
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/adIconCard"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_margin="@dimen/_2sdp"
+                android:clickable="true"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/lightTransparent"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.ads.MediaView
+                    android:id="@+id/nativeAdIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="@color/lightTransparent"
+                    android:contentDescription="Ad Icon"
+                    android:scaleType="fitXY" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline75"
@@ -58,9 +75,8 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/nativeAdSponsoredLabel"
                 app:layout_constraintEnd_toStartOf="@+id/guideline75"
-                app:layout_constraintStart_toEndOf="@+id/nativeAdIcon"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Facebook Advertiser " />
+                app:layout_constraintStart_toEndOf="@+id/adIconCard"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/nativeAdSponsoredLabel"
@@ -68,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_2sdp"
                 android:background="@drawable/ad_att_bg"
+                android:backgroundTint="@color/lightTransparent"
                 android:fontFamily="@font/poppins_extrabold"
                 android:paddingStart="3dp"
                 android:paddingEnd="3dp"
@@ -89,11 +106,11 @@
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="12sp"
+                android:background="@color/lightTransparent"
                 app:layout_constraintBottom_toTopOf="@+id/nativeAdSocialContext"
                 app:layout_constraintEnd_toStartOf="@+id/guideline75"
                 app:layout_constraintStart_toStartOf="@+id/nativeAdTitle"
-                app:layout_constraintTop_toBottomOf="@+id/nativeAdSponsoredLabel"
-                tools:text="Ad Body Text" />
+                app:layout_constraintTop_toBottomOf="@+id/nativeAdSponsoredLabel" />
 
             <TextView
                 android:id="@+id/nativeAdSocialContext"
@@ -101,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Get it on Google Play"
+                android:background="@color/lightTransparent"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -115,14 +132,14 @@
                 android:layout_height="40dp"
                 android:layout_marginVertical="@dimen/_4sdp"
                 android:background="@drawable/ad_att_btn_bg"
+                android:backgroundTint="@color/lightTransparent"
                 android:gravity="center"
                 android:textColor="@color/White"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline75"
-                tools:text="Install Now" />
+                app:layout_constraintStart_toStartOf="@+id/guideline75" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.facebook.ads.NativeAdLayout>

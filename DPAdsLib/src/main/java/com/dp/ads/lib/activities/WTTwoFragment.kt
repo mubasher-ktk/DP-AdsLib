@@ -124,12 +124,10 @@ class WTTwoFragment(val item: WalkThroughItem) : Fragment() {
     }
     private fun loadMetaWTThreeNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_3")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_3",
-                isMedia = true,
-                isMediumAd = true,
                 populateView = false
             )
         } ?: Log.i("WTTwoFragment","META_NATIVE_WALKTHROUGH_3 ad ID is missing.")
@@ -170,15 +168,14 @@ class WTTwoFragment(val item: WalkThroughItem) : Fragment() {
     }
     private fun showMetaWTTwoNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_2")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_2").toString().toBoolean(),
                 populateView = true,
-                nativeAdLayout = binding.nativeAdContainerAd,
+                adContainer = binding.nativeAdContainerAd,
                 onAdFailed = {
                     binding.nativeAdContainerAd.visibility = View.GONE
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_2: Meta: onAdFailed()")

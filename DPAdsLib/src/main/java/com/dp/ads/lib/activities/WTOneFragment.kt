@@ -20,6 +20,7 @@ import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.FragmentWTOneBinding
 import com.dp.ads.lib.data.WalkThroughItem
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
+import com.dp.ads.lib.metaAdClasses.MetaNativeAdFullScreen
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.mintegralAdClasses.MintegralBannerFullScreen
@@ -56,6 +57,7 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
         if (nativeWalkThroughFullEnabled) {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR_MED")) {
                 "ADMOB" -> loadAdmobWTFullNatives()
+                "META" -> loadMetaWTFullNatives()
                 "MINTEGRAL" -> loadMintegralWTFullBanner()
             }
         }
@@ -172,12 +174,11 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
     private fun loadMetaWTTwoNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_2")
         if (adId != null) {
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_2",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 populateView = false
             )
         } else {
@@ -222,6 +223,19 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             Log.e("DP_ADS_TAG","Admob ad ID not found for WALKTHROUGH_FULL_SCREEN")
         }
     }
+    private fun loadMetaWTFullNatives() {
+        val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_FULLSCR")
+        if (adId != null) {
+            MetaNativeAdFullScreen.requestAd(
+                mContext = requireActivity(),
+                adId = adId,
+                adName = "WALKTHROUGH_FULL_SCREEN",
+                populateView = false
+            )
+        } else {
+            Log.e("DP_ADS_TAG","Meta ad ID not found for WALKTHROUGH_FULL_SCREEN")
+        }
+    }
 
     override fun onResume() {
         super.onResume()
@@ -264,15 +278,14 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
 
     private fun showMetaWTOneNatives() {
         dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_WALKTHROUGH_1")?.let { adId ->
-            MetaNativeAdManager.requestAd(
+            MetaNativeAdManager.requestOrShowAd(
                 mContext = requireActivity(),
                 adId = adId,
                 adName = "WALKTHROUGH_1",
-                isMedia = true,
-                isMediumAd = true,
+                isMediaWithCtaOnTop = true,
                 remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_1").toString().toBoolean(),
                 populateView = true,
-                nativeAdLayout = binding.nativeAdContainerAd,
+                adContainer = binding.nativeAdContainerAd,
                 onAdFailed = {
                     binding.nativeAdContainerAd.visibility = View.GONE
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_1: Meta: onAdFailed()")
