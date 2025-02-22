@@ -2,13 +2,12 @@ package com.dp.ads.lib.metaAdClasses
 
 import android.app.Activity
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.cardview.widget.CardView
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
 import com.dp.ads.lib.utils.NetworkCheck
@@ -30,7 +29,7 @@ object MetaNativeAdFullScreen {
         adName: String = "",
         remoteConfig: Boolean = true,
         populateView: Boolean = false,
-        adContainer: NativeAdLayout? = null,
+        adContainer: CardView? = null,
         onAdFailed: (() -> Unit)? = null,
         onAdLoaded: (() -> Unit)? = null
     ) {
@@ -60,6 +59,8 @@ object MetaNativeAdFullScreen {
 
         adLoadingState[adName] = true
 
+        val adView = adContainer?.findViewById(R.id.fbNativeAdContainer) as? NativeAdLayout ?: return
+
         val nativeAd = NativeAd(mContext, adId)
         nativeAd.loadAd(
             nativeAd.buildLoadAdConfig()
@@ -75,7 +76,7 @@ object MetaNativeAdFullScreen {
                         if (populateView) {
                             adContainer?.let {
                                 Log.i("META_ADS_TAG", "Meta: Native : $adName : populateAdView()")
-                                populateNativeAd(nativeAd, it)
+                                populateNativeAd(nativeAd, adView)
                             }
                         } else {
                             mContext.let {
@@ -114,10 +115,11 @@ object MetaNativeAdFullScreen {
         )
     }
 
-    private fun showCachedAd(adName: String, adContainer: NativeAdLayout?) {
+    private fun showCachedAd(adName: String, adContainer: CardView?) {
         adContainer?.context?.let {
             nativeAdCache[adName]?.let { cachedAd ->
-                populateNativeAd(cachedAd, adContainer)
+                val adView = adContainer.findViewById(R.id.fbNativeAdContainer) as? NativeAdLayout ?: return
+                populateNativeAd(cachedAd, adView)
             } ?: run {
                 Log.i("META_ADS_TAG", "Ad is not available in cache for adName: $adName")
             }
@@ -142,8 +144,7 @@ object MetaNativeAdFullScreen {
         nativeAdSocialContext?.text = nativeAd.adSocialContext
         nativeAdBody?.text = nativeAd.adBodyText
 
-        nativeAdCallToAction?.visibility =
-            if (nativeAd.hasCallToAction()) View.VISIBLE else View.INVISIBLE
+        nativeAdCallToAction?.visibility = if (nativeAd.hasCallToAction()) View.VISIBLE else View.INVISIBLE
         nativeAdCallToAction?.text = nativeAd.adCallToAction
         sponsoredLabel?.text = nativeAd.sponsoredTranslation
 

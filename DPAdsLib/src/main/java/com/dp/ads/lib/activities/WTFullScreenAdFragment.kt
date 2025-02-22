@@ -117,7 +117,7 @@ class WTFullScreenAdFragment : Fragment() {
                     adName = "WALKTHROUGH_FULL_SCREEN",
                     remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_FULLSCR").toString().toBoolean(),
                     populateView = true,
-                    adContainer = binding.fbNativeAdContainer,
+                    adContainer = binding.nativeAdContainer,
                     onAdFailed = {
                         binding.fbNativeAdContainer.visibility = View.GONE
                         binding.ivClose.performClick()

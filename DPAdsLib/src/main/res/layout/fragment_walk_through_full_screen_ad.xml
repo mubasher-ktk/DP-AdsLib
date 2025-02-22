@@ -165,7 +165,6 @@
             android:visibility="gone" />
 
         <com.facebook.ads.NativeAdLayout
-            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/fbNativeAdContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
