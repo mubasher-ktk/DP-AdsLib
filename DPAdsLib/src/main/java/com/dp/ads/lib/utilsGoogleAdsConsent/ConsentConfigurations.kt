@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.AdSettings
+import com.facebook.ads.AudienceNetworkAds
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.mbridge.msdk.MBridgeSDK
@@ -110,9 +111,9 @@ class ConsentConfigurations private constructor(
             AdSettings.addTestDevice("240faf54-381a-4269-bbc6-713aed8a4b4b")
             AdSettings.addTestDevice("0f01a5f6-802a-4743-ae14-8e6a7a360965")
             AdSettings.addTestDevice("bba88f94-ecc3-4c56-bac8-8683f76946f9")
-            AdSettings.addTestDevice("67e557c7-c6ee-4209-9e84-7e5b60546400") // G-Pixel
-            AdSettings.addTestDevice("937cc986-d628-450b-ae61-f6ad32e3b6a2") // LG - Red Device
-            // AudienceNetworkAds.initialize(activityContext)
+            AdSettings.addTestDevice("67e557c7-c6ee-4209-9e84-7e5b60546400")
+            AdSettings.addTestDevice("937cc986-d628-450b-ae61-f6ad32e3b6a2")
+            AudienceNetworkAds.initialize(activityContext)
 
         }
         initializeMobileAds.invoke()
