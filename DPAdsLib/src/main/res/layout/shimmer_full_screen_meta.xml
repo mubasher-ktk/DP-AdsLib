@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.facebook.ads.NativeAdLayout
-        android:id="@+id/fbNativeAdContainer"
+        android:id="@+id/fbNativeAdContainerShimmer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#D9D9D9">
