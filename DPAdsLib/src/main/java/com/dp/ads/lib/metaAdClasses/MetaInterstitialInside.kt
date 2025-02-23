@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.dp.ads.lib.R
+import com.dp.ads.lib.data.InterstitialMaster.interstitialMetaHashMap
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.Ad
@@ -24,8 +25,6 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
     private var mContextMeta: Context? = null
     private var onAdClosedCallBackMeta: (() -> Unit)? = null
     private var onAdLoadedCallBackMeta: (() -> Unit)? = null
-
-    private val interstitialMetaHashMap = HashMap<String, InterstitialAd>()
 
     fun checkAndLoadMetaInterstitial(
         context: Context?,
