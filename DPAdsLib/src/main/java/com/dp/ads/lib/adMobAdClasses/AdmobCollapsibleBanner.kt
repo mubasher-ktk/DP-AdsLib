@@ -23,6 +23,7 @@ object AdmobCollapsibleBanner {
         activity: Activity,
         adViewContainer: ViewGroup,
         adID: String,
+        saveAdsToCache: String = "SAVE",
         remoteConfig: Boolean,
         adName: String,
         setShimmerToInvisible: Boolean,
@@ -49,7 +50,7 @@ object AdmobCollapsibleBanner {
                     activity,
                     adViewContainer,
                     adID,
-                    remoteConfig,
+                    saveAdsToCache,
                     adName,
                     shimmerLayoutBanner,
                     setShimmerToInvisible,
@@ -67,7 +68,7 @@ object AdmobCollapsibleBanner {
         activity: Activity,
         adViewContainer: ViewGroup,
         adID: String,
-        remoteConfig: Boolean,
+        saveAdsToCache: String = "SAVE",
         adName: String,
         shimmerLayoutBanner: ShimmerFrameLayout,
         setShimmerToInvisible: Boolean,
@@ -88,7 +89,7 @@ object AdmobCollapsibleBanner {
             override fun onAdLoaded() {
                 adViewContainer.removeAllViews()
                 adViewContainer.addView(adView)
-                if (remoteConfig.equals("SAVE")) {
+                if (saveAdsToCache == "SAVE") {
                     collapsibleBannerAdMobHashMap!![adName] = adView
                 }
                 shimmerLayoutBanner.stopShimmer()
