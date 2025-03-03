@@ -115,9 +115,11 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
     }
 
     private fun onNextClick() {
-        PrefHelper(requireContext()).putBoolean(dpAdsConfigurations!!.shouldShowStartScreens, value = true)
-        DPAdsManager.notifyFlowFinished()
-        fragmentActivity.finish()
+        if (isAdded) {
+            PrefHelper(requireActivity()).putBoolean(dpAdsConfigurations!!.shouldShowStartScreens, value = true)
+            DPAdsManager.notifyFlowFinished()
+            fragmentActivity.finish()
+        }
     }
 
     private fun showAdmobWTThreeInterstitial() {
@@ -126,13 +128,13 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
             nameFragment = "WALKTHROUGH_3",
             adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_INTERSTITIAL_LETS_START")!!,
             onAdClosedCallBackAdmob = {
-                Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackAdmob()")
+                Log.i("DP_ADS_TAG","Interstitial AdMob : WALKTHROUGH_3 : onAdClosedCallBackAdmob()")
                 Handler(Looper.getMainLooper()).postDelayed({
                     onNextClick()
                 },300)
             },
             onAdShowedCallBackAdmob = {
-                Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackAdmob()")
+                Log.i("DP_ADS_TAG", "Interstitial AdMob : WALKTHROUGH_3 : onAdShowedCallBackAdmob()")
             }
         )
     }
@@ -142,13 +144,13 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
             nameFragment = "WALKTHROUGH_3",
             adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_INTERSTITIAL_LETS_START")!!,
             onAdClosedCallBackMeta = {
-                Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackMeta()")
+                Log.i("DP_ADS_TAG","Interstitial Meta : WALKTHROUGH_3 : onAdClosedCallBackMeta()")
                 Handler(Looper.getMainLooper()).postDelayed({
                     onNextClick()
                 },300)
             },
             onAdShowedCallBackMeta = {
-                Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackMeta()")
+                Log.i("DP_ADS_TAG", "Interstitial Meta : WALKTHROUGH_3 : onAdShowedCallBackMeta()")
             }
         )
     }
