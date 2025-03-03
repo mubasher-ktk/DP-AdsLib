@@ -62,12 +62,9 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
                     }
 
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                        Log.e(
-                            "DP_ADS_TAG",
-                            "AdMob Interstitial Failed to Load: $nameFragment. Error: ${loadAdError.message}"
-                        )
-
+                        Log.e("DP_ADS_TAG","AdMob Interstitial Failed to Load: $nameFragment. Error: ${loadAdError.message}")
                         onAdClosedCallBackAdmob?.invoke()
+                        onAdClosedCallBackAdmob = null
                         interstitialAdMobHashMap.remove(nameFragment)
                     }
                 }
@@ -92,6 +89,7 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
             Log.i("DP_ADS_TAG", "Ad not available. Requesting new ad: $nameFragment")
             checkAndLoadAdMobInterstitial(context, nameFragment, adId)
             onAdClosedCallBackAdmob.invoke()
+            this.onAdClosedCallBackAdmob = null
         }
     }
 
@@ -112,10 +110,7 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
                             }
 
                             override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
-                                Log.e(
-                                    "DP_ADS_TAG",
-                                    "Failed to Show AdMob Interstitial: $nameFragment. Error: ${adError.message}"
-                                )
+                                Log.e("DP_ADS_TAG", "Failed to Show AdMob Interstitial: $nameFragment. Error: ${adError.message}")
                                 onAdClosedCallBackAdmob?.invoke()
                                 interstitialAdMobHashMap.remove(nameFragment)
                             }

@@ -39,6 +39,8 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
             if (!interstitialMetaHashMap.containsKey(nameFragment)) {
                 loadMetaInterstitial(nameFragment, adId)
             }
+        } else {
+            return
         }
     }
 
@@ -62,10 +64,7 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
                         }
 
                         override fun onError(ad: Ad, adError: AdError) {
-                            Log.e(
-                                "DP_ADS_TAG",
-                                "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}"
-                            )
+                            Log.e("DP_ADS_TAG", "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}")
                             onAdClosedCallBackMeta?.invoke()
                             interstitialMetaHashMap.remove(nameFragment)
                         }
@@ -102,6 +101,7 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
             Log.i("DP_ADS_TAG", "Ad not available. Requesting new Meta ad: $nameFragment")
             checkAndLoadMetaInterstitial(context, nameFragment, adId)
             onAdClosedCallBackMeta.invoke()
+            this.onAdClosedCallBackMeta = null
         }
     }
 
