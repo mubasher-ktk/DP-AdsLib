@@ -20,6 +20,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.dp.ads.lib.BuildConfig
+import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 
 class ResumeAdApplication(val globalClass: Application?=null, val adId: String) : Application.ActivityLifecycleCallbacks, LifecycleObserver {
     private var adVisible = false
@@ -148,8 +149,8 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForegrounded() {
-        if (currentActivity?.localClassName != null && currentActivity?.localClassName.equals("")) {
-            if (!AdMobInterstitialInside.isInterstitialAdVisible) {
+        if (currentActivity?.localClassName != null || currentActivity?.localClassName.equals("")) {
+            if (!AdMobInterstitialInside.isInterstitialAdVisible && !MetaInterstitialInside.isInterstitialAdVisible) {
                 showAdIfAvailable()
             }
         }
