@@ -148,7 +148,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForegrounded() {
-        if (currentActivity?.localClassName != null || currentActivity?.localClassName.equals("")) {
+        if (currentActivity?.localClassName != null && currentActivity?.localClassName.equals("")) {
             if (!AdMobInterstitialInside.isInterstitialAdVisible) {
                 showAdIfAvailable()
             }
