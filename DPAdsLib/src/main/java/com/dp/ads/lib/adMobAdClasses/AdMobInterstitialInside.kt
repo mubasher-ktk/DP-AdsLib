@@ -22,6 +22,7 @@ import kotlinx.coroutines.MainScope
 object AdMobInterstitialInside : CoroutineScope by MainScope() {
     private const val adShowingDelayTime = 1500
     private var isShowDialog = true
+    var isInterstitialAdVisible = false
 
     private var mContextAdmob: Context? = null
     private var onAdClosedCallBackAdmob: (() -> Unit)? = null
@@ -105,18 +106,21 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
                         object : FullScreenContentCallback() {
                             override fun onAdDismissedFullScreenContent() {
                                 Log.i("DP_ADS_TAG", "AdMob Interstitial Dismissed: $nameFragment")
+                                isInterstitialAdVisible = false
                                 onAdClosedCallBackAdmob?.invoke()
                                 interstitialAdMobHashMap.remove(nameFragment)
                             }
 
                             override fun onAdFailedToShowFullScreenContent(adError: com.google.android.gms.ads.AdError) {
                                 Log.e("DP_ADS_TAG", "Failed to Show AdMob Interstitial: $nameFragment. Error: ${adError.message}")
+                                isInterstitialAdVisible = false
                                 onAdClosedCallBackAdmob?.invoke()
                                 interstitialAdMobHashMap.remove(nameFragment)
                             }
 
                             override fun onAdShowedFullScreenContent() {
                                 Log.i("DP_ADS_TAG", "AdMob Interstitial Shown: $nameFragment")
+                                isInterstitialAdVisible = true
                                 onAdShowedCallBackAdmob.invoke()
                             }
                         }

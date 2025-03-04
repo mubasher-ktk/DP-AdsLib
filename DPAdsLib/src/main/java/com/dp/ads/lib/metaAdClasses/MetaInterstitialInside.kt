@@ -21,6 +21,7 @@ import kotlinx.coroutines.MainScope
 object MetaInterstitialInside : CoroutineScope by MainScope() {
     private const val adShowingDelayTime = 1500
     private var isShowDialog = true
+    var isInterstitialAdVisible = false
 
     private var mContextMeta: Context? = null
     private var onAdClosedCallBackMeta: (() -> Unit)? = null
@@ -54,17 +55,20 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
                 interstitialAd.buildLoadAdConfig()
                     .withAdListener(object : InterstitialAdListener {
                         override fun onInterstitialDisplayed(ad: Ad) {
+                            isInterstitialAdVisible = true
                             Log.i("DP_ADS_TAG", "Meta Interstitial Displayed: $nameFragment")
                         }
 
                         override fun onInterstitialDismissed(ad: Ad) {
                             Log.i("DP_ADS_TAG", "Meta Interstitial Dismissed: $nameFragment")
+                            isInterstitialAdVisible = false
                             onAdClosedCallBackMeta?.invoke()
                             interstitialMetaHashMap.remove(nameFragment)
                         }
 
                         override fun onError(ad: Ad, adError: AdError) {
                             Log.e("DP_ADS_TAG", "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}")
+                            isInterstitialAdVisible = false
                             onAdClosedCallBackMeta?.invoke()
                             interstitialMetaHashMap.remove(nameFragment)
                         }
