@@ -83,7 +83,6 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                 this,
                 adId,
                 request,
-                AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 loadCallback
             )
             if (BuildConfig.DEBUG) {

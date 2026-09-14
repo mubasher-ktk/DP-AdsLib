@@ -89,7 +89,6 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
                 currentActivity!!.applicationContext,
                 adId,
                 request,
-                AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 loadCallback)
         }
         timeoutHandler.postDelayed(timeoutRunnable,20000)
