@@ -10,4 +10,51 @@
     <string name="label_ad">إعلان</string>
     <string name="ad_label_install">تثبيت</string>
     <string name="label_next">التالي</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">مكافآت بدون إعلانات</string>
+    <string name="ads_free_subtitle">شاهد بعض مقاطع الفيديو القصيرة، واحصل على ساعات بدون إعلانات.</string>
+    <string name="ads_free_banked_today">%1$s تم توفيرها اليوم</string>
+    <string name="ads_free_unlock_title">احصل على وقت بدون إعلانات</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d خطوات</string>
+    <string name="ads_free_step_full_day">يوم كامل</string>
+    <string name="ads_free_step_hours">+%1$dس</string>
+    <string name="ads_free_watch_video">شاهد الفيديو (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">تم إنجاز كل شيء لهذا اليوم</string>
+    <string name="ads_free_loading">جارٍ طلب الفيديو…</string>
+    <string name="ads_free_no_reward">تم إغلاق الإعلان قبل الانتهاء. لا مكافأة هذه المرة.</string>
+    <string name="ads_free_network_unavailable">لا يوجد اتصال بالإنترنت.</string>
+    <string name="ads_free_reward_title">تم فتح المكافأة!</string>
+    <string name="ads_free_reward_subtitle">تمت إضافة %1$s من التصفح بدون إعلانات إلى حسابك.</string>
+    <string name="ads_free_reward_pill_hours">%1$s، بدون إعلانات</string>
+    <string name="ads_free_watch_another">شاهد فيديو آخر للحصول على %1$s</string>
+    <string name="ads_free_all_claimed_today">لقد حصلت على جميع مكافآت اليوم — عد غدًا.</string>
+    <string name="ads_free_maybe_later">ربما لاحقًا</string>
+    <string name="ads_free_close">إغلاق</string>
+    <string name="ads_free_hours_short">%1$dس</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">مهام إضافية</string>
+
+    <string name="ads_free_checkin_title">تسجيل الحضور اليومي</string>
+    <string name="ads_free_checkin_subtitle_progress">اليوم %1$d من %2$d • +30 دقيقة في اليوم %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">تسجيل الحضور التالي %1$s</string>
+    <string name="ads_free_checkin_action_go">تسجيل الحضور</string>
+    <string name="ads_free_checkin_action_done">تم</string>
+
+    <string name="ads_free_rate_title">قيّم التطبيق</string>
+    <string name="ads_free_rate_subtitle">اترك تقييمًا سريعًا — +30 دقيقة بدون إعلانات</string>
+    <string name="ads_free_rate_subtitle_claimed">شكرًا لتقييمك!</string>
+    <string name="ads_free_rate_action_go">تقييم</string>
+    <string name="ads_free_rate_action_done">تم الاستلام</string>
+
+    <string name="ads_free_share_title">شارك مع صديق</string>
+    <string name="ads_free_share_subtitle">أخبر صديقًا عن التطبيق — +30 دقيقة بدون إعلانات</string>
+    <string name="ads_free_share_subtitle_claimed">شكرًا للمشاركة!</string>
+    <string name="ads_free_share_action_go">مشاركة</string>
+    <string name="ads_free_share_action_done">تم الاستلام</string>
+    <string name="ads_free_share_chooser_title">مشاركة عبر</string>
+    <string name="ads_free_share_message">أستخدم هذا التطبيق بدون إعلانات، جرّبه أنت أيضًا!</string>
+
+    <string name="ads_free_bonus_reward_granted">تمت إضافة 30 دقيقة بدون إعلانات!</string>
 </resources>

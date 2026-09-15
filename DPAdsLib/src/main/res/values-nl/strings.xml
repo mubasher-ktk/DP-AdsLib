@@ -10,4 +10,51 @@
     <string name="label_ad">Advertentie</string>
     <string name="ad_label_install">Installeren</string>
     <string name="label_next">Volgende</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Advertentievrije beloningen</string>
+    <string name="ads_free_subtitle">Bekijk een paar korte video\'s om uren zonder advertenties te ontgrendelen.</string>
+    <string name="ads_free_banked_today">Vandaag %1$s verzameld</string>
+    <string name="ads_free_unlock_title">Advertentievrije tijd ontgrendelen</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d stappen</string>
+    <string name="ads_free_step_full_day">Hele dag</string>
+    <string name="ads_free_step_hours">+%1$du</string>
+    <string name="ads_free_watch_video">Video bekijken (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">Alles klaar voor vandaag</string>
+    <string name="ads_free_loading">Video wordt aangevraagd…</string>
+    <string name="ads_free_no_reward">Advertentie gesloten voordat deze klaar was. Deze keer geen beloning.</string>
+    <string name="ads_free_network_unavailable">Geen internetverbinding.</string>
+    <string name="ads_free_reward_title">Beloning ontgrendeld!</string>
+    <string name="ads_free_reward_subtitle">%1$s advertentievrij surfen toegevoegd aan je account.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, advertentievrij</string>
+    <string name="ads_free_watch_another">Bekijk er nog een voor %1$s</string>
+    <string name="ads_free_all_claimed_today">Je hebt alle beloningen van vandaag al opgehaald — kom morgen terug.</string>
+    <string name="ads_free_maybe_later">Misschien later</string>
+    <string name="ads_free_close">Sluiten</string>
+    <string name="ads_free_hours_short">%1$du</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Bonustaken</string>
+
+    <string name="ads_free_checkin_title">Dagelijkse check-in</string>
+    <string name="ads_free_checkin_subtitle_progress">Dag %1$d van %2$d • +30 min op dag %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Volgende check-in %1$s</string>
+    <string name="ads_free_checkin_action_go">Inchecken</string>
+    <string name="ads_free_checkin_action_done">Klaar</string>
+
+    <string name="ads_free_rate_title">Beoordeel de app</string>
+    <string name="ads_free_rate_subtitle">Geef snel een beoordeling — +30 min advertentievrij</string>
+    <string name="ads_free_rate_subtitle_claimed">Bedankt voor je beoordeling!</string>
+    <string name="ads_free_rate_action_go">Beoordelen</string>
+    <string name="ads_free_rate_action_done">Ontvangen</string>
+
+    <string name="ads_free_share_title">Deel met een vriend</string>
+    <string name="ads_free_share_subtitle">Vertel een vriend over de app — +30 min advertentievrij</string>
+    <string name="ads_free_share_subtitle_claimed">Bedankt voor het delen!</string>
+    <string name="ads_free_share_action_go">Delen</string>
+    <string name="ads_free_share_action_done">Ontvangen</string>
+    <string name="ads_free_share_chooser_title">Delen via</string>
+    <string name="ads_free_share_message">Ik gebruik deze app advertentievrij, jij moet het ook proberen!</string>
+
+    <string name="ads_free_bonus_reward_granted">30 minuten advertentievrij toegevoegd!</string>
 </resources>

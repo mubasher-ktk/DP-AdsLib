@@ -9,4 +9,51 @@
     <string name="label_ad">Ad</string>
     <string name="ad_label_install">Install</string>
     <string name="label_next">Next</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Ad-Free Rewards</string>
+    <string name="ads_free_subtitle">Watch a few short videos, unlock hours without ads.</string>
+    <string name="ads_free_banked_today">%1$s banked today</string>
+    <string name="ads_free_unlock_title">Unlock ad-free time</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d steps</string>
+    <string name="ads_free_step_full_day">Full day</string>
+    <string name="ads_free_step_hours">+%1$dh</string>
+    <string name="ads_free_watch_video">Watch video (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">All done for today</string>
+    <string name="ads_free_loading">Requesting video…</string>
+    <string name="ads_free_no_reward">Ad closed before finishing. No reward this time.</string>
+    <string name="ads_free_network_unavailable">No internet connection.</string>
+    <string name="ads_free_reward_title">Reward unlocked!</string>
+    <string name="ads_free_reward_subtitle">%1$s of ad-free browsing added to your account.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, ad-free</string>
+    <string name="ads_free_watch_another">Watch another for %1$s</string>
+    <string name="ads_free_all_claimed_today">You\'ve claimed every reward for today — come back tomorrow.</string>
+    <string name="ads_free_maybe_later">Maybe later</string>
+    <string name="ads_free_close">Close</string>
+    <string name="ads_free_hours_short">%1$dh</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Bonus tasks</string>
+
+    <string name="ads_free_checkin_title">Daily check-in</string>
+    <string name="ads_free_checkin_subtitle_progress">Day %1$d of %2$d • +30m on day %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Next check-in %1$s</string>
+    <string name="ads_free_checkin_action_go">Check in</string>
+    <string name="ads_free_checkin_action_done">Done</string>
+
+    <string name="ads_free_rate_title">Rate the app</string>
+    <string name="ads_free_rate_subtitle">Leave a quick rating — +30m ad-free</string>
+    <string name="ads_free_rate_subtitle_claimed">Thanks for rating us!</string>
+    <string name="ads_free_rate_action_go">Rate</string>
+    <string name="ads_free_rate_action_done">Claimed</string>
+
+    <string name="ads_free_share_title">Share with a friend</string>
+    <string name="ads_free_share_subtitle">Tell a friend about the app — +30m ad-free</string>
+    <string name="ads_free_share_subtitle_claimed">Thanks for sharing!</string>
+    <string name="ads_free_share_action_go">Share</string>
+    <string name="ads_free_share_action_done">Claimed</string>
+    <string name="ads_free_share_chooser_title">Share via</string>
+    <string name="ads_free_share_message">I\'m using this app ad-free — you should try it too!</string>
+
+    <string name="ads_free_bonus_reward_granted">+30 minutes ad-free added!</string>
 </resources>

@@ -10,4 +10,51 @@
     <string name="label_ad">اشتہار</string>
     <string name="ad_label_install">انسٹال کریں</string>
     <string name="label_next">اگلا</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">اشتہار سے پاک انعامات</string>
+    <string name="ads_free_subtitle">چند مختصر ویڈیوز دیکھیں اور اشتہار کے بغیر گھنٹے حاصل کریں۔</string>
+    <string name="ads_free_banked_today">%1$s آج جمع ہوئے</string>
+    <string name="ads_free_unlock_title">اشتہار سے پاک وقت حاصل کریں</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d مراحل</string>
+    <string name="ads_free_step_full_day">پورا دن</string>
+    <string name="ads_free_step_hours">+%1$dگھ</string>
+    <string name="ads_free_watch_video">ویڈیو دیکھیں (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">آج کے لیے سب مکمل ہو گیا</string>
+    <string name="ads_free_loading">ویڈیو کی درخواست کی جا رہی ہے…</string>
+    <string name="ads_free_no_reward">ویڈیو ختم ہونے سے پہلے بند ہو گئی۔ اس بار کوئی انعام نہیں۔</string>
+    <string name="ads_free_network_unavailable">انٹرنیٹ کنکشن موجود نہیں۔</string>
+    <string name="ads_free_reward_title">انعام حاصل ہو گیا!</string>
+    <string name="ads_free_reward_subtitle">آپ کے اکاؤنٹ میں %1$s اشتہار سے پاک وقت شامل کر دیا گیا۔</string>
+    <string name="ads_free_reward_pill_hours">%1$s، اشتہار سے پاک</string>
+    <string name="ads_free_watch_another">%1$s کے لیے ایک اور ویڈیو دیکھیں</string>
+    <string name="ads_free_all_claimed_today">آپ آج کے تمام انعامات حاصل کر چکے ہیں — کل دوبارہ آئیں۔</string>
+    <string name="ads_free_maybe_later">شاید بعد میں</string>
+    <string name="ads_free_close">بند کریں</string>
+    <string name="ads_free_hours_short">%1$dگھ</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">اضافی کام</string>
+
+    <string name="ads_free_checkin_title">روزانہ چیک ان</string>
+    <string name="ads_free_checkin_subtitle_progress">دن %1$d از %2$d • دن %2$d پر +30 منٹ</string>
+    <string name="ads_free_checkin_subtitle_next">اگلا چیک ان %1$s</string>
+    <string name="ads_free_checkin_action_go">چیک ان کریں</string>
+    <string name="ads_free_checkin_action_done">مکمل</string>
+
+    <string name="ads_free_rate_title">ایپ کو ریٹ کریں</string>
+    <string name="ads_free_rate_subtitle">فوری ریٹنگ دیں — +30 منٹ بغیر اشتہار</string>
+    <string name="ads_free_rate_subtitle_claimed">ہماری ریٹنگ کا شکریہ!</string>
+    <string name="ads_free_rate_action_go">ریٹ کریں</string>
+    <string name="ads_free_rate_action_done">حاصل شدہ</string>
+
+    <string name="ads_free_share_title">دوست کے ساتھ شیئر کریں</string>
+    <string name="ads_free_share_subtitle">اپنے دوست کو ایپ کے بارے میں بتائیں — +30 منٹ بغیر اشتہار</string>
+    <string name="ads_free_share_subtitle_claimed">شیئر کرنے کا شکریہ!</string>
+    <string name="ads_free_share_action_go">شیئر کریں</string>
+    <string name="ads_free_share_action_done">حاصل شدہ</string>
+    <string name="ads_free_share_chooser_title">اس کے ذریعے شیئر کریں</string>
+    <string name="ads_free_share_message">میں یہ ایپ بغیر اشتہار کے استعمال کر رہا ہوں، آپ بھی آزمائیں!</string>
+
+    <string name="ads_free_bonus_reward_granted">30 منٹ بغیر اشتہار شامل کیے گئے!</string>
 </resources>

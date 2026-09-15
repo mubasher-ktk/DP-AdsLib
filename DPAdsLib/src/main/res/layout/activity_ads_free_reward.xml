@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adsFreeBackground"
+    tools:context=".activities.AdsFreeRewardActivity">
+
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_ads_free_header"
+        android:paddingHorizontal="@dimen/_18sdp"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_24sdp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_extrabold"
+            android:text="@string/ads_free_title"
+            android:textColor="@color/White"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toStartOf="@+id/btnClose"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btnClose"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:background="@drawable/bg_ads_free_close_button"
+            android:contentDescription="@string/ads_free_close"
+            android:padding="@dimen/_6sdp"
+            android:src="@drawable/ic_ads_free_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/blue" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:alpha="0.85"
+            android:fontFamily="@font/poppins_medium"
+            android:lineSpacingExtra="1dp"
+            android:text="@string/ads_free_subtitle"
+            android:textColor="@color/White"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <LinearLayout
+            android:id="@+id/pillBankedToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/bg_ads_free_pill"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_9sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle">
+
+            <ImageView
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:src="@drawable/ic_ads_free_clock" />
+
+            <TextView
+                android:id="@+id/tvBankedToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/White"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                tools:text="0h banked today" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Content sheet -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_20sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvUnlockTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_extrabold"
+                    android:text="@string/ads_free_unlock_title"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/tvStepsProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold"
+                    tools:text="0/5 steps" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trackContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_22sdp">
+
+                <View
+                    android:id="@+id/viewTrackBg"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginHorizontal="@dimen/_19sdp"
+                    android:layout_marginTop="@dimen/_19sdp"
+                    android:background="@color/adsFreeTrackGray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/stepsRow" />
+
+                <View
+                    android:id="@+id/viewTrackProgress"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:background="@color/blue"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintEnd_toEndOf="@+id/viewTrackBg"
+                    app:layout_constraintStart_toStartOf="@+id/viewTrackBg"
+                    app:layout_constraintTop_toTopOf="@+id/viewTrackBg" />
+
+                <LinearLayout
+                    android:id="@+id/stepsRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="5"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <include
+                        android:id="@+id/step1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/item_ads_free_step" />
+
+                    <include
+                        android:id="@+id/step2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/item_ads_free_step" />
+
+                    <include
+                        android:id="@+id/step3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/item_ads_free_step" />
+
+                    <include
+                        android:id="@+id/step4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/item_ads_free_step" />
+
+                    <include
+                        android:id="@+id/step5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/item_ads_free_step" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/btnWatchVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ads_free_watch_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/_15sdp">
+
+                <ImageView
+                    android:id="@+id/ivWatchVideoIcon"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_9sdp"
+                    android:src="@drawable/ic_ads_free_play" />
+
+                <TextView
+                    android:id="@+id/tvWatchVideoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    tools:text="Watch video (0/5)" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBonusSectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_22sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:fontFamily="@font/poppins_extrabold"
+                android:text="@string/ads_free_bonus_section_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <include
+                android:id="@+id/taskCheckIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                layout="@layout/item_ads_free_task" />
+
+            <include
+                android:id="@+id/taskRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                layout="@layout/item_ads_free_task" />
+
+            <include
+                android:id="@+id/taskShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/item_ads_free_task" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

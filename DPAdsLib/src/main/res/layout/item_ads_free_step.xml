@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/flStepCircle"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:background="@drawable/bg_ads_free_step_locked">
+
+        <ImageView
+            android:id="@+id/ivStepIcon"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_ads_free_lock"
+            app:tint="@color/adsFreeStepLockedIcon"
+            tools:ignore="MissingPrefix" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvStepLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/adsFreeStepLockedIcon"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        tools:text="+3h" />
+
+</LinearLayout>

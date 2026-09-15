@@ -10,4 +10,51 @@
     <string name="label_ad">広告</string>
     <string name="ad_label_install">インストール</string>
     <string name="label_next">次へ</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">広告なし特典</string>
+    <string name="ads_free_subtitle">短い動画を数本視聴して、広告なしの時間を獲得しましょう。</string>
+    <string name="ads_free_banked_today">本日%1$s獲得</string>
+    <string name="ads_free_unlock_title">広告なし時間を獲得</string>
+    <string name="ads_free_steps_progress">%1$d/%2$dステップ</string>
+    <string name="ads_free_step_full_day">1日フル</string>
+    <string name="ads_free_step_hours">+%1$d時間</string>
+    <string name="ads_free_watch_video">動画を見る (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">本日分はすべて完了しました</string>
+    <string name="ads_free_loading">動画をリクエスト中…</string>
+    <string name="ads_free_no_reward">動画が最後まで再生されずに閉じられました。今回は特典はありません。</string>
+    <string name="ads_free_network_unavailable">インターネットに接続されていません。</string>
+    <string name="ads_free_reward_title">特典を獲得しました！</string>
+    <string name="ads_free_reward_subtitle">%1$s分の広告なし利用がアカウントに追加されました。</string>
+    <string name="ads_free_reward_pill_hours">%1$s、広告なし</string>
+    <string name="ads_free_watch_another">もう1本見て%1$sを獲得</string>
+    <string name="ads_free_all_claimed_today">本日の特典はすべて獲得済みです。明日また来てください。</string>
+    <string name="ads_free_maybe_later">後でにする</string>
+    <string name="ads_free_close">閉じる</string>
+    <string name="ads_free_hours_short">%1$d時間</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">ボーナスタスク</string>
+
+    <string name="ads_free_checkin_title">デイリーチェックイン</string>
+    <string name="ads_free_checkin_subtitle_progress">%2$d日目のうち%1$d日目 • %2$d日目で+30分</string>
+    <string name="ads_free_checkin_subtitle_next">次のチェックインまで %1$s</string>
+    <string name="ads_free_checkin_action_go">チェックイン</string>
+    <string name="ads_free_checkin_action_done">完了</string>
+
+    <string name="ads_free_rate_title">アプリを評価する</string>
+    <string name="ads_free_rate_subtitle">評価をお願いします — 広告なし+30分</string>
+    <string name="ads_free_rate_subtitle_claimed">評価ありがとうございます!</string>
+    <string name="ads_free_rate_action_go">評価する</string>
+    <string name="ads_free_rate_action_done">受け取り済み</string>
+
+    <string name="ads_free_share_title">友達に共有する</string>
+    <string name="ads_free_share_subtitle">友達にアプリを教えてあげましょう — 広告なし+30分</string>
+    <string name="ads_free_share_subtitle_claimed">シェアありがとうございます!</string>
+    <string name="ads_free_share_action_go">共有する</string>
+    <string name="ads_free_share_action_done">受け取り済み</string>
+    <string name="ads_free_share_chooser_title">共有方法を選択</string>
+    <string name="ads_free_share_message">このアプリを広告なしで使っています。ぜひ試してみてください!</string>
+
+    <string name="ads_free_bonus_reward_granted">広告なし30分が追加されました!</string>
 </resources>
