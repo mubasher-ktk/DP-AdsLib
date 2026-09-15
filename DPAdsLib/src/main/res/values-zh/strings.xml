@@ -10,4 +10,51 @@
     <string name="label_ad">ማስታወቂያ</string>
     <string name="ad_label_install">አግኝ</string>
     <string name="label_next">ቀጣይ</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">免广告奖励</string>
+    <string name="ads_free_subtitle">观看几个短视频，解锁无广告时间。</string>
+    <string name="ads_free_banked_today">今日已获得 %1$s</string>
+    <string name="ads_free_unlock_title">解锁无广告时间</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d 步</string>
+    <string name="ads_free_step_full_day">整天</string>
+    <string name="ads_free_step_hours">+%1$d小时</string>
+    <string name="ads_free_watch_video">观看视频 (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">今天的任务已全部完成</string>
+    <string name="ads_free_loading">正在请求视频…</string>
+    <string name="ads_free_no_reward">广告在播放完成前关闭，本次没有奖励。</string>
+    <string name="ads_free_network_unavailable">没有网络连接。</string>
+    <string name="ads_free_reward_title">奖励已解锁！</string>
+    <string name="ads_free_reward_subtitle">已为您的账户增加 %1$s 的无广告浏览时间。</string>
+    <string name="ads_free_reward_pill_hours">%1$s，无广告</string>
+    <string name="ads_free_watch_another">再看一个可获得 %1$s</string>
+    <string name="ads_free_all_claimed_today">您已领取今天的所有奖励——明天再来吧。</string>
+    <string name="ads_free_maybe_later">以后再说</string>
+    <string name="ads_free_close">关闭</string>
+    <string name="ads_free_hours_short">%1$d小时</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">奖励任务</string>
+
+    <string name="ads_free_checkin_title">每日签到</string>
+    <string name="ads_free_checkin_subtitle_progress">第 %1$d 天 / %2$d 天 • 第 %2$d 天 +30 分钟</string>
+    <string name="ads_free_checkin_subtitle_next">下次签到 %1$s</string>
+    <string name="ads_free_checkin_action_go">签到</string>
+    <string name="ads_free_checkin_action_done">已完成</string>
+
+    <string name="ads_free_rate_title">给应用评分</string>
+    <string name="ads_free_rate_subtitle">快速评分一下 — 额外获得30分钟无广告时间</string>
+    <string name="ads_free_rate_subtitle_claimed">感谢您的评分!</string>
+    <string name="ads_free_rate_action_go">评分</string>
+    <string name="ads_free_rate_action_done">已领取</string>
+
+    <string name="ads_free_share_title">分享给朋友</string>
+    <string name="ads_free_share_subtitle">告诉朋友这个应用 — 额外获得30分钟无广告时间</string>
+    <string name="ads_free_share_subtitle_claimed">感谢您的分享!</string>
+    <string name="ads_free_share_action_go">分享</string>
+    <string name="ads_free_share_action_done">已领取</string>
+    <string name="ads_free_share_chooser_title">分享方式</string>
+    <string name="ads_free_share_message">我在使用这个无广告应用，你也来试试吧！</string>
+
+    <string name="ads_free_bonus_reward_granted">已添加30分钟无广告时间！</string>
 </resources>

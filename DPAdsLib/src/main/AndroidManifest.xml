@@ -30,6 +30,14 @@
             android:name=".activities.WalkThroughConfigActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.AdsFreeRewardActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <receiver
+            android:name=".receivers.ShareCompletionReceiver"
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"

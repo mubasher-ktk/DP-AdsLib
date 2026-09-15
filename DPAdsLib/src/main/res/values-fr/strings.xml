@@ -10,4 +10,51 @@
     <string name="label_ad">Annonce</string>
     <string name="ad_label_install">Installer</string>
     <string name="label_next">Suivant</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Récompenses sans publicité</string>
+    <string name="ads_free_subtitle">Regardez quelques courtes vidéos pour débloquer des heures sans publicité.</string>
+    <string name="ads_free_banked_today">%1$s cumulées aujourd\'hui</string>
+    <string name="ads_free_unlock_title">Débloquer du temps sans publicité</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d étapes</string>
+    <string name="ads_free_step_full_day">Journée complète</string>
+    <string name="ads_free_step_hours">+%1$dh</string>
+    <string name="ads_free_watch_video">Regarder la vidéo (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">Tout est fait pour aujourd\'hui</string>
+    <string name="ads_free_loading">Demande de la vidéo…</string>
+    <string name="ads_free_no_reward">Publicité fermée avant la fin. Aucune récompense cette fois.</string>
+    <string name="ads_free_network_unavailable">Aucune connexion internet.</string>
+    <string name="ads_free_reward_title">Récompense débloquée !</string>
+    <string name="ads_free_reward_subtitle">%1$s de navigation sans publicité ajoutées à votre compte.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, sans publicité</string>
+    <string name="ads_free_watch_another">Regarder une autre pour %1$s</string>
+    <string name="ads_free_all_claimed_today">Vous avez réclamé toutes les récompenses d\'aujourd\'hui — revenez demain.</string>
+    <string name="ads_free_maybe_later">Plus tard peut-être</string>
+    <string name="ads_free_close">Fermer</string>
+    <string name="ads_free_hours_short">%1$dh</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Tâches bonus</string>
+
+    <string name="ads_free_checkin_title">Connexion quotidienne</string>
+    <string name="ads_free_checkin_subtitle_progress">Jour %1$d sur %2$d • +30 min le jour %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Prochaine connexion %1$s</string>
+    <string name="ads_free_checkin_action_go">Se connecter</string>
+    <string name="ads_free_checkin_action_done">Terminé</string>
+
+    <string name="ads_free_rate_title">Notez l application</string>
+    <string name="ads_free_rate_subtitle">Laissez un avis rapide — +30 min sans publicité</string>
+    <string name="ads_free_rate_subtitle_claimed">Merci pour votre avis !</string>
+    <string name="ads_free_rate_action_go">Noter</string>
+    <string name="ads_free_rate_action_done">Réclamé</string>
+
+    <string name="ads_free_share_title">Partager avec un ami</string>
+    <string name="ads_free_share_subtitle">Parlez de l application à un ami — +30 min sans publicité</string>
+    <string name="ads_free_share_subtitle_claimed">Merci pour le partage !</string>
+    <string name="ads_free_share_action_go">Partager</string>
+    <string name="ads_free_share_action_done">Réclamé</string>
+    <string name="ads_free_share_chooser_title">Partager via</string>
+    <string name="ads_free_share_message">J utilise cette application sans publicité, essayez la aussi !</string>
+
+    <string name="ads_free_bonus_reward_granted">30 minutes sans publicité ajoutées !</string>
 </resources>

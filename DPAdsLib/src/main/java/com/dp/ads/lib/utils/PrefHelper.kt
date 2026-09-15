@@ -23,6 +23,22 @@ class PrefHelper(context: Context) {
         return sharedPreferences.getBoolean(key, default)
     }
 
+    fun putLong(key: String, value: Long) {
+        editor.putLong(key, value).apply()
+    }
+
+    fun getLongDefault(key: String, default: Long): Long {
+        return sharedPreferences.getLong(key, default)
+    }
+
+    fun putInt(key: String, value: Int) {
+        editor.putInt(key, value).apply()
+    }
+
+    fun getIntDefault(key: String, default: Int): Int {
+        return sharedPreferences.getInt(key, default)
+    }
+
     fun clear() {
         editor.clear().apply()
     }

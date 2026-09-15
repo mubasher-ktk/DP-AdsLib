@@ -10,4 +10,51 @@
     <string name="label_ad">ማስታወቂያ</string>
     <string name="ad_label_install">አግኝ</string>
     <string name="label_next">ቀጣይ</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">የማስታወቂያ-ልቅ ሽልማቶች</string>
+    <string name="ads_free_subtitle">አጫጭር ቪዲዮዎችን በመመልከት ማስታወቂያ የሌለበት ጊዜ ይክፈቱ።</string>
+    <string name="ads_free_banked_today">%1$s ዛሬ ተቀማጭ ተደርጓል</string>
+    <string name="ads_free_unlock_title">ማስታወቂያ የሌለበት ጊዜ ይክፈቱ</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d ደረጆች</string>
+    <string name="ads_free_step_full_day">ሙሉ ቀን</string>
+    <string name="ads_free_step_hours">+%1$dሰ</string>
+    <string name="ads_free_watch_video">ቪዲዮ ይመልከቱ (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">ለዛሬ ሁሉም ተጠናቅቋል</string>
+    <string name="ads_free_loading">ቪዲዮ በመጠየቅ ላይ…</string>
+    <string name="ads_free_no_reward">ማስታወቂያው ሳይጠናቀቅ ተዘግቷል። በዚህ ጊዜ ሽልማት የለም።</string>
+    <string name="ads_free_network_unavailable">የኢንተርኔት ግንኙነት የለም።</string>
+    <string name="ads_free_reward_title">ሽልማት ተከፍቷል!</string>
+    <string name="ads_free_reward_subtitle">%1$s ማስታወቂያ የሌለበት ጊዜ ወደ መለያዎ ተጨምሯል።</string>
+    <string name="ads_free_reward_pill_hours">%1$s፣ ማስታወቂያ የለም</string>
+    <string name="ads_free_watch_another">ለ%1$s ሌላ ይመልከቱ</string>
+    <string name="ads_free_all_claimed_today">ለዛሬ ያሉትን ሽልማቶች ሁሉ ወስደዋል — ነገ ተመልሰው ይምጡ።</string>
+    <string name="ads_free_maybe_later">በኋላ ይሆናል</string>
+    <string name="ads_free_close">ዝጋ</string>
+    <string name="ads_free_hours_short">%1$dሰ</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">ተጨማሪ ተግባራት</string>
+
+    <string name="ads_free_checkin_title">የቀን መግቢያ</string>
+    <string name="ads_free_checkin_subtitle_progress">ቀን %1$d ከ%2$d • በቀን %2$d ላይ +30 ደቂቃ</string>
+    <string name="ads_free_checkin_subtitle_next">ቀጣይ መግቢያ %1$s</string>
+    <string name="ads_free_checkin_action_go">ግባ</string>
+    <string name="ads_free_checkin_action_done">ተጠናቅቋል</string>
+
+    <string name="ads_free_rate_title">መተግበሪያውን ይገምግሙ</string>
+    <string name="ads_free_rate_subtitle">ፈጣን ደረጃ ይስጡ — ማስታወቂያ የሌለበት +30 ደቂቃ</string>
+    <string name="ads_free_rate_subtitle_claimed">ስለ ደረጃዎ እናመስግናለን!</string>
+    <string name="ads_free_rate_action_go">ደረጃ ይስጡ</string>
+    <string name="ads_free_rate_action_done">ተቀብለዋል</string>
+
+    <string name="ads_free_share_title">ለጓደኛ ያጋሩ</string>
+    <string name="ads_free_share_subtitle">ስለ መተግበሪያው ለጓደኛዎ ይንገሩ — ማስታወቂያ የሌለበት +30 ደቂቃ</string>
+    <string name="ads_free_share_subtitle_claimed">ስለ ማጋራትዎ እናመስግናለን!</string>
+    <string name="ads_free_share_action_go">ያጋሩ</string>
+    <string name="ads_free_share_action_done">ተቀብለዋል</string>
+    <string name="ads_free_share_chooser_title">በዚህ ያጋሩ</string>
+    <string name="ads_free_share_message">ይህን መተግበሪያ ማስታወቂያ በሌለበት ሁኔታ እየተጠቀምኩ ነው፣ እርስዎም ይሞክሩት!</string>
+
+    <string name="ads_free_bonus_reward_granted">ማስታወቂያ የሌለበት 30 ደቂቃ ጨምሯል!</string>
 </resources>

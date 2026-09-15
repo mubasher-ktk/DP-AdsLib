@@ -10,4 +10,51 @@
     <string name="label_ad">Advertensie</string>
     <string name="ad_label_install">Installeer</string>
     <string name="label_next">Volgende</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Advertensie-vrye Belonings</string>
+    <string name="ads_free_subtitle">Kyk \'n paar kort video\'s, ontsluit ure sonder advertensies.</string>
+    <string name="ads_free_banked_today">%1$s vandag gebank</string>
+    <string name="ads_free_unlock_title">Ontsluit advertensie-vrye tyd</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d stappe</string>
+    <string name="ads_free_step_full_day">Volle dag</string>
+    <string name="ads_free_step_hours">+%1$du</string>
+    <string name="ads_free_watch_video">Kyk video (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">Alles klaar vir vandag</string>
+    <string name="ads_free_loading">Vra video aan…</string>
+    <string name="ads_free_no_reward">Advertensie is gesluit voor voltooiing. Geen beloning hierdie keer nie.</string>
+    <string name="ads_free_network_unavailable">Geen internetverbinding nie.</string>
+    <string name="ads_free_reward_title">Beloning ontsluit!</string>
+    <string name="ads_free_reward_subtitle">%1$s advertensie-vrye tyd by jou rekening gevoeg.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, advertensie-vry</string>
+    <string name="ads_free_watch_another">Kyk nog een vir %1$s</string>
+    <string name="ads_free_all_claimed_today">Jy het al vandag se belonings geëis — kom môre terug.</string>
+    <string name="ads_free_maybe_later">Miskien later</string>
+    <string name="ads_free_close">Maak toe</string>
+    <string name="ads_free_hours_short">%1$du</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Bonustake</string>
+
+    <string name="ads_free_checkin_title">Daaglikse inteken</string>
+    <string name="ads_free_checkin_subtitle_progress">Dag %1$d van %2$d • +30 min op dag %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Volgende inteken %1$s</string>
+    <string name="ads_free_checkin_action_go">Teken in</string>
+    <string name="ads_free_checkin_action_done">Klaar</string>
+
+    <string name="ads_free_rate_title">Gradeer die app</string>
+    <string name="ads_free_rate_subtitle">Gee gou jou gradering — +30 min advertensie-vry</string>
+    <string name="ads_free_rate_subtitle_claimed">Dankie vir jou gradering!</string>
+    <string name="ads_free_rate_action_go">Gradeer</string>
+    <string name="ads_free_rate_action_done">Ontvang</string>
+
+    <string name="ads_free_share_title">Deel met jou vriende</string>
+    <string name="ads_free_share_subtitle">Vertel jou vriende van die app — +30 min advertensie-vry</string>
+    <string name="ads_free_share_subtitle_claimed">Dankie vir die deel!</string>
+    <string name="ads_free_share_action_go">Deel</string>
+    <string name="ads_free_share_action_done">Ontvang</string>
+    <string name="ads_free_share_chooser_title">Deel via</string>
+    <string name="ads_free_share_message">Ek gebruik hierdie app advertensie-vry, probeer dit ook!</string>
+
+    <string name="ads_free_bonus_reward_granted">30 minute advertensie-vry bygevoeg!</string>
 </resources>

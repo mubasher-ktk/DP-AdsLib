@@ -10,4 +10,51 @@
     <string name="label_ad">Реклама</string>
     <string name="ad_label_install">Установить</string>
     <string name="label_next">Далее</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Награды без рекламы</string>
+    <string name="ads_free_subtitle">Посмотрите несколько коротких видео, чтобы разблокировать часы без рекламы.</string>
+    <string name="ads_free_banked_today">%1$s накоплено сегодня</string>
+    <string name="ads_free_unlock_title">Разблокировать время без рекламы</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d шагов</string>
+    <string name="ads_free_step_full_day">Целый день</string>
+    <string name="ads_free_step_hours">+%1$dч</string>
+    <string name="ads_free_watch_video">Смотреть видео (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">На сегодня всё выполнено</string>
+    <string name="ads_free_loading">Запрос видео…</string>
+    <string name="ads_free_no_reward">Реклама закрыта до окончания. На этот раз без награды.</string>
+    <string name="ads_free_network_unavailable">Нет подключения к интернету.</string>
+    <string name="ads_free_reward_title">Награда разблокирована!</string>
+    <string name="ads_free_reward_subtitle">%1$s использования без рекламы добавлено на ваш счёт.</string>
+    <string name="ads_free_reward_pill_hours">%1$s без рекламы</string>
+    <string name="ads_free_watch_another">Посмотреть ещё одно за %1$s</string>
+    <string name="ads_free_all_claimed_today">Вы уже получили все награды за сегодня — возвращайтесь завтра.</string>
+    <string name="ads_free_maybe_later">Может быть позже</string>
+    <string name="ads_free_close">Закрыть</string>
+    <string name="ads_free_hours_short">%1$dч</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Дополнительные задания</string>
+
+    <string name="ads_free_checkin_title">Ежедневный вход</string>
+    <string name="ads_free_checkin_subtitle_progress">День %1$d из %2$d • +30 мин в день %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Следующий вход %1$s</string>
+    <string name="ads_free_checkin_action_go">Отметиться</string>
+    <string name="ads_free_checkin_action_done">Готово</string>
+
+    <string name="ads_free_rate_title">Оцените приложение</string>
+    <string name="ads_free_rate_subtitle">Оставьте быструю оценку — +30 мин без рекламы</string>
+    <string name="ads_free_rate_subtitle_claimed">Спасибо за оценку!</string>
+    <string name="ads_free_rate_action_go">Оценить</string>
+    <string name="ads_free_rate_action_done">Получено</string>
+
+    <string name="ads_free_share_title">Поделиться с другом</string>
+    <string name="ads_free_share_subtitle">Расскажите другу о приложении — +30 мин без рекламы</string>
+    <string name="ads_free_share_subtitle_claimed">Спасибо, что поделились!</string>
+    <string name="ads_free_share_action_go">Поделиться</string>
+    <string name="ads_free_share_action_done">Получено</string>
+    <string name="ads_free_share_chooser_title">Поделиться через</string>
+    <string name="ads_free_share_message">Я использую это приложение без рекламы, попробуй тоже!</string>
+
+    <string name="ads_free_bonus_reward_granted">Добавлено 30 минут без рекламы!</string>
 </resources>

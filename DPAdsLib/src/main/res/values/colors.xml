@@ -6,4 +6,16 @@
     <color name="blueDark">#2196F3</color>
     <color name="lightTransparent">#16000000</color>
     <color name="lightTransparent_F">#000000</color>
+
+    <!-- Ads-Free Rewards screen -->
+    <color name="adsFreeBlueLight">#1FB6FF</color>
+    <color name="adsFreeBlueDarkest">#1465A6</color>
+    <color name="adsFreeBackground">#F4F8FC</color>
+    <color name="adsFreeTextMuted">#8B98A5</color>
+    <color name="adsFreeTrackGray">#E4EBF2</color>
+    <color name="adsFreeStepLockedBg">#F2F5F9</color>
+    <color name="adsFreeStepLockedIcon">#AEB9C4</color>
+    <color name="adsFreePremiumBg">#FCF1E0</color>
+    <color name="adsFreePremiumIcon">#D98F1C</color>
+    <color name="adsFreeOverlayScrim">#800A1018</color>
 </resources>

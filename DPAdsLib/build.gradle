@@ -51,6 +51,7 @@ dependencies {
     implementation libs.sdp.android
 
     implementation libs.user.messaging.platform
+    implementation libs.play.review
 
     // Ads Network
     implementation libs.play.services.ads

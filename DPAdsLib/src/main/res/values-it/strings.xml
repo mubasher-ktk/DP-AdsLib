@@ -10,4 +10,51 @@
     <string name="label_ad">Annuncio</string>
     <string name="ad_label_install">Installa</string>
     <string name="label_next">Avanti</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Premi senza pubblicità</string>
+    <string name="ads_free_subtitle">Guarda alcuni brevi video per sbloccare ore senza pubblicità.</string>
+    <string name="ads_free_banked_today">%1$s accumulate oggi</string>
+    <string name="ads_free_unlock_title">Sblocca tempo senza pubblicità</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d passaggi</string>
+    <string name="ads_free_step_full_day">Giornata intera</string>
+    <string name="ads_free_step_hours">+%1$dh</string>
+    <string name="ads_free_watch_video">Guarda video (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">Tutto fatto per oggi</string>
+    <string name="ads_free_loading">Richiesta video in corso…</string>
+    <string name="ads_free_no_reward">Annuncio chiuso prima della fine. Nessun premio questa volta.</string>
+    <string name="ads_free_network_unavailable">Nessuna connessione internet.</string>
+    <string name="ads_free_reward_title">Premio sbloccato!</string>
+    <string name="ads_free_reward_subtitle">%1$s di navigazione senza pubblicità aggiunte al tuo account.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, senza pubblicità</string>
+    <string name="ads_free_watch_another">Guardane un altro per %1$s</string>
+    <string name="ads_free_all_claimed_today">Hai già riscattato tutti i premi di oggi — torna domani.</string>
+    <string name="ads_free_maybe_later">Forse più tardi</string>
+    <string name="ads_free_close">Chiudi</string>
+    <string name="ads_free_hours_short">%1$dh</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Attività bonus</string>
+
+    <string name="ads_free_checkin_title">Accesso giornaliero</string>
+    <string name="ads_free_checkin_subtitle_progress">Giorno %1$d di %2$d • +30 min il giorno %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Prossimo accesso %1$s</string>
+    <string name="ads_free_checkin_action_go">Accedi</string>
+    <string name="ads_free_checkin_action_done">Fatto</string>
+
+    <string name="ads_free_rate_title">Valuta la app</string>
+    <string name="ads_free_rate_subtitle">Lascia una recensione veloce — +30 min senza pubblicità</string>
+    <string name="ads_free_rate_subtitle_claimed">Grazie per la recensione!</string>
+    <string name="ads_free_rate_action_go">Valuta</string>
+    <string name="ads_free_rate_action_done">Riscattato</string>
+
+    <string name="ads_free_share_title">Condividi con un amico</string>
+    <string name="ads_free_share_subtitle">Parla di questa app a un amico — +30 min senza pubblicità</string>
+    <string name="ads_free_share_subtitle_claimed">Grazie per aver condiviso!</string>
+    <string name="ads_free_share_action_go">Condividi</string>
+    <string name="ads_free_share_action_done">Riscattato</string>
+    <string name="ads_free_share_chooser_title">Condividi tramite</string>
+    <string name="ads_free_share_message">Sto usando questa app senza pubblicità, provala anche tu!</string>
+
+    <string name="ads_free_bonus_reward_granted">Aggiunti 30 minuti senza pubblicità!</string>
 </resources>

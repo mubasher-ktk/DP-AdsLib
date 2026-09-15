@@ -10,4 +10,51 @@
     <string name="label_ad">Reklamë</string>
     <string name="ad_label_install">Instalo</string>
     <string name="label_next">Tjetër</string>
+
+    <!-- Ads-Free Rewards screen -->
+    <string name="ads_free_title">Shpërblime pa reklama</string>
+    <string name="ads_free_subtitle">Shiko disa video të shkurtra dhe zhblloko orë pa reklama.</string>
+    <string name="ads_free_banked_today">%1$s të grumbulluara sot</string>
+    <string name="ads_free_unlock_title">Zhblloko kohë pa reklama</string>
+    <string name="ads_free_steps_progress">%1$d/%2$d hapa</string>
+    <string name="ads_free_step_full_day">Ditë e plotë</string>
+    <string name="ads_free_step_hours">+%1$dorë</string>
+    <string name="ads_free_watch_video">Shiko videon (%1$d/%2$d)</string>
+    <string name="ads_free_all_done_today">Gjithçka u krye për sot</string>
+    <string name="ads_free_loading">Duke kërkuar videon…</string>
+    <string name="ads_free_no_reward">Reklama u mbyll para se të mbaronte. Pa shpërblim kësaj here.</string>
+    <string name="ads_free_network_unavailable">Nuk ka lidhje interneti.</string>
+    <string name="ads_free_reward_title">Shpërblimi u zhbllokua!</string>
+    <string name="ads_free_reward_subtitle">%1$s kohë pa reklama u shtua në llogarinë tënde.</string>
+    <string name="ads_free_reward_pill_hours">%1$s, pa reklama</string>
+    <string name="ads_free_watch_another">Shiko një tjetër për %1$s</string>
+    <string name="ads_free_all_claimed_today">I ke marrë të gjitha shpërblimet e sotme — kthehu nesër.</string>
+    <string name="ads_free_maybe_later">Ndoshta më vonë</string>
+    <string name="ads_free_close">Mbyll</string>
+    <string name="ads_free_hours_short">%1$dorë</string>
+
+    <!-- Ads-Free Rewards screen - bonus tasks -->
+    <string name="ads_free_bonus_section_title">Detyra bonus</string>
+
+    <string name="ads_free_checkin_title">Regjistrim ditor</string>
+    <string name="ads_free_checkin_subtitle_progress">Dita %1$d nga %2$d • +30 min në ditën %2$d</string>
+    <string name="ads_free_checkin_subtitle_next">Regjistrimi tjetër %1$s</string>
+    <string name="ads_free_checkin_action_go">Regjistrohu</string>
+    <string name="ads_free_checkin_action_done">Përfunduar</string>
+
+    <string name="ads_free_rate_title">Vlerësoni aplikacionin</string>
+    <string name="ads_free_rate_subtitle">Jepni një vlerësim të shpejtë — +30 min pa reklama</string>
+    <string name="ads_free_rate_subtitle_claimed">Faleminderit për vlerësimin!</string>
+    <string name="ads_free_rate_action_go">Vlerëso</string>
+    <string name="ads_free_rate_action_done">Marrë</string>
+
+    <string name="ads_free_share_title">Ndaje me një mik</string>
+    <string name="ads_free_share_subtitle">Tregoji një miku për aplikacionin — +30 min pa reklama</string>
+    <string name="ads_free_share_subtitle_claimed">Faleminderit për ndarjen!</string>
+    <string name="ads_free_share_action_go">Ndaje</string>
+    <string name="ads_free_share_action_done">Marrë</string>
+    <string name="ads_free_share_chooser_title">Ndaje nëpërmjet</string>
+    <string name="ads_free_share_message">Po përdor këtë aplikacion pa reklama, provoje edhe ti!</string>
+
+    <string name="ads_free_bonus_reward_granted">U shtuan 30 minuta pa reklama!</string>
 </resources>

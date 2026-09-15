@@ -34,6 +34,7 @@ shimmer = "0.5.0"
 lottie = "6.7.1"
 sspAndroid = "1.1.1"
 userMessagingPlatform = "3.2.0"
+playReview = "2.0.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,6 +66,7 @@ shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatform" }
+play-review = { module = "com.google.android.play:review", version.ref = "playReview" }
 
 
 [plugins]
