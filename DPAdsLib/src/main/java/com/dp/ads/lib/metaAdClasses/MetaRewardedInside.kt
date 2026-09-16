@@ -21,24 +21,35 @@ object MetaRewardedInside : CoroutineScope by MainScope() {
     private var mContextMeta: Context? = null
     private var onAdLoadingCallBackMeta: (() -> Unit)? = null
     private var onRewardEarnedCallBackMeta: (() -> Unit)? = null
-    private var onAdFailedOrNoRewardCallBackMeta: (() -> Unit)? = null
+    private var onNoNetworkCallBackMeta: (() -> Unit)? = null
+    private var onAdFailedToLoadOrShowCallBackMeta: (() -> Unit)? = null
+    private var onDismissedWithoutRewardCallBackMeta: (() -> Unit)? = null
 
+    /**
+     * @param onNoNetwork no connectivity at request time - never a candidate for cross-network fallback.
+     * @param onAdFailedToLoadOrShow the ad failed to load or failed to display - the fallback-eligible case.
+     * @param onDismissedWithoutReward ad loaded and showed fine, but the user closed it before earning the reward.
+     */
     fun requestAndShowRewardedAd(
         context: Context?,
         adName: String,
         adId: String,
         onAdLoading: (() -> Unit)? = null,
         onRewardEarned: () -> Unit,
-        onAdFailedOrNoReward: () -> Unit
+        onNoNetwork: () -> Unit,
+        onAdFailedToLoadOrShow: () -> Unit,
+        onDismissedWithoutReward: () -> Unit
     ) {
         mContextMeta = context
         onAdLoadingCallBackMeta = onAdLoading
         onRewardEarnedCallBackMeta = onRewardEarned
-        onAdFailedOrNoRewardCallBackMeta = onAdFailedOrNoReward
+        onNoNetworkCallBackMeta = onNoNetwork
+        onAdFailedToLoadOrShowCallBackMeta = onAdFailedToLoadOrShow
+        onDismissedWithoutRewardCallBackMeta = onDismissedWithoutReward
 
         if (!NetworkCheck.isNetworkAvailable(mContextMeta)) {
             Log.e("DP_ADS_TAG", "Meta Rewarded: no network. $adName")
-            onAdFailedOrNoRewardCallBackMeta?.invoke()
+            onNoNetworkCallBackMeta?.invoke()
             return
         }
 
@@ -61,7 +72,7 @@ object MetaRewardedInside : CoroutineScope by MainScope() {
 
                         val activity = mContextMeta as? Activity
                         if (activity == null || activity.isFinishing || activity.isDestroyed) {
-                            onAdFailedOrNoRewardCallBackMeta?.invoke()
+                            onAdFailedToLoadOrShowCallBackMeta?.invoke()
                             return
                         }
                         rewardedVideoAd.show()
@@ -71,9 +82,9 @@ object MetaRewardedInside : CoroutineScope by MainScope() {
                         Log.e("DP_ADS_TAG", "Meta Rewarded Failed to Load: $adName. Error: ${adError.errorMessage}")
                         dismissWaitDialog()
                         isRewardedAdVisible = false
-                        onAdFailedOrNoRewardCallBackMeta?.invoke()
+                        onAdFailedToLoadOrShowCallBackMeta?.invoke()
                         onRewardEarnedCallBackMeta = null
-                        onAdFailedOrNoRewardCallBackMeta = null
+                        onAdFailedToLoadOrShowCallBackMeta = null
                     }
 
                     override fun onRewardedVideoCompleted() {
@@ -87,10 +98,11 @@ object MetaRewardedInside : CoroutineScope by MainScope() {
                         Log.i("DP_ADS_TAG", "Meta Rewarded Closed: $adName. Reward earned: $isRewardEarned")
                         isRewardedAdVisible = false
                         if (!isRewardEarned) {
-                            onAdFailedOrNoRewardCallBackMeta?.invoke()
+                            onDismissedWithoutRewardCallBackMeta?.invoke()
                         }
                         onRewardEarnedCallBackMeta = null
-                        onAdFailedOrNoRewardCallBackMeta = null
+                        onAdFailedToLoadOrShowCallBackMeta = null
+                        onDismissedWithoutRewardCallBackMeta = null
                     }
 
                     override fun onAdClicked(ad: Ad) {}

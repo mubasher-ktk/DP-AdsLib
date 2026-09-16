@@ -12,8 +12,10 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.dp.ads.lib.R
@@ -49,6 +51,7 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
     private lateinit var binding: ActivityAdsFreeRewardBinding
     private var isRequestingAd = false
     private var pendingRateRewardOnResume = false
+    private var fullScreenAdLoaderDialog: Dialog? = null
 
     private val tickHandler = Handler(Looper.getMainLooper())
     private val tickRunnable = object : Runnable {
@@ -99,6 +102,11 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
         tickHandler.removeCallbacks(tickRunnable)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        hideFullScreenAdLoader()
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUIUpdated()
@@ -133,33 +141,79 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
             return
         }
 
-        val network = remoteConfigData?.get("${AD_NAME}_MED") as? String
-        val adId = when (network) {
-            "ADMOB" -> dpAdsConfigurations.firstOpenFlowAdIds["ADMOB_REWARDED_ADFREE"]
-            "META" -> dpAdsConfigurations.firstOpenFlowAdIds["META_REWARDED_ADFREE"]
-            else -> null
-        }
-
-        if (network == null || adId.isNullOrBlank()) {
+        val adIds = dpAdsConfigurations?.firstOpenFlowAdIds
+        val primaryNetwork = remoteConfigData?.get("${AD_NAME}_MED") as? String
+        val primaryAdId = rewardedAdIdFor(adIds, primaryNetwork)
+        if (primaryNetwork == null || primaryAdId.isNullOrBlank()) {
             Toast.makeText(this, R.string.ads_free_network_unavailable, Toast.LENGTH_SHORT).show()
             return
         }
 
-        isRequestingAd = true
+        // The other network, held in reserve: if the backend-selected network fails to load or
+        // show (anything short of "no internet"), we retry once on this one before giving up.
+        val fallbackNetwork = if (primaryNetwork == "ADMOB") "META" else "ADMOB"
+        val fallbackAdId = rewardedAdIdFor(adIds, fallbackNetwork)
 
-        val onAdLoading: () -> Unit = {
-            binding.btnWatchVideo.isEnabled = false
-        }
+        isRequestingAd = true
+        binding.btnWatchVideo.isEnabled = false
+        showFullScreenAdLoader()
+
+        runRewardedAdFlow(
+            network = primaryNetwork,
+            adId = primaryAdId,
+            fallbackNetwork = fallbackNetwork,
+            fallbackAdId = fallbackAdId,
+            isFallbackAttempt = false
+        )
+    }
+
+    private fun rewardedAdIdFor(adIds: Map<String, String>?, network: String?): String? = when (network) {
+        "ADMOB" -> adIds?.get("ADMOB_REWARDED_ADFREE")
+        "META" -> adIds?.get("META_REWARDED_ADFREE")
+        else -> null
+    }
+
+    /**
+     * Runs the rewarded flow on [network]/[adId]. On a load-or-show failure (never on "no
+     * network", never on "user closed before earning it") this retries exactly once on
+     * [fallbackNetwork]/[fallbackAdId] before treating it as a final failure - so it recurses at
+     * most one level deep (isFallbackAttempt guards against a second fallback).
+     */
+    private fun runRewardedAdFlow(
+        network: String,
+        adId: String,
+        fallbackNetwork: String,
+        fallbackAdId: String?,
+        isFallbackAttempt: Boolean
+    ) {
         val onRewardEarned: () -> Unit = {
             isRequestingAd = false
+            hideFullScreenAdLoader()
             val earnedMillis = AdsFreeManager.grantNextStepReward(this)
             refreshUi()
             showRewardClaimedDialog(earnedMillis)
         }
-        val onAdFailedOrNoReward: () -> Unit = {
+
+        val onTerminalFailure: () -> Unit = {
             isRequestingAd = false
+            hideFullScreenAdLoader()
             refreshUi()
             Toast.makeText(this, R.string.ads_free_no_reward, Toast.LENGTH_SHORT).show()
+        }
+
+        val onAdFailedToLoadOrShow: () -> Unit = {
+            if (!isFallbackAttempt && !fallbackAdId.isNullOrBlank() && !isFinishing && !isDestroyed) {
+                Log.i("DP_ADS_TAG", "$network rewarded failed, falling back to $fallbackNetwork: $AD_NAME")
+                runRewardedAdFlow(
+                    network = fallbackNetwork,
+                    adId = fallbackAdId,
+                    fallbackNetwork = network,
+                    fallbackAdId = adId,
+                    isFallbackAttempt = true
+                )
+            } else {
+                onTerminalFailure()
+            }
         }
 
         when (network) {
@@ -167,19 +221,46 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
                 context = this,
                 adName = AD_NAME,
                 adId = adId,
-                onAdLoading = onAdLoading,
                 onRewardEarned = onRewardEarned,
-                onAdFailedOrNoReward = onAdFailedOrNoReward
+                onNoNetwork = onTerminalFailure,
+                onAdFailedToLoadOrShow = onAdFailedToLoadOrShow,
+                onDismissedWithoutReward = onTerminalFailure
             )
             "META" -> MetaRewardedInside.requestAndShowRewardedAd(
                 context = this,
                 adName = AD_NAME,
                 adId = adId,
-                onAdLoading = onAdLoading,
                 onRewardEarned = onRewardEarned,
-                onAdFailedOrNoReward = onAdFailedOrNoReward
+                onNoNetwork = onTerminalFailure,
+                onAdFailedToLoadOrShow = onAdFailedToLoadOrShow,
+                onDismissedWithoutReward = onTerminalFailure
             )
         }
+    }
+
+    /** Fullscreen, non-cancelable loader shown for the whole click-to-resolution window (including
+     * a fallback attempt) so a monkey-clicked tap on Watch Ad has nothing left to hit. */
+    private fun showFullScreenAdLoader() {
+        if (isFinishing || isDestroyed) return
+        if (fullScreenAdLoaderDialog?.isShowing == true) return
+        val view = layoutInflater.inflate(R.layout.dialog_adloading, null, false)
+        fullScreenAdLoaderDialog = Dialog(this).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(view)
+            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setCancelable(false)
+            show()
+        }
+    }
+
+    private fun hideFullScreenAdLoader() {
+        try {
+            fullScreenAdLoaderDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        fullScreenAdLoaderDialog = null
     }
 
     private fun refreshUi() {

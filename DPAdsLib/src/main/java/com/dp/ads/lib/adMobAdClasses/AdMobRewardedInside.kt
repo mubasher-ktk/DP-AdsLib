@@ -23,24 +23,35 @@ object AdMobRewardedInside : CoroutineScope by MainScope() {
     private var mContextAdmob: Context? = null
     private var onAdLoadingCallBackAdmob: (() -> Unit)? = null
     private var onRewardEarnedCallBackAdmob: (() -> Unit)? = null
-    private var onAdFailedOrNoRewardCallBackAdmob: (() -> Unit)? = null
+    private var onNoNetworkCallBackAdmob: (() -> Unit)? = null
+    private var onAdFailedToLoadOrShowCallBackAdmob: (() -> Unit)? = null
+    private var onDismissedWithoutRewardCallBackAdmob: (() -> Unit)? = null
 
+    /**
+     * @param onNoNetwork no connectivity at request time - never a candidate for cross-network fallback.
+     * @param onAdFailedToLoadOrShow the ad failed to load or failed to display - the fallback-eligible case.
+     * @param onDismissedWithoutReward ad loaded and showed fine, but the user closed it before earning the reward.
+     */
     fun requestAndShowRewardedAd(
         context: Context?,
         adName: String,
         adId: String,
         onAdLoading: (() -> Unit)? = null,
         onRewardEarned: () -> Unit,
-        onAdFailedOrNoReward: () -> Unit
+        onNoNetwork: () -> Unit,
+        onAdFailedToLoadOrShow: () -> Unit,
+        onDismissedWithoutReward: () -> Unit
     ) {
         mContextAdmob = context
         onAdLoadingCallBackAdmob = onAdLoading
         onRewardEarnedCallBackAdmob = onRewardEarned
-        onAdFailedOrNoRewardCallBackAdmob = onAdFailedOrNoReward
+        onNoNetworkCallBackAdmob = onNoNetwork
+        onAdFailedToLoadOrShowCallBackAdmob = onAdFailedToLoadOrShow
+        onDismissedWithoutRewardCallBackAdmob = onDismissedWithoutReward
 
         if (!NetworkCheck.isNetworkAvailable(mContextAdmob)) {
             Log.e("DP_ADS_TAG", "AdMob Rewarded: no network. $adName")
-            onAdFailedOrNoRewardCallBackAdmob?.invoke()
+            onNoNetworkCallBackAdmob?.invoke()
             return
         }
 
@@ -66,8 +77,8 @@ object AdMobRewardedInside : CoroutineScope by MainScope() {
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     Log.e("DP_ADS_TAG", "AdMob Rewarded Failed to Load: $adName. Error: ${loadAdError.message}")
                     dismissWaitDialog()
-                    onAdFailedOrNoRewardCallBackAdmob?.invoke()
-                    onAdFailedOrNoRewardCallBackAdmob = null
+                    onAdFailedToLoadOrShowCallBackAdmob?.invoke()
+                    onAdFailedToLoadOrShowCallBackAdmob = null
                 }
             }
         )
@@ -76,7 +87,7 @@ object AdMobRewardedInside : CoroutineScope by MainScope() {
     private fun showAdmobRewarded(rewardedAd: RewardedAd, adName: String) {
         val activity = mContextAdmob as? Activity
         if (activity == null || activity.isFinishing || activity.isDestroyed) {
-            onAdFailedOrNoRewardCallBackAdmob?.invoke()
+            onAdFailedToLoadOrShowCallBackAdmob?.invoke()
             return
         }
 
@@ -87,18 +98,20 @@ object AdMobRewardedInside : CoroutineScope by MainScope() {
                 Log.i("DP_ADS_TAG", "AdMob Rewarded Dismissed: $adName. Reward earned: $isRewardEarned")
                 isRewardedAdVisible = false
                 if (!isRewardEarned) {
-                    onAdFailedOrNoRewardCallBackAdmob?.invoke()
+                    onDismissedWithoutRewardCallBackAdmob?.invoke()
                 }
                 onRewardEarnedCallBackAdmob = null
-                onAdFailedOrNoRewardCallBackAdmob = null
+                onAdFailedToLoadOrShowCallBackAdmob = null
+                onDismissedWithoutRewardCallBackAdmob = null
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                 Log.e("DP_ADS_TAG", "Failed to Show AdMob Rewarded: $adName. Error: ${adError.message}")
                 isRewardedAdVisible = false
-                onAdFailedOrNoRewardCallBackAdmob?.invoke()
+                onAdFailedToLoadOrShowCallBackAdmob?.invoke()
                 onRewardEarnedCallBackAdmob = null
-                onAdFailedOrNoRewardCallBackAdmob = null
+                onAdFailedToLoadOrShowCallBackAdmob = null
+                onDismissedWithoutRewardCallBackAdmob = null
             }
 
             override fun onAdShowedFullScreenContent() {
