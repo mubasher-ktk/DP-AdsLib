@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
 import com.google.android.gms.ads.AdError
@@ -148,6 +149,9 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onAppForegrounded() {
+        if (globalClass != null && AdsFreeManager.isAdFreeActive(globalClass)) {
+            return
+        }
         if (currentActivity?.localClassName != null || currentActivity?.localClassName.equals("")) {
             if (!AdMobInterstitialInside.isInterstitialAdVisible && !MetaInterstitialInside.isInterstitialAdVisible) {
                 showAdIfAvailable()

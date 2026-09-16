@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$du</string>
     <string name="ads_free_watch_video">Video bekijken (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Alles klaar voor vandaag</string>
+    <string name="ads_free_all_done_countdown">Kom terug over %1$s om weer advertentievrij te worden</string>
     <string name="ads_free_loading">Video wordt aangevraagd…</string>
     <string name="ads_free_no_reward">Advertentie gesloten voordat deze klaar was. Deze keer geen beloning.</string>
     <string name="ads_free_network_unavailable">Geen internetverbinding.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Dagelijkse check-in</string>
     <string name="ads_free_checkin_subtitle_progress">Dag %1$d van %2$d • +30 min op dag %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Volgende check-in %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Dag %1$d van %2$d • Volgende check-in %3$s</string>
     <string name="ads_free_checkin_action_go">Inchecken</string>
     <string name="ads_free_checkin_action_done">Klaar</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Delen</string>
     <string name="ads_free_share_action_done">Ontvangen</string>
     <string name="ads_free_share_chooser_title">Delen via</string>
-    <string name="ads_free_share_message">Ik gebruik deze app advertentievrij, jij moet het ook proberen!</string>
+    <string name="ads_free_share_message">Ik gebruik deze app advertentievrij, jij moet het ook proberen! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">30 minuten advertentievrij toegevoegd!</string>
+
+    <string name="label_go_ad_free">Word advertentievrij</string>
+    <string name="label_go_ad_free_subtitle">Bekijk een video, verdien uren zonder advertenties</string>
+    <string name="label_ad_free_active_title">Advertentievrij is actief</string>
+    <string name="label_ad_free_active_subtitle">Verdiend door beloningsvideos te bekijken</string>
+    <string name="label_time_remaining">Resterende tijd</string>
+    <string name="label_extend">Verlengen</string>
+    <string name="label_ad_free_not_active_title">Advertentievrij is niet actief</string>
+    <string name="label_ad_free_not_active_notice">Bekijk een video om advertentievrije tijd te verdienen</string>
 </resources>

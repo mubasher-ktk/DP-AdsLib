@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.Ad
@@ -54,6 +55,11 @@ class MetaInterstitialAdSplash(
         onAdShowed: (() -> Unit)? = null
     ) {
         if (isAdAvailable()) return
+
+        if (currentActivity != null && AdsFreeManager.isAdFreeActive(currentActivity!!)) {
+            onAdFailed?.invoke()
+            return
+        }
 
         if (!NetworkCheck.isNetworkAvailable(currentActivity)) {
             return

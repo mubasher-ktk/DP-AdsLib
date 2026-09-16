@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.Ad
 import com.facebook.ads.AdError
@@ -42,6 +43,13 @@ object MetaNativeAdManager {
     ) {
         if (mContext == null) {
             Log.i("DP_ADS_TAG", "Context is null; cannot load ad.")
+            onAdFailed?.invoke()
+            return
+        }
+
+        if (AdsFreeManager.isAdFreeActive(mContext)) {
+            adContainer?.visibility = View.GONE
+            Log.i("DP_ADS_TAG", "Native : Meta : Ad-free active, skipping load")
             onAdFailed?.invoke()
             return
         }

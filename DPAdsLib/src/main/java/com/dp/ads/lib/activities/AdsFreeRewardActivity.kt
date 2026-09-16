@@ -10,6 +10,8 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.Window
 import android.widget.Toast
@@ -48,6 +50,14 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
     private var isRequestingAd = false
     private var pendingRateRewardOnResume = false
 
+    private val tickHandler = Handler(Looper.getMainLooper())
+    private val tickRunnable = object : Runnable {
+        override fun run() {
+            refreshUi()
+            tickHandler.postDelayed(this, 1000L)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -80,7 +90,13 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
             pendingRateRewardOnResume = false
             grantRateReward()
         }
-        refreshUi()
+        tickHandler.removeCallbacks(tickRunnable)
+        tickHandler.post(tickRunnable)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        tickHandler.removeCallbacks(tickRunnable)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -168,7 +184,7 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
 
     private fun refreshUi() {
         val remainingMillis = AdsFreeManager.getRemainingMillis(this)
-        binding.tvBankedToday.text = getString(R.string.ads_free_banked_today, formatHours(remainingMillis))
+        binding.tvBankedToday.text = getString(R.string.ads_free_banked_today, formatDuration(remainingMillis))
 
         val completed = AdsFreeManager.getStepsCompletedToday(this)
         val total = AdsFreeManager.getTotalSteps()
@@ -190,7 +206,7 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
         val allDone = completed >= total
         binding.btnWatchVideo.isEnabled = !allDone && !isRequestingAd
         binding.tvWatchVideoLabel.text = if (allDone) {
-            getString(R.string.ads_free_all_done_today)
+            getString(R.string.ads_free_all_done_countdown, formatDuration(AdsFreeManager.millisUntilStepsReset(this)))
         } else {
             getString(R.string.ads_free_watch_video, completed, total)
         }
@@ -222,7 +238,7 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
         }
 
         binding.taskCheckIn.tvTaskSubtitle.text = if (claimedToday) {
-            getString(R.string.ads_free_checkin_subtitle_next, formatHours(AdsFreeManager.millisUntilNextCheckIn(this)))
+            getString(R.string.ads_free_checkin_subtitle_next, displayDay, target, formatHours(AdsFreeManager.millisUntilNextCheckIn(this)))
         } else {
             getString(R.string.ads_free_checkin_subtitle_progress, displayDay, target)
         }
@@ -299,16 +315,19 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
         } catch (e: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(playStoreWebUrl())))
         }
     }
+
+    /** market:// isn't renderable/clickable in most share targets (WhatsApp, SMS, etc.) - shared text always needs the plain https:// listing link. */
+    private fun playStoreWebUrl(): String = "https://play.google.com/store/apps/details?id=$packageName"
 
     private fun onShareClicked() {
         if (AdsFreeManager.isShareRewardClaimed(this)) return
 
         val sendIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, getString(R.string.ads_free_share_message))
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.ads_free_share_message, playStoreWebUrl()))
         }
 
         val receiverIntent = Intent(this, ShareCompletionReceiver::class.java)
@@ -355,7 +374,7 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
                 val lockedBgRes = if (isFinalStep) R.drawable.bg_ads_free_step_premium else R.drawable.bg_ads_free_step_locked
                 val lockedIconColorRes = if (isFinalStep) R.color.adsFreePremiumIcon else R.color.adsFreeStepLockedIcon
                 stepBinding.flStepCircle.setBackgroundResource(lockedBgRes)
-                stepBinding.ivStepIcon.setImageResource(if (isFinalStep) R.drawable.ic_ads_free_crown else R.drawable.ic_ads_free_lock)
+                stepBinding.ivStepIcon.setImageResource(if (isFinalStep) R.drawable.ic_premium_crown else R.drawable.ic_ads_free_lock)
                 stepBinding.ivStepIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this, lockedIconColorRes))
                 stepBinding.tvStepLabel.setTextColor(ContextCompat.getColor(this, R.color.adsFreeStepLockedIcon))
             }
@@ -408,5 +427,14 @@ class AdsFreeRewardActivity : AppCompatBaseActivity() {
         val hourMillis = TimeUnit.HOURS.toMillis(1)
         val hours = if (millis <= 0L) 0L else (millis + hourMillis - 1) / hourMillis
         return getString(R.string.ads_free_hours_short, hours)
+    }
+
+    /** Live HH:MM:SS countdown display - used for the ticking banked-time pill and the full-track countdown. */
+    private fun formatDuration(millis: Long): String {
+        val totalSeconds = (millis / 1000L).coerceAtLeast(0L)
+        val hours = totalSeconds / 3600L
+        val minutes = (totalSeconds % 3600L) / 60L
+        val seconds = totalSeconds % 60L
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
 }

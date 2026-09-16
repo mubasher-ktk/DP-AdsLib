@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.data.InterstitialMaster.interstitialAdMobHashMap
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
@@ -36,6 +37,10 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
     ) {
         mContextAdmob = context
         onAdLoadedCallBackAdmob = onAdLoadedCallAdmob
+
+        if (context != null && AdsFreeManager.isAdFreeActive(context)) {
+            return
+        }
 
         if (NetworkCheck.isNetworkAvailable(mContextAdmob)) {
             if (!interstitialAdMobHashMap.containsKey(nameFragment)) {
@@ -83,6 +88,12 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
         mContextAdmob = context
         isShowDialog = true
         this.onAdClosedCallBackAdmob = onAdClosedCallBackAdmob
+
+        if (context != null && AdsFreeManager.isAdFreeActive(context)) {
+            onAdClosedCallBackAdmob.invoke()
+            this.onAdClosedCallBackAdmob = null
+            return
+        }
 
         if (interstitialAdMobHashMap.containsKey(nameFragment)) {
             showAdmobInterstitial(onAdShowedCallBackAdmob, nameFragment)

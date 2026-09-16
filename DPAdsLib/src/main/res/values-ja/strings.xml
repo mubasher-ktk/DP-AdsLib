@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$d時間</string>
     <string name="ads_free_watch_video">動画を見る (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">本日分はすべて完了しました</string>
+    <string name="ads_free_all_done_countdown">%1$s後にまた来て、広告なし特典を受け取りましょう</string>
     <string name="ads_free_loading">動画をリクエスト中…</string>
     <string name="ads_free_no_reward">動画が最後まで再生されずに閉じられました。今回は特典はありません。</string>
     <string name="ads_free_network_unavailable">インターネットに接続されていません。</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">デイリーチェックイン</string>
     <string name="ads_free_checkin_subtitle_progress">%2$d日目のうち%1$d日目 • %2$d日目で+30分</string>
-    <string name="ads_free_checkin_subtitle_next">次のチェックインまで %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">%2$d日目のうち%1$d日目 • 次のチェックインまで %3$s</string>
     <string name="ads_free_checkin_action_go">チェックイン</string>
     <string name="ads_free_checkin_action_done">完了</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">共有する</string>
     <string name="ads_free_share_action_done">受け取り済み</string>
     <string name="ads_free_share_chooser_title">共有方法を選択</string>
-    <string name="ads_free_share_message">このアプリを広告なしで使っています。ぜひ試してみてください!</string>
+    <string name="ads_free_share_message">このアプリを広告なしで使っています。ぜひ試してみてください! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">広告なし30分が追加されました!</string>
+
+    <string name="label_go_ad_free">広告なしにする</string>
+    <string name="label_go_ad_free_subtitle">動画を見て、広告なしの時間を獲得</string>
+    <string name="label_ad_free_active_title">広告なしが有効です</string>
+    <string name="label_ad_free_active_subtitle">リワード動画を見て獲得</string>
+    <string name="label_time_remaining">残り時間</string>
+    <string name="label_extend">延長</string>
+    <string name="label_ad_free_not_active_title">広告なしは無効です</string>
+    <string name="label_ad_free_not_active_notice">動画を見て広告なし時間を獲得しましょう</string>
 </resources>

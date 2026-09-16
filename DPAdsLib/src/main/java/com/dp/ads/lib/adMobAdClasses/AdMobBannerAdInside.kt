@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.dp.ads.lib.BuildConfig
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.NetworkCheck
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -29,7 +30,11 @@ class AdMobBannerAdInside(
 
     init {
         currentActivity?.let {
-            if (NetworkCheck.isNetworkAvailable(it)) {
+            if (AdsFreeManager.isAdFreeActive(it)) {
+                Log.i("DP_ADS_TAG", "AdMob: BannerAd : Ad-free active, skipping load")
+                shimmerContainer.visibility = View.GONE
+                bannerContainer.visibility = View.GONE
+            } else if (NetworkCheck.isNetworkAvailable(it)) {
                 loadBannerAd(onAdFailed, onAdLoaded, onAdClicked)
             } else {
                 Log.i("DP_ADS_TAG", "AdMob: BannerAd : No Network Available")
@@ -56,6 +61,8 @@ class AdMobBannerAdInside(
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     Log.i("DP_ADS_TAG", "AdMob: BannerAd : onAdFailedToLoad: $error")
+                    shimmerContainer.visibility = View.GONE
+                    bannerContainer.visibility = View.GONE
                     onAdFailed?.invoke()
                     currentActivity?.let {
                         if (BuildConfig.DEBUG) {

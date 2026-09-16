@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dч</string>
     <string name="ads_free_watch_video">Смотреть видео (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">На сегодня всё выполнено</string>
+    <string name="ads_free_all_done_countdown">Возвращайтесь через %1$s, чтобы снова получить время без рекламы</string>
     <string name="ads_free_loading">Запрос видео…</string>
     <string name="ads_free_no_reward">Реклама закрыта до окончания. На этот раз без награды.</string>
     <string name="ads_free_network_unavailable">Нет подключения к интернету.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Ежедневный вход</string>
     <string name="ads_free_checkin_subtitle_progress">День %1$d из %2$d • +30 мин в день %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Следующий вход %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">День %1$d из %2$d • Следующий вход %3$s</string>
     <string name="ads_free_checkin_action_go">Отметиться</string>
     <string name="ads_free_checkin_action_done">Готово</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Поделиться</string>
     <string name="ads_free_share_action_done">Получено</string>
     <string name="ads_free_share_chooser_title">Поделиться через</string>
-    <string name="ads_free_share_message">Я использую это приложение без рекламы, попробуй тоже!</string>
+    <string name="ads_free_share_message">Я использую это приложение без рекламы, попробуй тоже! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">Добавлено 30 минут без рекламы!</string>
+
+    <string name="label_go_ad_free">Включить без рекламы</string>
+    <string name="label_go_ad_free_subtitle">Посмотрите видео, заработайте часы без рекламы</string>
+    <string name="label_ad_free_active_title">Режим без рекламы активен</string>
+    <string name="label_ad_free_active_subtitle">Получено за просмотр видео с наградой</string>
+    <string name="label_time_remaining">Осталось времени</string>
+    <string name="label_extend">Продлить</string>
+    <string name="label_ad_free_not_active_title">Режим без рекламы не активен</string>
+    <string name="label_ad_free_not_active_notice">Посмотрите видео, чтобы заработать время без рекламы</string>
 </resources>

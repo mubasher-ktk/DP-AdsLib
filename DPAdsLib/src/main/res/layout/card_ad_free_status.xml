@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clAdFreeStatus"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_go_ad_free_card"
+    android:elevation="@dimen/_4sdp"
+    android:padding="@dimen/_12sdp">
+
+    <FrameLayout
+        android:id="@+id/badgeAdFreeStatus"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/bg_go_ad_free_badge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_premium_crown" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtAdFreeStatusTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:fontFamily="@font/poppins_extrabold"
+        android:text="@string/label_ad_free_active_title"
+        android:textColor="@color/White"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtAdFreeStatusSubtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/badgeAdFreeStatus"
+        app:layout_constraintTop_toTopOf="@id/badgeAdFreeStatus"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/txtAdFreeStatusSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/label_ad_free_active_subtitle"
+        android:textColor="#D9FFFFFF"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@id/badgeAdFreeStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/badgeAdFreeStatus"
+        app:layout_constraintTop_toBottomOf="@+id/txtAdFreeStatusTitle" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/panelTimeRemaining"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="@drawable/bg_ad_free_time_panel"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/badgeAdFreeStatus">
+
+        <TextView
+            android:id="@+id/txtTimeRemainingLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_extrabold"
+            android:letterSpacing="0.08"
+            android:text="@string/label_time_remaining"
+            android:textAllCaps="true"
+            android:textColor="#B3FFFFFF"
+            android:textSize="9sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnExtend"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtTimeRemainingValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/poppins_extrabold"
+            android:fontFeatureSettings="tnum"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnExtend"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTimeRemainingLabel"
+            tools:text="03:42:15" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExtend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:background="@drawable/bg_go_ad_free_start_btn"
+            android:fontFamily="@font/poppins_extrabold"
+            android:foreground="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="@string/label_extend"
+            android:textAllCaps="false"
+            android:textColor="#0D5FC4"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.data.InterstitialMaster.interstitialMetaHashMap
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
@@ -35,6 +36,10 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
     ) {
         mContextMeta = context
         onAdLoadedCallBackMeta = onAdLoadedCallMeta
+
+        if (context != null && AdsFreeManager.isAdFreeActive(context)) {
+            return
+        }
 
         if (NetworkCheck.isNetworkAvailable(mContextMeta)) {
             if (!interstitialMetaHashMap.containsKey(nameFragment)) {
@@ -98,6 +103,12 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
         mContextMeta = context
         isShowDialog = true
         this.onAdClosedCallBackMeta = onAdClosedCallBackMeta
+
+        if (context != null && AdsFreeManager.isAdFreeActive(context)) {
+            onAdClosedCallBackMeta.invoke()
+            this.onAdClosedCallBackMeta = null
+            return
+        }
 
         if (interstitialMetaHashMap.containsKey(nameFragment)) {
             showMetaInterstitial(onAdShowedCallBackMeta, nameFragment)

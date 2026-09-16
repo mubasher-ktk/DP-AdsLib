@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dorë</string>
     <string name="ads_free_watch_video">Shiko videon (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Gjithçka u krye për sot</string>
+    <string name="ads_free_all_done_countdown">Kthehu pas %1$s për të rimarrë kohën pa reklama</string>
     <string name="ads_free_loading">Duke kërkuar videon…</string>
     <string name="ads_free_no_reward">Reklama u mbyll para se të mbaronte. Pa shpërblim kësaj here.</string>
     <string name="ads_free_network_unavailable">Nuk ka lidhje interneti.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Regjistrim ditor</string>
     <string name="ads_free_checkin_subtitle_progress">Dita %1$d nga %2$d • +30 min në ditën %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Regjistrimi tjetër %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Dita %1$d nga %2$d • Regjistrimi tjetër %3$s</string>
     <string name="ads_free_checkin_action_go">Regjistrohu</string>
     <string name="ads_free_checkin_action_done">Përfunduar</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Ndaje</string>
     <string name="ads_free_share_action_done">Marrë</string>
     <string name="ads_free_share_chooser_title">Ndaje nëpërmjet</string>
-    <string name="ads_free_share_message">Po përdor këtë aplikacion pa reklama, provoje edhe ti!</string>
+    <string name="ads_free_share_message">Po përdor këtë aplikacion pa reklama, provoje edhe ti! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">U shtuan 30 minuta pa reklama!</string>
+
+    <string name="label_go_ad_free">Kalo pa reklama</string>
+    <string name="label_go_ad_free_subtitle">Shiko një video, fito orë pa reklama</string>
+    <string name="label_ad_free_active_title">Pa reklama është aktiv</string>
+    <string name="label_ad_free_active_subtitle">Fituar duke shikuar video shpërblimi</string>
+    <string name="label_time_remaining">Koha e mbetur</string>
+    <string name="label_extend">Zgjato</string>
+    <string name="label_ad_free_not_active_title">Pa reklama nuk është aktiv</string>
+    <string name="label_ad_free_not_active_notice">Shiko një video për të fituar kohë pa reklama</string>
 </resources>

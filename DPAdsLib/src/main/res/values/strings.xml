@@ -20,6 +20,7 @@
     <string name="ads_free_step_hours">+%1$dh</string>
     <string name="ads_free_watch_video">Watch video (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">All done for today</string>
+    <string name="ads_free_all_done_countdown">Come back after %1$s to reclaim ad-free</string>
     <string name="ads_free_loading">Requesting video…</string>
     <string name="ads_free_no_reward">Ad closed before finishing. No reward this time.</string>
     <string name="ads_free_network_unavailable">No internet connection.</string>
@@ -37,7 +38,7 @@
 
     <string name="ads_free_checkin_title">Daily check-in</string>
     <string name="ads_free_checkin_subtitle_progress">Day %1$d of %2$d • +30m on day %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Next check-in %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Day %1$d of %2$d • Next check-in %3$s</string>
     <string name="ads_free_checkin_action_go">Check in</string>
     <string name="ads_free_checkin_action_done">Done</string>
 
@@ -53,7 +54,16 @@
     <string name="ads_free_share_action_go">Share</string>
     <string name="ads_free_share_action_done">Claimed</string>
     <string name="ads_free_share_chooser_title">Share via</string>
-    <string name="ads_free_share_message">I\'m using this app ad-free — you should try it too!</string>
+    <string name="ads_free_share_message">I\'m using this app ad-free — you should try it too! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">+30 minutes ad-free added!</string>
+
+    <string name="label_go_ad_free">Go ad-free</string>
+    <string name="label_go_ad_free_subtitle">Watch a short video, earn hours without ads</string>
+    <string name="label_ad_free_active_title">Ad-free is active</string>
+    <string name="label_ad_free_active_subtitle">Earned by watching reward videos</string>
+    <string name="label_time_remaining">Time remaining</string>
+    <string name="label_extend">Extend</string>
+    <string name="label_ad_free_not_active_title">Ad-free is not active</string>
+    <string name="label_ad_free_not_active_notice">Watch a short video to earn ad-free time</string>
 </resources>

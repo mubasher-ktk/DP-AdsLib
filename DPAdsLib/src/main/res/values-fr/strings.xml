@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dh</string>
     <string name="ads_free_watch_video">Regarder la vidéo (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Tout est fait pour aujourd\'hui</string>
+    <string name="ads_free_all_done_countdown">Revenez dans %1$s pour réclamer du temps sans publicité</string>
     <string name="ads_free_loading">Demande de la vidéo…</string>
     <string name="ads_free_no_reward">Publicité fermée avant la fin. Aucune récompense cette fois.</string>
     <string name="ads_free_network_unavailable">Aucune connexion internet.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Connexion quotidienne</string>
     <string name="ads_free_checkin_subtitle_progress">Jour %1$d sur %2$d • +30 min le jour %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Prochaine connexion %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Jour %1$d sur %2$d • Prochaine connexion %3$s</string>
     <string name="ads_free_checkin_action_go">Se connecter</string>
     <string name="ads_free_checkin_action_done">Terminé</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Partager</string>
     <string name="ads_free_share_action_done">Réclamé</string>
     <string name="ads_free_share_chooser_title">Partager via</string>
-    <string name="ads_free_share_message">J utilise cette application sans publicité, essayez la aussi !</string>
+    <string name="ads_free_share_message">J utilise cette application sans publicité, essayez la aussi ! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">30 minutes sans publicité ajoutées !</string>
+
+    <string name="label_go_ad_free">Passer sans publicité</string>
+    <string name="label_go_ad_free_subtitle">Regardez une vidéo, gagnez des heures sans publicité</string>
+    <string name="label_ad_free_active_title">Le mode sans publicité est actif</string>
+    <string name="label_ad_free_active_subtitle">Obtenu en regardant des vidéos de récompense</string>
+    <string name="label_time_remaining">Temps restant</string>
+    <string name="label_extend">Prolonger</string>
+    <string name="label_ad_free_not_active_title">Le mode sans publicité n est pas actif</string>
+    <string name="label_ad_free_not_active_notice">Regardez une vidéo pour gagner du temps sans publicité</string>
 </resources>

@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dघं</string>
     <string name="ads_free_watch_video">वीडियो देखें (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">आज के लिए सब पूरा हो गया</string>
+    <string name="ads_free_all_done_countdown">%1$s बाद वापस आएं और विज्ञापन-मुक्त समय फिर से प्राप्त करें</string>
     <string name="ads_free_loading">वीडियो का अनुरोध किया जा रहा है…</string>
     <string name="ads_free_no_reward">वीडियो पूरा होने से पहले बंद हुआ। इस बार कोई पुरस्कार नहीं।</string>
     <string name="ads_free_network_unavailable">इंटरनेट कनेक्शन नहीं है।</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">दैनिक चेक-इन</string>
     <string name="ads_free_checkin_subtitle_progress">दिन %1$d का %2$d • दिन %2$d पर +30 मिनट</string>
-    <string name="ads_free_checkin_subtitle_next">अगला चेक-इन %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">दिन %1$d का %2$d • अगला चेक-इन %3$s</string>
     <string name="ads_free_checkin_action_go">चेक-इन करें</string>
     <string name="ads_free_checkin_action_done">पूर्ण</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">साझा करें</string>
     <string name="ads_free_share_action_done">प्राप्त</string>
     <string name="ads_free_share_chooser_title">इसके माध्यम से साझा करें</string>
-    <string name="ads_free_share_message">मैं यह ऐप विज्ञापन-मुक्त उपयोग कर रहा हूं, आप भी इसे आज़माएं!</string>
+    <string name="ads_free_share_message">मैं यह ऐप विज्ञापन-मुक्त उपयोग कर रहा हूं, आप भी इसे आज़माएं! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">30 मिनट विज्ञापन-मुक्त समय जोड़ा गया!</string>
+
+    <string name="label_go_ad_free">विज्ञापन-मुक्त बनें</string>
+    <string name="label_go_ad_free_subtitle">एक वीडियो देखें, बिना विज्ञापन घंटे कमाएं</string>
+    <string name="label_ad_free_active_title">विज्ञापन-मुक्त सक्रिय है</string>
+    <string name="label_ad_free_active_subtitle">रिवॉर्ड वीडियो देखकर अर्जित</string>
+    <string name="label_time_remaining">शेष समय</string>
+    <string name="label_extend">बढ़ाएं</string>
+    <string name="label_ad_free_not_active_title">विज्ञापन-मुक्त सक्रिय नहीं है</string>
+    <string name="label_ad_free_not_active_notice">विज्ञापन-मुक्त समय पाने के लिए एक वीडियो देखें</string>
 </resources>

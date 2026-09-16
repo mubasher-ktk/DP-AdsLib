@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
 import com.google.android.gms.ads.AdError
@@ -52,6 +53,10 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
         }
 
         if (currentActivity != null) {
+            if (AdsFreeManager.isAdFreeActive(currentActivity!!)) {
+                onAdFailed?.invoke()
+                return
+            }
             if (!NetworkCheck.isNetworkAvailable(currentActivity)) {
                 return
             }
