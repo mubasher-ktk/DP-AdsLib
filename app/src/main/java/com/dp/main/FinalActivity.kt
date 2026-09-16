@@ -64,7 +64,7 @@ class FinalActivity : AppCompatActivity() {
 
         // Network switch - same remoteConfigData map/convention every other slot uses.
         remoteConfigData["REWARDED_ADFREE"] = true
-        remoteConfigData["REWARDED_ADFREE_MED"] = "META"
+        remoteConfigData["REWARDED_ADFREE_MED"] = "ADMOB"
 
         AdsFreeManager.launch(this)
     }

@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$du</string>
     <string name="ads_free_watch_video">Kyk video (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Alles klaar vir vandag</string>
+    <string name="ads_free_all_done_countdown">Kom terug na %1$s om weer advertensie-vry te wees</string>
     <string name="ads_free_loading">Vra video aan…</string>
     <string name="ads_free_no_reward">Advertensie is gesluit voor voltooiing. Geen beloning hierdie keer nie.</string>
     <string name="ads_free_network_unavailable">Geen internetverbinding nie.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Daaglikse inteken</string>
     <string name="ads_free_checkin_subtitle_progress">Dag %1$d van %2$d • +30 min op dag %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Volgende inteken %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Dag %1$d van %2$d • Volgende inteken %3$s</string>
     <string name="ads_free_checkin_action_go">Teken in</string>
     <string name="ads_free_checkin_action_done">Klaar</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Deel</string>
     <string name="ads_free_share_action_done">Ontvang</string>
     <string name="ads_free_share_chooser_title">Deel via</string>
-    <string name="ads_free_share_message">Ek gebruik hierdie app advertensie-vry, probeer dit ook!</string>
+    <string name="ads_free_share_message">Ek gebruik hierdie app advertensie-vry, probeer dit ook! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">30 minute advertensie-vry bygevoeg!</string>
+
+    <string name="label_go_ad_free">Gaan advertensie-vry</string>
+    <string name="label_go_ad_free_subtitle">Kyk n video, verdien ure sonder advertensies</string>
+    <string name="label_ad_free_active_title">Advertensie-vry is aktief</string>
+    <string name="label_ad_free_active_subtitle">Verdien deur beloningsvideos te kyk</string>
+    <string name="label_time_remaining">Oorblywende tyd</string>
+    <string name="label_extend">Verleng</string>
+    <string name="label_ad_free_not_active_title">Advertensie-vry is nie aktief nie</string>
+    <string name="label_ad_free_not_active_notice">Kyk n video om advertensie-vrye tyd te verdien</string>
 </resources>

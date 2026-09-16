@@ -43,7 +43,7 @@ object AdsFreeManager {
         3L * HOUR_MILLIS,
         6L * HOUR_MILLIS,
         12L * HOUR_MILLIS,
-        DAY_MILLIS
+        12L * HOUR_MILLIS
     )
 
     fun getTotalSteps(): Int = stepRewardsMillis.size
@@ -57,6 +57,7 @@ object AdsFreeManager {
 
     fun getStepsCompletedToday(context: Context): Int {
         resetStepsIfNewDay(context)
+        decayStepsToMatchBank(context)
         return PrefHelper(context).getIntDefault(PREF_STEPS_COMPLETED, 0)
     }
 
@@ -67,6 +68,7 @@ object AdsFreeManager {
      */
     fun grantNextStepReward(context: Context): Long {
         resetStepsIfNewDay(context)
+        decayStepsToMatchBank(context)
         val prefHelper = PrefHelper(context)
         val completed = prefHelper.getIntDefault(PREF_STEPS_COMPLETED, 0)
         if (completed >= stepRewardsMillis.size) return 0L
@@ -80,6 +82,10 @@ object AdsFreeManager {
         return rewardMillis
     }
 
+    /**
+     * Once the full ladder (all steps) is completed, the track stays completed until the next
+     * calendar day - the only cap left in the system. This function does NOT touch that case.
+     */
     private fun resetStepsIfNewDay(context: Context) {
         val prefHelper = PrefHelper(context)
         val todayStamp = System.currentTimeMillis() / DAY_MILLIS
@@ -88,6 +94,47 @@ object AdsFreeManager {
             prefHelper.putLong(PREF_STEPS_DAY_STAMP, todayStamp)
             prefHelper.putInt(PREF_STEPS_COMPLETED, 0)
         }
+    }
+
+    /**
+     * Mid-cycle only (0 < completed < total): each tick's ticked-step count is recomputed as the
+     * largest N whose cumulative reward sum (tier 1, tier 1+2, tier 1+2+3, ...) still fits under
+     * the currently banked time - so ticks fall away highest-tier-first as the bank drains,
+     * rather than waiting for the whole bank to hit zero before resetting everything at once.
+     * Once the full ladder is completed, this no longer applies - only resetStepsIfNewDay governs
+     * that state.
+     */
+    private fun decayStepsToMatchBank(context: Context) {
+        val prefHelper = PrefHelper(context)
+        val completed = prefHelper.getIntDefault(PREF_STEPS_COMPLETED, 0)
+        if (completed !in 1 until stepRewardsMillis.size) return
+
+        val remaining = getRemainingMillis(context)
+        // Tier i only needs the PRIOR tiers' cumulative sum to still be exceeded - not its own
+        // full size too - so a just-earned tier stays ticked immediately (remaining > 0 is enough
+        // for tier 1), and only falls away once the bank drops to what the earlier tiers alone
+        // would have needed.
+        var cumulativeBefore = 0L
+        var effectiveCompleted = 0
+        for (i in 0 until completed) {
+            if (remaining > cumulativeBefore) {
+                effectiveCompleted = i + 1
+            } else {
+                break
+            }
+            cumulativeBefore += stepRewardsMillis[i]
+        }
+
+        if (effectiveCompleted != completed) {
+            prefHelper.putInt(PREF_STEPS_COMPLETED, effectiveCompleted)
+        }
+    }
+
+    /** Millis remaining until the milestone track's calendar-day reset (i.e. the next UTC midnight). */
+    fun millisUntilStepsReset(context: Context): Long {
+        val todayStamp = System.currentTimeMillis() / DAY_MILLIS
+        val nextDayStampMillis = (todayStamp + 1L) * DAY_MILLIS
+        return (nextDayStampMillis - System.currentTimeMillis()).coerceAtLeast(0L)
     }
 
     /** Extends the banked ad-free expiry by [millis] without touching the milestone-step counter. */

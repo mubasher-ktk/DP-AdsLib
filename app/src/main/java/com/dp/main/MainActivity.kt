@@ -472,7 +472,7 @@ class MainActivity : AppCompatActivity() {
     private fun saveAllValues() {
         val editor = getSharedPreferences("RemoteConfig", MODE_PRIVATE).edit()
         // DP-Ads-Visibility-Config
-        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH, "INTERSTITIAL")
+        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH, "RESUME")
         editor.putBoolean(RemoteConfigConstTest.BANNER_SPLASH, true)
         editor.putBoolean(RemoteConfigConstTest.RESUME_OVERALL, true)
         editor.putBoolean(RemoteConfigConstTest.NATIVE_LANGUAGE_1, true)

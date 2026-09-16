@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.ads.mediation.admob.AdMobAdapter
@@ -30,7 +31,7 @@ object AdmobCollapsibleBanner {
         shimmerLayoutBanner: ShimmerFrameLayout,
         adSize: AdSize
     ) {
-        if (NetworkCheck.isNetworkAvailable(activity) && remoteConfig) {
+        if (NetworkCheck.isNetworkAvailable(activity) && remoteConfig && !AdsFreeManager.isAdFreeActive(activity)) {
             if (collapsibleBannerAdMobHashMap!!.containsKey(adName)) {
                 val collapsibleAdView: AdView? = collapsibleBannerAdMobHashMap!![adName]
                 shimmerLayoutBanner.stopShimmer()

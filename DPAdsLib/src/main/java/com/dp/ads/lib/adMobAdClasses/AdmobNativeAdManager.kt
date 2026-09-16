@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.NetworkCheck
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
@@ -43,6 +44,13 @@ object AdmobNativeAdManager {
 
         if (mContext == null) {
             Log.i("DP_ADS_TAG", "Context is null; cannot load ad.")
+            onAdFailed?.invoke()
+            return
+        }
+
+        if (AdsFreeManager.isAdFreeActive(mContext)) {
+            adContainer?.visibility = View.GONE
+            Log.i("DP_ADS_TAG", "Native : Admob : Ad-free active, skipping load")
             onAdFailed?.invoke()
             return
         }

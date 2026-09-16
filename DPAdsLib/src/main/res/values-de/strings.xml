@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dStd</string>
     <string name="ads_free_watch_video">Video ansehen (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Für heute alles erledigt</string>
+    <string name="ads_free_all_done_countdown">Komm nach %1$s wieder, um erneut werbefrei zu sein</string>
     <string name="ads_free_loading">Video wird angefordert…</string>
     <string name="ads_free_no_reward">Anzeige vor dem Ende geschlossen. Diesmal keine Prämie.</string>
     <string name="ads_free_network_unavailable">Keine Internetverbindung.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Tägliches Einloggen</string>
     <string name="ads_free_checkin_subtitle_progress">Tag %1$d von %2$d • +30 Min. am Tag %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Nächste Anmeldung %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Tag %1$d von %2$d • Nächste Anmeldung %3$s</string>
     <string name="ads_free_checkin_action_go">Einloggen</string>
     <string name="ads_free_checkin_action_done">Erledigt</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Teilen</string>
     <string name="ads_free_share_action_done">Erhalten</string>
     <string name="ads_free_share_chooser_title">Teilen über</string>
-    <string name="ads_free_share_message">Ich nutze diese App werbefrei, probier sie auch aus!</string>
+    <string name="ads_free_share_message">Ich nutze diese App werbefrei, probier sie auch aus! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">+30 Minuten werbefrei hinzugefügt!</string>
+
+    <string name="label_go_ad_free">Werbefrei werden</string>
+    <string name="label_go_ad_free_subtitle">Video ansehen, Stunden ohne Werbung verdienen</string>
+    <string name="label_ad_free_active_title">Werbefrei ist aktiv</string>
+    <string name="label_ad_free_active_subtitle">Erhalten durch das Ansehen von Belohnungsvideos</string>
+    <string name="label_time_remaining">Verbleibende Zeit</string>
+    <string name="label_extend">Verlängern</string>
+    <string name="label_ad_free_not_active_title">Werbefrei ist nicht aktiv</string>
+    <string name="label_ad_free_not_active_notice">Video ansehen, um werbefreie Zeit zu erhalten</string>
 </resources>

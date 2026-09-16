@@ -21,6 +21,7 @@
     <string name="ads_free_step_hours">+%1$dh</string>
     <string name="ads_free_watch_video">Ver video (%1$d/%2$d)</string>
     <string name="ads_free_all_done_today">Todo listo por hoy</string>
+    <string name="ads_free_all_done_countdown">Vuelve en %1$s para reclamar tiempo sin anuncios</string>
     <string name="ads_free_loading">Solicitando video…</string>
     <string name="ads_free_no_reward">El anuncio se cerró antes de terminar. Sin recompensa esta vez.</string>
     <string name="ads_free_network_unavailable">Sin conexión a internet.</string>
@@ -38,7 +39,7 @@
 
     <string name="ads_free_checkin_title">Registro diario</string>
     <string name="ads_free_checkin_subtitle_progress">Día %1$d de %2$d • +30 min el día %2$d</string>
-    <string name="ads_free_checkin_subtitle_next">Próximo registro %1$s</string>
+    <string name="ads_free_checkin_subtitle_next">Día %1$d de %2$d • Próximo registro %3$s</string>
     <string name="ads_free_checkin_action_go">Registrarse</string>
     <string name="ads_free_checkin_action_done">Hecho</string>
 
@@ -54,7 +55,16 @@
     <string name="ads_free_share_action_go">Compartir</string>
     <string name="ads_free_share_action_done">Reclamado</string>
     <string name="ads_free_share_chooser_title">Compartir vía</string>
-    <string name="ads_free_share_message">¡Estoy usando esta app sin anuncios, deberías probarla también!</string>
+    <string name="ads_free_share_message">¡Estoy usando esta app sin anuncios, deberías probarla también! %1$s</string>
 
     <string name="ads_free_bonus_reward_granted">¡Se añadieron 30 minutos sin anuncios!</string>
+
+    <string name="label_go_ad_free">Activar sin anuncios</string>
+    <string name="label_go_ad_free_subtitle">Mira un video, gana horas sin anuncios</string>
+    <string name="label_ad_free_active_title">Sin anuncios está activo</string>
+    <string name="label_ad_free_active_subtitle">Ganado al ver videos de recompensa</string>
+    <string name="label_time_remaining">Tiempo restante</string>
+    <string name="label_extend">Extender</string>
+    <string name="label_ad_free_not_active_title">Sin anuncios no está activo</string>
+    <string name="label_ad_free_not_active_notice">Mira un video para ganar tiempo sin anuncios</string>
 </resources>

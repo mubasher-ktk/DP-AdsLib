@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.dp.ads.lib.BuildConfig
+import com.dp.ads.lib.callingClasses.AdsFreeManager
 import com.dp.ads.lib.utils.NetworkCheck
 import com.facebook.ads.Ad
 import com.facebook.ads.AdError
@@ -28,7 +29,11 @@ class MetaBannerAdSplash(
 
     init {
         currentActivity?.let {
-            if (NetworkCheck.isNetworkAvailable(it)) {
+            if (AdsFreeManager.isAdFreeActive(it)) {
+                Log.i("DP_ADS_TAG", "Meta: BannerAd : Ad-free active, skipping load")
+                shimmerContainer.visibility = View.GONE
+                bannerContainer.visibility = View.GONE
+            } else if (NetworkCheck.isNetworkAvailable(it)) {
                 loadBannerAd(onAdFailed, onAdLoaded, onAdClicked)
             } else {
                 Log.i("DP_ADS_TAG", "Meta: BannerAd : No Network Available")
@@ -49,6 +54,8 @@ class MetaBannerAdSplash(
         val adListener = object : AdListener {
             override fun onError(ad: Ad?, adError: AdError) {
                 Log.i("DP_ADS_TAG", "Meta: BannerAd : onAdFailedToLoad: ${adError.errorMessage}")
+                shimmerContainer.visibility = View.GONE
+                bannerContainer.visibility = View.GONE
                 onAdFailed?.invoke()
                 currentActivity.let {
                     if (BuildConfig.DEBUG) {
