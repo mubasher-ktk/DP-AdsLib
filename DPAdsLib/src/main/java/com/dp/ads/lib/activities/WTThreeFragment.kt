@@ -21,8 +21,6 @@ import com.dp.ads.lib.databinding.FragmentWTThreeBinding
 import com.dp.ads.lib.data.WalkThroughItem
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralInterstitialInside
 import com.dp.ads.lib.utils.NetworkCheck
 import com.dp.ads.lib.utils.PrefHelper
 import kotlinx.coroutines.Dispatchers
@@ -82,35 +80,10 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     "META" -> {
                         showMetaWTThreeInterstitial()
                     }
-                    "MINTEGRAL" -> {
-                        showMintegralWTThreeInterstitial()
-                    }
                 }
             } else {
                 onNextClick()
             }
-        }
-    }
-
-    private fun showMintegralWTThreeInterstitial() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_INTERSTITIAL_LETS_START")?.split("-")?.size == 2) {
-            MintegralInterstitialInside.showIfAvailableOrLoadMintegralInterstitial(
-                context = requireActivity(),
-                nameFragment = "WALKTHROUGH_3",
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_INTERSTITIAL_LETS_START").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_INTERSTITIAL_LETS_START").split("-")[1],
-                onAdClosedCallback = {
-                    Log.i("DP_ADS_TAG","Interstitial : WALKTHROUGH_3 : onAdClosedCallBackAdmob()")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        onNextClick()
-                    },300)
-                },
-                onAdShowedCallback = {
-                    Log.i("DP_ADS_TAG", "Interstitial : WALKTHROUGH_3 : onAdShowedCallBackAdmob()")
-                }
-            )
-        } else {
-            Log.e("DP_ADS_TAG","Mintegral: Interstitial ad ID not found for WALKTHROUGH_3")
         }
     }
 
@@ -173,10 +146,6 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     binding.nativeAdContainerAd.visibility = View.VISIBLE
                     showMetaWTThreeNatives()
                 }
-                "MINTEGRAL" -> {
-                    binding.nativeAdContainerAd.visibility = View.VISIBLE
-                    showMintegralWTThreeBanner()
-                }
             }
         } else {
             binding.nativeAdContainerAd.visibility = View.GONE
@@ -223,32 +192,6 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     Log.i("DP_ADS_TAG", "WALKTHROUGH_3: Admob: onAdLoaded()")
                 }
             )
-        }
-    }
-    private fun showMintegralWTThreeBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_WALKTHROUGH_3")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = requireActivity(),
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_3").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_3").split("-")[1],
-                adName = "WALKTHROUGH_3",
-                remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_3").toString().toBoolean(),
-                populateView = true,
-                bannerContainer = binding.bannerAdMint,
-                shimmerContainer = binding.shimmerLayout,
-                onAdFailed = {
-//                    findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.GONE
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_3: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    binding.shimmerLayout.stopShimmer()
-                    binding.shimmerLayout.visibility = View.INVISIBLE
-                    binding.bannerAdMint.visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_3: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY WALKTHROUGH_3 Incorrect ID Format (placementID-unitID)")
         }
     }
 }

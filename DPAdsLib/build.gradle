@@ -55,7 +55,6 @@ dependencies {
 
     // Ads Network
     implementation libs.play.services.ads
-    implementation libs.mbridge.android.sdk
     implementation libs.unity.ads
     implementation libs.androidx.lifecycle.process
     implementation libs.audience.network.sdk

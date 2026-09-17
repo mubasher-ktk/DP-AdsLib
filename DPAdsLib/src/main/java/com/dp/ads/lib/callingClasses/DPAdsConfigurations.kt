@@ -7,9 +7,6 @@ import com.dp.ads.lib.adMobAdClasses.AdmobResumeAdSplash
 import com.dp.ads.lib.adMobAdClasses.AdmobNativeAdManager
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialAdSplash
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralInterstitialAdSplash
-import com.dp.ads.lib.mintegralAdClasses.MintegralResumeAdSplash
 import com.dp.ads.lib.utils.NetworkCheck
 import com.dp.ads.lib.utils.PrefHelper
 import com.dp.ads.lib.utilsGoogleAdsConsent.ConsentConfigurations
@@ -23,9 +20,7 @@ class DPAdsConfigurations private constructor() {
     var firstOpenFlowAdIds: HashMap<String, String> = HashMap()
     var shouldShowStartScreens: String = ""
     lateinit var admobResumeAdSplash: AdmobResumeAdSplash
-    private lateinit var mintegralResumeAdSplash: MintegralResumeAdSplash
     private lateinit var admobInterstitialAdSplash: AdmobInterstitialAdSplash
-    private lateinit var mintegralInterstitialAdSplash: MintegralInterstitialAdSplash
     private lateinit var metaInterstitialAdSplash: MetaInterstitialAdSplash
 
     fun setRemoteConfigData(activityContext: Activity, myRemoteConfigData: HashMap<String, Any>/*, firstOpenFlowAdIdsRefreshed: HashMap<String, String>*/) {
@@ -43,9 +38,6 @@ class DPAdsConfigurations private constructor() {
                         myRemoteConfigData.getValue("RESUME_INTER_SPLASH_MED") == "ADMOB" -> {
                             showAdMobResumeAdSplash(activityContext)
                         }
-                        myRemoteConfigData.getValue("RESUME_INTER_SPLASH_MED") == "MINTEGRAL" -> {
-                            showMintegralResumeAdSplash(activityContext)
-                        }
                     }
                 }
                 myRemoteConfigData.getValue("RESUME_INTER_SPLASH") == "INTERSTITIAL" -> {
@@ -55,9 +47,6 @@ class DPAdsConfigurations private constructor() {
                         }
                         myRemoteConfigData.getValue("RESUME_INTER_SPLASH_MED") == "META" -> {
                             showMetaInterstitialAdSplash(activityContext)
-                        }
-                        myRemoteConfigData.getValue("RESUME_INTER_SPLASH_MED") == "MINTEGRAL" -> {
-                            showMintegralInterstitialAdSplash(activityContext)
                         }
                     }
                 }
@@ -74,9 +63,6 @@ class DPAdsConfigurations private constructor() {
                         myRemoteConfigData.getValue("NATIVE_LANGUAGE_1_MED") == "META" -> {
                             loadMetaLanguageScreenOneNatives(activityContext)
                         }
-                        myRemoteConfigData.getValue("NATIVE_LANGUAGE_1_MED") == "MINTEGRAL" -> {
-                            loadMintegralLanguageScreenOneBanner(activityContext)
-                        }
                     }
                 }
 
@@ -87,9 +73,6 @@ class DPAdsConfigurations private constructor() {
                         }
                         myRemoteConfigData.getValue("NATIVE_LANGUAGE_2_MED") == "META" -> {
                             loadMetaLanguageScreenDupNatives(activityContext)
-                        }
-                        myRemoteConfigData.getValue("NATIVE_LANGUAGE_2_MED") == "MINTEGRAL" -> {
-                            loadMintegralLanguageScreenDupBanner(activityContext)
                         }
                     }
                 }
@@ -117,19 +100,6 @@ class DPAdsConfigurations private constructor() {
             populateView = false
         )
     }
-    private fun loadMintegralLanguageScreenOneBanner(activityContext: Activity) {
-        if (firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_1").split("-").size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = activityContext,
-                placementId = firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_1").split("-")[0],
-                unitId = firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_1").split("-")[1],
-                adName = "NATIVE_LANGUAGE_1",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY LANGUAGE_1 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
     private fun loadAdmobLanguageScreenDupNatives(mContext: Activity) {
         AdmobNativeAdManager.requestOrShowAd(
             mContext = mContext,
@@ -148,19 +118,6 @@ class DPAdsConfigurations private constructor() {
             populateView = false
         )
     }
-    private fun loadMintegralLanguageScreenDupBanner(activityContext: Activity) {
-        if (firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_2").split("-").size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = activityContext,
-                placementId = firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_2").split("-")[0],
-                unitId = firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_2").split("-")[1],
-                adName = "NATIVE_LANGUAGE_2",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY LANGUAGE_2 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
     private fun showMetaInterstitialAdSplash(activityContext: Activity) {
         activityContext.let {
             metaInterstitialAdSplash = MetaInterstitialAdSplash(activityContext, firstOpenFlowAdIds.getValue("META_SPLASH_INTERSTITIAL"),
@@ -193,25 +150,6 @@ class DPAdsConfigurations private constructor() {
             )
         }
     }
-    private fun showMintegralResumeAdSplash(activityContext: Activity) {
-        activityContext.let {
-            if (firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_RESUME").split("-").size == 2) {
-                mintegralResumeAdSplash = MintegralResumeAdSplash(
-                    activity = activityContext,
-                    placementId = firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_RESUME").split("-")[0],
-                    unitId = firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_RESUME").split("-")[1],
-                    canSkip = true,
-                    timeoutSkip = 5,
-                    onAdDismissed = { proceedNext(activityContext) },
-                    onAdFailed = { proceedNext(activityContext) },
-                    onAdTimeout = { proceedNext(activityContext) },
-                    onAdShowed = { }
-                )
-            } else {
-                Log.i("DP_ADS_TAG","Interstitial : Mintegral : May SPLASH_Incorrect ID Format (placementID-unitID)")
-            }
-        }
-    }
     private fun showAdMobInterstitialAdSplash(activityContext: Activity) {
         activityContext.let {
             admobInterstitialAdSplash = AdmobInterstitialAdSplash(activityContext, firstOpenFlowAdIds.getValue("ADMOB_SPLASH_INTERSTITIAL"),
@@ -228,30 +166,6 @@ class DPAdsConfigurations private constructor() {
             )
         }
     }
-    private fun showMintegralInterstitialAdSplash(activityContext: Activity) {
-        activityContext.let {
-            if (firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_INTERSTITIAL").split("-").size == 2) {
-                mintegralInterstitialAdSplash = MintegralInterstitialAdSplash(
-                    activityContext,
-                    placementId = firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_INTERSTITIAL").split("-")[0],
-                    unitId = firstOpenFlowAdIds.getValue("MINTEGRAL_SPLASH_INTERSTITIAL").split("-")[1],
-                    onAdDismissed = {
-                        proceedNext(activityContext)
-                    },
-                    onAdFailed = {
-                        proceedNext(activityContext)
-                    },
-                    onAdTimeout = {
-                        proceedNext(activityContext)
-                    },
-                    onAdShowed = {}
-                )
-            } else {
-                Log.i("DP_ADS_TAG","Interstitial : Mintegral : May SPLASH_Incorrect ID Format (placementID-unitID)")
-            }
-        }
-    }
-
     private fun proceedNext(activityContext: Activity) {
         if (PrefHelper(activityContext).getBooleanDefault(shouldShowStartScreens, default = false)) {
             DPAdsManager.notifyFlowFinished()

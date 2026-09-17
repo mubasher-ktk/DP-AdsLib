@@ -15,7 +15,6 @@ import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.databinding.FragmentWalkThroughFullScreenAdBinding
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdFullScreen
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerFullScreen
 
 class WTFullScreenAdFragment : Fragment() {
     private lateinit var binding: FragmentWalkThroughFullScreenAdBinding
@@ -73,11 +72,6 @@ class WTFullScreenAdFragment : Fragment() {
                     binding.shimmerLayoutFMeta.root.visibility = View.VISIBLE
                     showMetaWTFullNatives()
                 }
-
-                "MINTEGRAL" -> {
-                    binding.shimmerLayoutFAdmob.root.visibility = View.VISIBLE
-                    showMintegralWTFullBanner()
-                }
             }
         } else {
             binding.nativeAdContainer.visibility = View.GONE
@@ -132,30 +126,4 @@ class WTFullScreenAdFragment : Fragment() {
             } ?: Log.w("WTOneFragment", "Meta_NATIVE_WALKTHROUGH_FULL_SCREEN ad ID is missing.")
     }
 
-    private fun showMintegralWTFullBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR")?.split("-")?.size == 2) {
-            MintegralBannerFullScreen.requestBannerAd(
-                activity = requireActivity(),
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR").split("-")[1],
-                adName = "WALKTHROUGH_FULL_SCREEN",
-                remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_FULLSCR").toString().toBoolean(),
-                populateView = true,
-                bannerContainer = binding.bannerAdF,
-                shimmerContainer = binding.shimmerLayoutFAdmob.root,
-                onAdFailed = {
-                    binding.bannerAdF.visibility = View.GONE
-                    binding.ivClose.performClick()
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    binding.shimmerLayoutFAdmob.root.visibility = View.GONE
-                    binding.bannerAdF.visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_FULL_SCREEN: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY WT_FULL_ Incorrect ID Format (placementID-unitID)")
-        }
-    }
 }

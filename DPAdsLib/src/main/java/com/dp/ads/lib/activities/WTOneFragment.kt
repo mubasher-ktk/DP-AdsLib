@@ -22,9 +22,6 @@ import com.dp.ads.lib.data.WalkThroughItem
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdFullScreen
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerFullScreen
-import com.dp.ads.lib.mintegralAdClasses.MintegralInterstitialInside
 import com.dp.ads.lib.utils.NetworkCheck
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,7 +46,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_2_MED")) {
                 "ADMOB" -> loadAdmobWTTwoNatives()
                 "META" -> loadMetaWTTwoNatives()
-                "MINTEGRAL" -> loadMintegralWTTwoBanner()
             }
         }
 
@@ -58,7 +54,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_WALKTHROUGH_FULLSCR_MED")) {
                 "ADMOB" -> loadAdmobWTFullNatives()
                 "META" -> loadMetaWTFullNatives()
-                "MINTEGRAL" -> loadMintegralWTFullBanner()
             }
         }
 
@@ -70,9 +65,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
                 }
                 "META" -> {
                     loadMetaWTThreeInterstitial()
-                }
-                "MINTEGRAL" -> {
-                    loadMintegralWTThreeInterstitial()
                 }
             }
         }
@@ -141,22 +133,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             Log.e("DP_ADS_TAG","Admob: Interstitial ad ID not found for WALKTHROUGH_3")
         }
     }
-    private fun loadMintegralWTThreeInterstitial() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_INTERSTITIAL_LETS_START")?.split("-")?.size == 2) {
-            MintegralInterstitialInside.checkAndLoadMintegralInterstitial(
-                context = requireActivity(),
-                nameFragment = "WALKTHROUGH_3",
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_INTERSTITIAL_LETS_START").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_INTERSTITIAL_LETS_START").split("-")[1],
-                onAdLoadedCallback = {
-                    Log.i("DP_ADS_TAG","Mintegral: Interstitial : WALKTHROUGH_3 : adLoaded()")
-                }
-            )
-        } else {
-            Log.e("DP_ADS_TAG","Mintegral: Interstitial ad ID not found for WALKTHROUGH_3")
-        }
-    }
-
     private fun loadAdmobWTTwoNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_WALKTHROUGH_2")
         if (adId != null) {
@@ -183,31 +159,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             )
         } else {
             Log.e("DP_ADS_TAG","Meta ad ID not found for WALKTHROUGH_2")
-        }
-    }
-    private fun loadMintegralWTTwoBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_WALKTHROUGH_2")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = requireActivity(),
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_2").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_2").split("-")[1],
-                adName = "WALKTHROUGH_2",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY WALKTHROUGH_2 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
-    private fun loadMintegralWTFullBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR")?.split("-")?.size == 2) {
-            MintegralBannerFullScreen.requestBannerAd(
-                activity = requireActivity(),
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR").split("-")[1],
-                adName = "WALKTHROUGH_FULL_SCREEN",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY WT_FULL_Incorrect ID Format (placementID-unitID)")
         }
     }
     private fun loadAdmobWTFullNatives() {
@@ -266,10 +217,6 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
                     binding.nativeAdContainerAd.visibility = View.VISIBLE
                     showMetaWTOneNatives()
                 }
-                "MINTEGRAL" -> {
-                    binding.nativeAdContainerAd.visibility = View.VISIBLE
-                    showMintegralWTOneBanner()
-                }
             }
         } else {
             binding.nativeAdContainerAd.visibility = View.GONE
@@ -318,32 +265,4 @@ class WTOneFragment(val item: WalkThroughItem) : Fragment() {
             )
         } ?: Log.w("WTOneFragment", "ADMOB_NATIVE_WALKTHROUGH_1 ad ID is missing.")
     }
-    private fun showMintegralWTOneBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_WALKTHROUGH_1")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = requireActivity(),
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_1").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_WALKTHROUGH_1").split("-")[1],
-                adName = "WALKTHROUGH_1",
-                remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_WALKTHROUGH_1").toString().toBoolean(),
-                populateView = true,
-                bannerContainer = binding.bannerAdMint,
-                shimmerContainer = binding.shimmerLayout,
-                onAdFailed = {
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_1: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    binding.shimmerLayout.stopShimmer()
-                    binding.shimmerLayout.visibility = View.INVISIBLE
-                    binding.bannerAdMint.visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "WALKTHROUGH_1: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY WALKTHROUGH_1 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
-
-
 }

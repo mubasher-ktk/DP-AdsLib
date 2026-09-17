@@ -3,7 +3,6 @@ package com.dp.ads.lib.activities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
@@ -16,9 +15,7 @@ import com.dp.ads.lib.callingClasses.LanguageScreensConfiguration
 import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.utils.hideSystemUIUpdated
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class LanguageScreenDup: AppCompatBaseActivity() {
 
@@ -76,7 +73,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1_MED")) {
                 "ADMOB" -> loadAdmobSurveyOneNatives()
                 "META" -> loadMetaSurveyOneNatives()
-                "MINTEGRAL" -> loadMintegralSurveyOneBanner()
             }
         }
 
@@ -85,7 +81,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_2_MED")) {
                 "ADMOB" -> loadAdmobSurveyDupNatives()
                 "META" -> loadMetaSurveyDupNatives()
-                "MINTEGRAL" -> loadMintegralSurveyDupBanner()
             }
         }
 
@@ -112,10 +107,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
                 "META" -> {
                     findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.VISIBLE
                     showMetaLanguageScreenDupNatives()
-                }
-                "MINTEGRAL" -> {
-                    findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.VISIBLE
-                    showMintegralLanguageScreenDupBanner()
                 }
             }
         } else {
@@ -165,32 +156,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
             )
         } ?: Log.w("DP_ADS_TAG", "META_NATIVE_LANGUAGE_2 ad ID is missing.")
     }
-    private fun showMintegralLanguageScreenDupBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_LANGUAGE_2")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = this,
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_2").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_2").split("-")[1],
-                adName = "NATIVE_LANGUAGE_2",
-                remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_LANGUAGE_2").toString().toBoolean(),
-                populateView = true,
-                bannerContainer = findViewById(R.id.bannerAdMint),
-                shimmerContainer = findViewById(R.id.shimmerLayout),
-                onAdFailed = {
-                    Log.i("DP_ADS_TAG", "LANGUAGE_2: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    findViewById<ShimmerFrameLayout>(R.id.shimmerLayout).stopShimmer()
-                    findViewById<ShimmerFrameLayout>(R.id.shimmerLayout).visibility = View.INVISIBLE
-                    findViewById<FrameLayout>(R.id.bannerAdMint).visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "LANGUAGE_2: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY LANGUAGE_2 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
     private fun loadAdmobSurveyOneNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")
         if (adId != null) {
@@ -219,19 +184,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
             Log.w("DP_ADS_TAG", "META_NATIVE_SURVEY_1 ad ID is missing.")
         }
     }
-    private fun loadMintegralSurveyOneBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = this,
-                placementId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[0],
-                unitId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[1],
-                adName = "NATIVE_SURVEY_1",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY SURVEY_1 Incorrect ID Format (placementID-unitID)")
-        }
-    }
-
     private fun loadAdmobSurveyDupNatives() {
         val adId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_2")
         if (adId != null) {
@@ -258,18 +210,6 @@ class LanguageScreenDup: AppCompatBaseActivity() {
             )
         } else {
             Log.e("DP_ADS_TAG", "Meta ad ID not found for NATIVE_SURVEY_2")
-        }
-    }
-    private fun loadMintegralSurveyDupBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_2")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = this,
-                placementId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_2")!!.split("-")[0],
-                unitId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_2")!!.split("-")[1],
-                adName = "NATIVE_SURVEY_2",
-                populateView = false)
-        } else {
-            Log.e("DP_ADS_TAG","BANNER : Mintegral : MAY SURVEY_2 Incorrect ID Format (placementID-unitID)")
         }
     }
 }

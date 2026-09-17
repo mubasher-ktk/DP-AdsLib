@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Declared here so com.dp.ads.lib.R.id.nativeAdContainerAdmob resolves at compile time.
+         The actual view with this id is supplied by the host app's welcome-screen layout
+         (WelcomeScreenOne/WelcomeScreenDup look it up via myView?.findViewById). -->
+    <item name="nativeAdContainerAdmob" type="id" />
+</resources>
