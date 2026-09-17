@@ -18,6 +18,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import java.util.concurrent.atomic.AtomicBoolean
 
 @SuppressLint("StaticFieldLeak")
 object AdMobInterstitialInside : CoroutineScope by MainScope() {
@@ -28,6 +29,7 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
     private var mContextAdmob: Context? = null
     private var onAdClosedCallBackAdmob: (() -> Unit)? = null
     private var onAdLoadedCallBackAdmob: (() -> Unit)? = null
+    private val interstitialLoadInFlight = HashMap<String, AtomicBoolean>()
 
     fun checkAndLoadAdMobInterstitial(
         context: Context?,
@@ -53,29 +55,37 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
 
     private fun loadAdmobInterstitial(nameFragment: String, adId: String) {
         Log.i("DP_ADS_TAG", "Requesting AdMob Interstitial: $nameFragment")
-        if (!interstitialAdMobHashMap.containsKey(nameFragment)) {
-            val adRequestInterstitial = AdRequest.Builder().build()
-            InterstitialAd.load(
-                mContextAdmob!!,
-                adId,
-                adRequestInterstitial,
-                object : InterstitialAdLoadCallback() {
-                    override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                        Log.i("DP_ADS_TAG", "AdMob Interstitial Loaded: $nameFragment")
-                        interstitialAdMobHashMap[nameFragment] = interstitialAd
-                        onAdLoadedCallBackAdmob?.invoke()
-                        onAdLoadedCallBackAdmob = null
-                    }
+        if (interstitialAdMobHashMap.containsKey(nameFragment)) return
 
-                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                        Log.e("DP_ADS_TAG","AdMob Interstitial Failed to Load: $nameFragment. Error: ${loadAdError.message}")
-                        onAdClosedCallBackAdmob?.invoke()
-                        onAdClosedCallBackAdmob = null
-                        interstitialAdMobHashMap.remove(nameFragment)
-                    }
-                }
-            )
+        val requestInFlight = interstitialLoadInFlight.getOrPut(nameFragment) { AtomicBoolean(false) }
+        if (!requestInFlight.compareAndSet(false, true)) {
+            Log.i("DP_ADS_TAG", "AdMob Interstitial : $nameFragment : request already in-flight, skipping duplicate load()")
+            return
         }
+
+        val adRequestInterstitial = AdRequest.Builder().build()
+        InterstitialAd.load(
+            mContextAdmob!!,
+            adId,
+            adRequestInterstitial,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.i("DP_ADS_TAG", "AdMob Interstitial Loaded: $nameFragment")
+                    requestInFlight.set(false)
+                    interstitialAdMobHashMap[nameFragment] = interstitialAd
+                    onAdLoadedCallBackAdmob?.invoke()
+                    onAdLoadedCallBackAdmob = null
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    Log.e("DP_ADS_TAG","AdMob Interstitial Failed to Load: $nameFragment. Error: ${loadAdError.message}")
+                    requestInFlight.set(false)
+                    onAdClosedCallBackAdmob?.invoke()
+                    onAdClosedCallBackAdmob = null
+                    interstitialAdMobHashMap.remove(nameFragment)
+                }
+            }
+        )
     }
 
     fun showIfAvailableOrLoadAdMobInterstitial(

@@ -17,6 +17,7 @@ import com.facebook.ads.InterstitialAd
 import com.facebook.ads.InterstitialAdListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import java.util.concurrent.atomic.AtomicBoolean
 
 @SuppressLint("StaticFieldLeak")
 object MetaInterstitialInside : CoroutineScope by MainScope() {
@@ -27,6 +28,7 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
     private var mContextMeta: Context? = null
     private var onAdClosedCallBackMeta: (() -> Unit)? = null
     private var onAdLoadedCallBackMeta: (() -> Unit)? = null
+    private val interstitialLoadInFlight = HashMap<String, AtomicBoolean>()
 
     fun checkAndLoadMetaInterstitial(
         context: Context?,
@@ -53,44 +55,52 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
     private fun loadMetaInterstitial(nameFragment: String, adId: String) {
         Log.i("DP_ADS_TAG", "Requesting Meta Interstitial: $nameFragment")
 
-        if (!interstitialMetaHashMap.containsKey(nameFragment)) {
-            val interstitialAd = InterstitialAd(mContextMeta, adId)
+        if (interstitialMetaHashMap.containsKey(nameFragment)) return
 
-            interstitialAd.loadAd(
-                interstitialAd.buildLoadAdConfig()
-                    .withAdListener(object : InterstitialAdListener {
-                        override fun onInterstitialDisplayed(ad: Ad) {
-                            isInterstitialAdVisible = true
-                            Log.i("DP_ADS_TAG", "Meta Interstitial Displayed: $nameFragment")
-                        }
-
-                        override fun onInterstitialDismissed(ad: Ad) {
-                            Log.i("DP_ADS_TAG", "Meta Interstitial Dismissed: $nameFragment")
-                            isInterstitialAdVisible = false
-                            onAdClosedCallBackMeta?.invoke()
-                            interstitialMetaHashMap.remove(nameFragment)
-                        }
-
-                        override fun onError(ad: Ad, adError: AdError) {
-                            Log.e("DP_ADS_TAG", "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}")
-                            isInterstitialAdVisible = false
-                            onAdClosedCallBackMeta?.invoke()
-                            interstitialMetaHashMap.remove(nameFragment)
-                        }
-
-                        override fun onAdLoaded(ad: Ad) {
-                            Log.i("DP_ADS_TAG", "Meta Interstitial Loaded: $nameFragment")
-                            interstitialMetaHashMap[nameFragment] = interstitialAd
-                            onAdLoadedCallBackMeta?.invoke()
-                            onAdLoadedCallBackMeta = null
-                        }
-
-                        override fun onAdClicked(ad: Ad) {}
-                        override fun onLoggingImpression(ad: Ad) {}
-                    })
-                    .build()
-            )
+        val requestInFlight = interstitialLoadInFlight.getOrPut(nameFragment) { AtomicBoolean(false) }
+        if (!requestInFlight.compareAndSet(false, true)) {
+            Log.i("DP_ADS_TAG", "Meta Interstitial : $nameFragment : request already in-flight, skipping duplicate loadAd()")
+            return
         }
+
+        val interstitialAd = InterstitialAd(mContextMeta, adId)
+
+        interstitialAd.loadAd(
+            interstitialAd.buildLoadAdConfig()
+                .withAdListener(object : InterstitialAdListener {
+                    override fun onInterstitialDisplayed(ad: Ad) {
+                        isInterstitialAdVisible = true
+                        Log.i("DP_ADS_TAG", "Meta Interstitial Displayed: $nameFragment")
+                    }
+
+                    override fun onInterstitialDismissed(ad: Ad) {
+                        Log.i("DP_ADS_TAG", "Meta Interstitial Dismissed: $nameFragment")
+                        isInterstitialAdVisible = false
+                        onAdClosedCallBackMeta?.invoke()
+                        interstitialMetaHashMap.remove(nameFragment)
+                    }
+
+                    override fun onError(ad: Ad, adError: AdError) {
+                        Log.e("DP_ADS_TAG", "Meta Interstitial Failed to Load: $nameFragment. Error: ${adError.errorMessage}")
+                        requestInFlight.set(false)
+                        isInterstitialAdVisible = false
+                        onAdClosedCallBackMeta?.invoke()
+                        interstitialMetaHashMap.remove(nameFragment)
+                    }
+
+                    override fun onAdLoaded(ad: Ad) {
+                        Log.i("DP_ADS_TAG", "Meta Interstitial Loaded: $nameFragment")
+                        requestInFlight.set(false)
+                        interstitialMetaHashMap[nameFragment] = interstitialAd
+                        onAdLoadedCallBackMeta?.invoke()
+                        onAdLoadedCallBackMeta = null
+                    }
+
+                    override fun onAdClicked(ad: Ad) {}
+                    override fun onLoggingImpression(ad: Ad) {}
+                })
+                .build()
+        )
     }
 
     fun showIfAvailableOrLoadMetaInterstitial(

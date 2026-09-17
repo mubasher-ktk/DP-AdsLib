@@ -21,10 +21,12 @@ import com.facebook.ads.NativeAd
 import com.facebook.ads.NativeAdLayout
 import com.facebook.ads.NativeAdListener
 import java.util.HashMap
+import java.util.concurrent.atomic.AtomicBoolean
 
 object MetaNativeAdManager {
     private val nativeAdCache = HashMap<String, NativeAd?>()
     private val adLoadingState = HashMap<String, Boolean>()
+    private val adRequestInFlight = HashMap<String, AtomicBoolean>()
 
     fun requestOrShowAd(
         mContext: Activity?,
@@ -81,6 +83,12 @@ object MetaNativeAdManager {
             return
         }
 
+        val requestInFlight = adRequestInFlight.getOrPut(adName) { AtomicBoolean(false) }
+        if (!requestInFlight.compareAndSet(false, true)) {
+            Log.i("DP_ADS_TAG", "Meta: Native : $adName : request already in-flight, skipping duplicate loadAd()")
+            return
+        }
+
         adLoadingState[adName] = true
 
         val adView = mContext.layoutInflater.inflate(
@@ -92,7 +100,10 @@ object MetaNativeAdManager {
                 else -> R.layout.meta_native_simple_small
             },
             null
-        ) as? NativeAdLayout ?: return
+        ) as? NativeAdLayout ?: run {
+            requestInFlight.set(false)
+            return
+        }
 
         if (NetworkCheck.isNetworkAvailable(mContext)) {
             val fbNativeAd = NativeAd(mContext, adId)
@@ -105,6 +116,7 @@ object MetaNativeAdManager {
                 override fun onError(ad: Ad, adError: AdError) {
                     nativeAdCache[adName] = null
                     adLoadingState[adName] = false
+                    requestInFlight.set(false)
                     onAdFailed?.invoke()
                     Log.i("DP_ADS_TAG", "Meta: Native : $adName : onError()\n${adError.errorMessage}")
                     mContext.let {
@@ -116,6 +128,7 @@ object MetaNativeAdManager {
 
                 override fun onAdLoaded(ad: Ad) {
                     Log.i("DP_ADS_TAG", "Meta: Native : $adName : onAdLoaded()")
+                    requestInFlight.set(false)
                     if (saveAdsToCache == "SAVE") {
                         nativeAdCache[adName] = fbNativeAd
                         adLoadingState[adName] = true
@@ -165,6 +178,7 @@ object MetaNativeAdManager {
                     .build()
             )
         } else {
+            requestInFlight.set(false)
             onAdFailed?.invoke()
         }
     }
@@ -246,5 +260,6 @@ object MetaNativeAdManager {
     fun clearNativeCache() {
         nativeAdCache.clear()
         adLoadingState.clear()
+        adRequestInFlight.clear()
     }
 }

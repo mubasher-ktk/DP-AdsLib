@@ -72,6 +72,7 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
         val interstitialLetsStartEnabled = dpAdsConfigurations?.getRemoteConfigData()?.get("INTERSTITIAL_LETS_START") as? Boolean ?: false
 
         binding.btnNext.setOnClickListener {
+            binding.btnNext.isEnabled = false
             if (interstitialLetsStartEnabled) {
                 when (dpAdsConfigurations?.getRemoteConfigData()?.get("INTERSTITIAL_LETS_START_MED")) {
                     "ADMOB" -> {
@@ -79,6 +80,9 @@ class WTThreeFragment(private val fragmentActivity: FragmentActivity, val item: 
                     }
                     "META" -> {
                         showMetaWTThreeInterstitial()
+                    }
+                    else -> {
+                        binding.btnNext.isEnabled = true
                     }
                 }
             } else {

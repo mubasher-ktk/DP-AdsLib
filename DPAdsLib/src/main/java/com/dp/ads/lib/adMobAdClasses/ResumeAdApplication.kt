@@ -22,6 +22,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
+import java.util.concurrent.atomic.AtomicBoolean
 
 class ResumeAdApplication(val globalClass: Application?=null, val adId: String) : Application.ActivityLifecycleCallbacks, LifecycleObserver {
     private var adVisible = false
@@ -32,6 +33,8 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
     var isShowingAd = false
 //    private var myElephant: Application? = globalClass
     var fullScreenContentCallback: FullScreenContentCallback? = null
+    private val fetchRequestInFlight = AtomicBoolean(false)
+    private val showRequestInFlight = AtomicBoolean(false)
 
     init {
         globalClass.let {
@@ -58,8 +61,14 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
             return
         }
 
+        if (!fetchRequestInFlight.compareAndSet(false, true)) {
+            Log.i("DP_ADS_TAG", "Admob: Resume : request already in-flight, skipping duplicate fetchAd()")
+            return
+        }
+
         val loadCallback: AppOpenAd.AppOpenAdLoadCallback = object : AppOpenAd.AppOpenAdLoadCallback() {
             override fun onAdLoaded(ad: AppOpenAd) {
+                fetchRequestInFlight.set(false)
                 appOpenAd = ad
                 globalClass.let {
                     if (BuildConfig.DEBUG) {
@@ -70,6 +79,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
             override fun onAdFailedToLoad(p0: LoadAdError) {
                 super.onAdFailedToLoad(p0)
+                fetchRequestInFlight.set(false)
                 globalClass.let {
                     if (BuildConfig.DEBUG) {
                         Toast.makeText(globalClass, "OpenAd :: AdMob :: Failed to Load", Toast.LENGTH_SHORT).show()
@@ -79,7 +89,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
         }
         val request: AdRequest = getAdRequest()
 
-        globalClass?.applicationContext?.apply {
+        globalClass.applicationContext?.apply {
             AppOpenAd.load(
                 this,
                 adId,
@@ -94,8 +104,13 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
     fun showAdIfAvailable(onAdNotAvailableOrShown: (() -> Unit)? = null) {
         if (!isShowingAd && isAdAvailable()) {
+            if (!showRequestInFlight.compareAndSet(false, true)) {
+                Log.i("DP_ADS_TAG", "Admob: Resume : show already in-flight, skipping duplicate showAdIfAvailable()")
+                return
+            }
             fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
+                    showRequestInFlight.set(false)
                     isShowDialog = false
                     dismissWaitDialog()
                     onAdNotAvailableOrShown.let {
@@ -108,6 +123,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    showRequestInFlight.set(false)
                     isShowDialog = false
                     dismissWaitDialog()
                     onAdNotAvailableOrShown.let {
@@ -119,6 +135,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                 }
 
                 override fun onAdShowedFullScreenContent() {
+                    showRequestInFlight.set(false)
                     isShowingAd = true
                     isShowDialog = false
                     dismissWaitDialog()
