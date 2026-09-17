@@ -25,7 +25,6 @@ import com.dp.ads.lib.callingClasses.WelcomeScreensConfiguration
 import com.dp.ads.lib.data.Language
 import com.dp.ads.lib.data.WalkThroughItem
 import com.dp.ads.lib.metaAdClasses.MetaBannerAdSplash
-import com.dp.ads.lib.unityAdClasses.UnityBannerAdSplash
 import com.dp.ads.lib.utils.MyLocaleHelper
 import com.dp.ads.lib.utils.NetworkCheck
 import com.dp.ads.lib.utils.PrefHelper
@@ -91,7 +90,6 @@ class MainActivity : AppCompatActivity() {
 
         val consentConfig = ConsentConfigurations.Builder()
             .setApplicationContext(application)
-//            .setUnityInitializationId(gameId = "1234567", testMode = true)
             .setActivityContext(this)
             .setTestDeviceHashedIdList(
                 arrayListOf(
@@ -116,9 +114,6 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     it.getValue(RemoteConfigConstTest.BANNER_SPLASH_MED) == "META" -> {
                                         loadMetaBannerAd()
-                                    }
-                                    it.getValue(RemoteConfigConstTest.BANNER_SPLASH_MED) == "UNITY" -> {
-                                        loadUnityBannerAd()
                                     }
                                 }
                             }
@@ -172,13 +167,6 @@ class MainActivity : AppCompatActivity() {
         DPAdsManager.startFlow(dpAdsConfigurations)
     }
 
-    private fun loadUnityBannerAd() {
-        UnityBannerAdSplash.showBannerAds(
-            activity = this,
-            bannerContainer = binding.bannerAd,
-            placementId = "banner")
-    }
-
     private fun loadAdmobBannerAd() {
         AdMobBannerAdSplash(
             activity = this@MainActivity,
@@ -196,7 +184,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMetaBannerAd() {
         MetaBannerAdSplash(this@MainActivity,
-            placementID = "",
+            placementID = "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID",
             bannerContainer = binding.bannerAd,
             shimmerContainer = binding.bannerShimmerLayout.root,
             onAdFailed = {
@@ -437,7 +425,7 @@ class MainActivity : AppCompatActivity() {
     private fun saveAllValues() {
         val editor = getSharedPreferences("RemoteConfig", MODE_PRIVATE).edit()
         // DP-Ads-Visibility-Config
-        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH, "RESUME")
+        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH, "INTERSTITIAL")
         editor.putBoolean(RemoteConfigConstTest.BANNER_SPLASH, true)
         editor.putBoolean(RemoteConfigConstTest.RESUME_OVERALL, true)
         editor.putBoolean(RemoteConfigConstTest.NATIVE_LANGUAGE_1, true)
@@ -451,20 +439,20 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean(RemoteConfigConstTest.INTERSTITIAL_LETS_START, true)
 
         // DP-Ads-Mediation-Config
-        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.RESUME_OVERALL_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.BANNER_SPLASH_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_LANGUAGE_1_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_LANGUAGE_2_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_SURVEY_1_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_SURVEY_2_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_1_MED, "ADMOB")
-        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_2_MED, "ADMOB")
+        editor.putString(RemoteConfigConstTest.RESUME_INTER_SPLASH_MED, "META")
+        editor.putString(RemoteConfigConstTest.RESUME_OVERALL_MED, "META")
+        editor.putString(RemoteConfigConstTest.BANNER_SPLASH_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_LANGUAGE_1_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_LANGUAGE_2_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_SURVEY_1_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_SURVEY_2_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_1_MED, "META")
+        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_2_MED, "META")
         editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_FULLSCR_MED, "META")
-        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_3_MED, "ADMOB")
+        editor.putString(RemoteConfigConstTest.NATIVE_WALKTHROUGH_3_MED, "META")
         editor.putString(RemoteConfigConstTest.INTERSTITIAL_LETS_START_MED, "META")
 
-        editor.putString(RemoteConfigConstTest.TIMER_NATIVE_F_SRC, "5")
+        editor.putString(RemoteConfigConstTest.TIMER_NATIVE_F_SRC, "3")
 
         editor.apply()
     }
