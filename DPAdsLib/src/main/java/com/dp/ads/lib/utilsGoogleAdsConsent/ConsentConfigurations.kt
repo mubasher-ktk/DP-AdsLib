@@ -10,15 +10,11 @@ import com.facebook.ads.AdSettings
 import com.facebook.ads.AudienceNetworkAds
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import com.unity3d.ads.IUnityAdsInitializationListener
-import com.unity3d.ads.UnityAds
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ConsentConfigurations private constructor(
     private val activityContext: Activity,
     private val applicationContext: Application,
-    private val gameId: String,
-    private val testMode: Boolean,
     private val testDeviceHashedIdList: ArrayList<String>,
     private val onConsentGathered: () -> Unit) {
 
@@ -62,19 +58,6 @@ class ConsentConfigurations private constructor(
                     }
                 }
             })
-
-        if (gameId != "") {
-            UnityAds.initialize(applicationContext, gameId, testMode, object :
-                IUnityAdsInitializationListener {
-                override fun onInitializationComplete() {
-                    Log.e("DP_ADS_TAG", "UnityAds: onInitializationComplete()")
-                }
-
-                override fun onInitializationFailed(error: UnityAds.UnityAdsInitializationError?, message: String?) {
-                    Log.e("DP_ADS_TAG", "UnityAds: onInitializationFailed() \n\n$error\n\n$message")
-                }
-            })
-        }
     }
 
     private fun initializeMobileAdsSdk(initializeMobileAds: () -> Unit) {
@@ -103,18 +86,11 @@ class ConsentConfigurations private constructor(
     class Builder {
         private lateinit var activityContext: Activity
         private lateinit var applicationContext: Application
-        private var gameId: String = ""
-        private var testMode: Boolean = true
         private var testDeviceHashedIdList: ArrayList<String> = ArrayList()
         private lateinit var onConsentGathered: () -> Unit
 
         fun setApplicationContext(applicationContext: Application) = apply {
             this.applicationContext = applicationContext
-        }
-
-        fun setUnityInitializationId(gameId: String, testMode: Boolean) = apply {
-            this.gameId = gameId
-            this.testMode = testMode
         }
 
         fun setActivityContext(activity: Activity) = apply {
@@ -136,7 +112,7 @@ class ConsentConfigurations private constructor(
             if (!::onConsentGathered.isInitialized) {
                 throw IllegalStateException("OnConsentGathered callback must be provided")
             }
-            return ConsentConfigurations(activityContext, applicationContext, gameId, testMode, testDeviceHashedIdList, onConsentGathered)
+            return ConsentConfigurations(activityContext, applicationContext, testDeviceHashedIdList, onConsentGathered)
         }
     }
 }
