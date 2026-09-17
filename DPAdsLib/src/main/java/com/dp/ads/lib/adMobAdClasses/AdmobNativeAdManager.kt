@@ -22,10 +22,12 @@ import com.google.android.gms.ads.VideoController
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import java.util.concurrent.atomic.AtomicBoolean
 
 object AdmobNativeAdManager {
     val nativeAdCache = HashMap<String, NativeAd?>()
     val adLoadingState = HashMap<String, Boolean>()
+    private val adRequestInFlight = HashMap<String, AtomicBoolean>()
 
     fun requestOrShowAd(
         mContext: Activity?,
@@ -75,6 +77,12 @@ object AdmobNativeAdManager {
             return
         }
 
+        val requestInFlight = adRequestInFlight.getOrPut(adName) { AtomicBoolean(false) }
+        if (!requestInFlight.compareAndSet(false, true)) {
+            Log.i("DP_ADS_TAG", "Admob: Native : $adName : request already in-flight, skipping duplicate loadAd()")
+            return
+        }
+
         adLoadingState[adName] = true
 
         val adView = mContext.layoutInflater.inflate(
@@ -86,11 +94,15 @@ object AdmobNativeAdManager {
                 else -> R.layout.admob_native_simple_small
             },
             null
-        ) as? NativeAdView ?: return
+        ) as? NativeAdView ?: run {
+            requestInFlight.set(false)
+            return
+        }
 
         if (NetworkCheck.isNetworkAvailable(mContext)) {
             val adLoader = AdLoader.Builder(mContext, adId)
                 .forNativeAd { nativeAd ->
+                    requestInFlight.set(false)
                     if (saveAdsToCache.equals("SAVE")) {
                         nativeAdCache[adName] = nativeAd
                         adLoadingState[adName] = true
@@ -114,6 +126,7 @@ object AdmobNativeAdManager {
                     override fun onAdFailedToLoad(errorCode: LoadAdError) {
                         nativeAdCache[adName] = null
                         adLoadingState[adName] = false
+                        requestInFlight.set(false)
                         onAdFailed?.invoke()
                         mContext.let {
                             if (BuildConfig.DEBUG) {
@@ -156,6 +169,7 @@ object AdmobNativeAdManager {
 
             adLoader.loadAd(AdRequest.Builder().build())
         } else {
+            requestInFlight.set(false)
             onAdFailed?.invoke()
         }
     }
@@ -262,5 +276,6 @@ object AdmobNativeAdManager {
     fun clearNativeCache() {
         nativeAdCache.clear()
         adLoadingState.clear()
+        adRequestInFlight.clear()
     }
 }
