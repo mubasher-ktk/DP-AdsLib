@@ -17,7 +17,6 @@ constraintlayout = "2.2.2"
 
 gms = "4.4.4"
 crashlytics = "3.0.2"
-mbridge_android_sdk = "16.9.91"
 unityAds = "4.16.3"
 navigation = "2.8.9"
 navigationUiKtx = "2.8.9"
@@ -59,7 +58,6 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics", ve
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-perf = { module = "com.google.firebase:firebase-perf", version.ref = "firebasePerf" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
-mbridge_android_sdk = { module = "com.mbridge.msdk.oversea:mbridge_android_sdk", version.ref = "mbridge_android_sdk" }
 unity-ads = { module = "com.unity3d.ads:unity-ads", version.ref = "unityAds" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }

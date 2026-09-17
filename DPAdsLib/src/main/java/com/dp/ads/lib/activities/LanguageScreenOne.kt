@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +16,7 @@ import com.dp.ads.lib.callingClasses.DPAdsConfigurations
 import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.interfaces.LanguageInterface
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.utils.hideSystemUIUpdated
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class LanguageScreenOne : AppCompatBaseActivity(), LanguageInterface {
 
@@ -80,10 +77,6 @@ class LanguageScreenOne : AppCompatBaseActivity(), LanguageInterface {
                     findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.VISIBLE
                     showMetaLanguageScreenOneNatives()
                 }
-                "MINTEGRAL" -> {
-                    findViewById<CardView>(R.id.nativeAdContainerAd).visibility = View.VISIBLE
-                    showMintegralLanguageScreenOneBanner()
-                }
             }
         } else {
             findViewById<CardView>(R.id.nativeAdContainerAd)?.let {
@@ -131,30 +124,5 @@ class LanguageScreenOne : AppCompatBaseActivity(), LanguageInterface {
                 }
             )
         } ?: Log.w("LanguageScreenOne", "META_NATIVE_LANGUAGE_1 ad ID is missing.")
-    }
-    private fun showMintegralLanguageScreenOneBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_LANGUAGE_1")?.split("-")?.size == 2) {
-            MintegralBannerAdManager.requestBannerAd(
-                activity = this,
-                placementId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_1").split("-")[0],
-                unitId = dpAdsConfigurations!!.firstOpenFlowAdIds.getValue("MINTEGRAL_BANNER_LANGUAGE_1").split("-")[1],
-                adName = "NATIVE_LANGUAGE_1",
-                remoteConfig = dpAdsConfigurations?.getRemoteConfigData()?.getValue("NATIVE_LANGUAGE_1").toString().toBoolean(),
-                populateView = true,
-                bannerContainer = findViewById(R.id.bannerAdMint),
-                shimmerContainer = findViewById(R.id.shimmerLayout),
-                onAdFailed = {
-                    Log.i("DP_ADS_TAG", "LANGUAGE_1: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    findViewById<ShimmerFrameLayout>(R.id.shimmerLayout).stopShimmer()
-                    findViewById<ShimmerFrameLayout>(R.id.shimmerLayout).visibility = View.INVISIBLE
-                    findViewById<FrameLayout>(R.id.bannerAdMint).visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "LANGUAGE_1: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY LANGUAGE_1 Incorrect ID Format (placementID-unitID)")
-        }
     }
 }

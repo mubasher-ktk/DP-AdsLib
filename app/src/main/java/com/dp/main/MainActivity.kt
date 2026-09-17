@@ -25,7 +25,6 @@ import com.dp.ads.lib.callingClasses.WelcomeScreensConfiguration
 import com.dp.ads.lib.data.Language
 import com.dp.ads.lib.data.WalkThroughItem
 import com.dp.ads.lib.metaAdClasses.MetaBannerAdSplash
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdSplash
 import com.dp.ads.lib.unityAdClasses.UnityBannerAdSplash
 import com.dp.ads.lib.utils.MyLocaleHelper
 import com.dp.ads.lib.utils.NetworkCheck
@@ -78,20 +77,6 @@ class MainActivity : AppCompatActivity() {
             this["META_NATIVE_WALKTHROUGH_FULLSCR"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
             this["META_NATIVE_WALKTHROUGH_3"] = "VID_HD_16_9_46S_APP_INSTALL#YOUR_PLACEMENT_ID"
             this["META_INTERSTITIAL_LETS_START"] = "VID_HD_9_16_39S_APP_INSTALL#YOUR_PLACEMENT_ID"
-
-            // Ad PlacementID-UnitID
-            this["MINTEGRAL_SPLASH_INTERSTITIAL"] = "290653-462374"
-            this["MINTEGRAL_SPLASH_RESUME"] = "328916-1542060"
-            this["MINTEGRAL_BANNER_SPLASH"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_LANGUAGE_1"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_LANGUAGE_2"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_SURVEY_1"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_SURVEY_2"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_WALKTHROUGH_1"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_WALKTHROUGH_2"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_WALKTHROUGH_FULLSCR"] = "1010694-2677210"
-            this["MINTEGRAL_BANNER_WALKTHROUGH_3"] = "1010694-2677210"
-            this["MINTEGRAL_INTERSTITIAL_LETS_START"] = "290653-462374"
         }
 
         DPAdsManager.setOnFlowStateListener(
@@ -106,7 +91,6 @@ class MainActivity : AppCompatActivity() {
 
         val consentConfig = ConsentConfigurations.Builder()
             .setApplicationContext(application)
-            .setMintegralInitializationId(appId = "144002", appKey = "7c22942b749fe6a6e361b675e96b3ee9")
 //            .setUnityInitializationId(gameId = "1234567", testMode = true)
             .setActivityContext(this)
             .setTestDeviceHashedIdList(
@@ -132,9 +116,6 @@ class MainActivity : AppCompatActivity() {
                                     }
                                     it.getValue(RemoteConfigConstTest.BANNER_SPLASH_MED) == "META" -> {
                                         loadMetaBannerAd()
-                                    }
-                                    it.getValue(RemoteConfigConstTest.BANNER_SPLASH_MED) == "MINTEGRAL" -> {
-                                        loadMintegralBannerAd()
                                     }
                                     it.getValue(RemoteConfigConstTest.BANNER_SPLASH_MED) == "UNITY" -> {
                                         loadUnityBannerAd()
@@ -196,22 +177,6 @@ class MainActivity : AppCompatActivity() {
             activity = this,
             bannerContainer = binding.bannerAd,
             placementId = "banner")
-    }
-
-    private fun loadMintegralBannerAd() {
-        MintegralBannerAdSplash(
-            activity = this@MainActivity,
-            placementID = "1010694",
-            unitID = "2677210",
-            bannerContainer = binding.bannerAd,
-            shimmerContainer = binding.bannerShimmerLayout.root,
-            onAdFailed = {
-                binding.bannerAd.visibility = View.GONE
-            },
-            onAdLoaded = {
-            },
-            onAdClicked = {}
-        )
     }
 
     private fun loadAdmobBannerAd() {

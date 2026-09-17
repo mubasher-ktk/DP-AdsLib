@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import com.dp.ads.lib.R
 import com.dp.ads.lib.adMobAdClasses.AdmobNativeAdManager
@@ -15,9 +14,7 @@ import com.dp.ads.lib.callingClasses.DPAdsManager
 import com.dp.ads.lib.callingClasses.WelcomeScreensConfiguration
 import com.dp.ads.lib.interfaces.WelcomeInterface
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
-import com.dp.ads.lib.mintegralAdClasses.MintegralBannerAdManager
 import com.dp.ads.lib.utils.hideSystemUIUpdated
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
 
@@ -50,12 +47,10 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
             when (dpAdsConfigurations?.getRemoteConfigData()?.get("NATIVE_SURVEY_1_MED")) {
                 "ADMOB" -> showAdmobSurveyOneNatives()
                 "META" -> showMetaSurveyOneNatives()
-                "MINTEGRAL" -> showMintegralSurveyOneBanner()
             }
         } else {
             myView?.let {
                 myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
-                myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             }
         }
     }
@@ -69,7 +64,6 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
 
     private fun showAdmobSurveyOneNatives() {
         myView?.let {
-            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
             dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("ADMOB_NATIVE_SURVEY_1")?.let { adId ->
                 AdmobNativeAdManager.requestOrShowAd(
@@ -93,7 +87,6 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
     }
     private fun showMetaSurveyOneNatives() {
         myView?.let {
-            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
             myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.VISIBLE
             dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("META_NATIVE_SURVEY_1")?.let { adId ->
                 MetaNativeAdManager.requestOrShowAd(
@@ -113,33 +106,6 @@ class WelcomeScreenOne : AppCompatBaseActivity(), WelcomeInterface {
                     }
                 )
             } ?: Log.w("WelcomeScreenOne", "META_NATIVE_SURVEY_1 ad ID is missing.")
-        }
-    }
-    private fun showMintegralSurveyOneBanner() {
-        if (dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")?.split("-")?.size == 2) {
-            myView?.findViewById<CardView>(R.id.nativeAdContainerAdmob)?.visibility = View.GONE
-            myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.VISIBLE
-            MintegralBannerAdManager.requestBannerAd(
-                activity = this,
-                placementId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[0],
-                unitId = dpAdsConfigurations?.firstOpenFlowAdIds?.getValue("MINTEGRAL_BANNER_SURVEY_1")!!.split("-")[1],
-                adName = "NATIVE_SURVEY_1",
-                populateView = true,
-                bannerContainer = myView?.findViewById(R.id.bannerAdMint),
-                shimmerContainer = myView?.findViewById(R.id.shimmerLayoutMint),
-                onAdFailed = {
-                    myView?.findViewById<CardView>(R.id.nativeAdContainerMintegral)?.visibility = View.GONE
-                    Log.i("DP_ADS_TAG", "SURVEY_1: MINTEGRAL: onAdFailed()")
-                },
-                onAdLoaded = {
-                    myView?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayoutMint)?.stopShimmer()
-                    myView?.findViewById<ShimmerFrameLayout>(R.id.shimmerLayoutMint)?.visibility = View.INVISIBLE
-                    myView?.findViewById<FrameLayout>(R.id.bannerAdMint)?.visibility = View.VISIBLE
-                    Log.i("DP_ADS_TAG", "SURVEY_1: MINTEGRAL: onAdLoaded()")
-                }
-            )
-        } else {
-            Log.i("DP_ADS_TAG", "BANNER : Mintegral : MAY SURVEY_1 Incorrect ID Format (placementID-unitID)")
         }
     }
 }
