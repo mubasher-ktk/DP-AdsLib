@@ -28,10 +28,20 @@ class MetaInterstitialAdSplash(
     private var isShowingAd = false
     private var isShowingDialog = false
     private var isShowDialog = true
+    // Unlike AdMob's InterstitialAd (only assigned inside its onAdLoaded callback,
+    // so "interstitialAd == null" correctly means "still loading"), Meta's
+    // InterstitialAd is constructed synchronously in fetchAd() before loadAd() is
+    // even called, so it's already non-null well before the timeout could ever
+    // fire. That made the timeout below dead code: it could never detect a stalled
+    // load, so a silently-stuck Meta request left the user on the splash screen
+    // with no way out. This flag tracks the real "load finished (success or
+    // error)" state instead.
+    private var adLoadCompleted = false
     private val timeoutHandler = Handler(Looper.getMainLooper())
 
     private val timeoutRunnable = Runnable {
-        if (interstitialAd == null) {
+        if (!adLoadCompleted) {
+            adLoadCompleted = true
             onAdTimeout?.invoke()
             dismissWaitDialog()
             Log.i("DP_ADS_TAG", "Meta: Interstitial : Timeout()")
@@ -86,6 +96,7 @@ class MetaInterstitialAdSplash(
 
             override fun onError(ad: Ad?, adError: AdError) {
                 Log.i("DP_ADS_TAG", "Meta: Interstitial : onError() - ${adError.errorMessage}")
+                adLoadCompleted = true
                 timeoutHandler.removeCallbacks(timeoutRunnable)
                 dismissWaitDialog()
                 onAdFailed?.invoke()
@@ -98,6 +109,7 @@ class MetaInterstitialAdSplash(
 
             override fun onAdLoaded(ad: Ad?) {
                 Log.i("DP_ADS_TAG", "Meta: Interstitial : onAdLoaded()")
+                adLoadCompleted = true
                 timeoutHandler.removeCallbacks(timeoutRunnable)
                 showAdIfAvailable()
             }
@@ -119,7 +131,16 @@ class MetaInterstitialAdSplash(
     private fun showAdIfAvailable() {
         if (!isShowingAd && isAdAvailable()) {
             Handler(Looper.getMainLooper()).postDelayed({
-                interstitialAd?.show()
+                // Now that the timeout above can actually fire, the app may have
+                // already moved past this splash (proceedNext()) by the time a
+                // late-arriving load finishes here. Guard against calling show()
+                // on a finished/destroyed activity, matching the same check
+                // AdmobInterstitialAdSplash already has.
+                currentActivity?.let { activity ->
+                    if (!activity.isFinishing && !activity.isDestroyed) {
+                        interstitialAd?.show()
+                    }
+                }
             }, 1500)
         }
     }
