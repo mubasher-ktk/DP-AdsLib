@@ -35,6 +35,11 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
     var fullScreenContentCallback: FullScreenContentCallback? = null
     private val fetchRequestInFlight = AtomicBoolean(false)
     private val showRequestInFlight = AtomicBoolean(false)
+    private val fetchTimeoutHandler = Handler(Looper.getMainLooper())
+    private val fetchTimeoutRunnable = Runnable {
+        Log.i("DP_ADS_TAG", "Admob: Resume : fetchAd() timed out (20s), resetting in-flight guard")
+        fetchRequestInFlight.set(false)
+    }
 
     init {
         globalClass.let {
@@ -68,6 +73,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
         val loadCallback: AppOpenAd.AppOpenAdLoadCallback = object : AppOpenAd.AppOpenAdLoadCallback() {
             override fun onAdLoaded(ad: AppOpenAd) {
+                fetchTimeoutHandler.removeCallbacks(fetchTimeoutRunnable)
                 fetchRequestInFlight.set(false)
                 appOpenAd = ad
                 globalClass.let {
@@ -79,6 +85,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
 
             override fun onAdFailedToLoad(p0: LoadAdError) {
                 super.onAdFailedToLoad(p0)
+                fetchTimeoutHandler.removeCallbacks(fetchTimeoutRunnable)
                 fetchRequestInFlight.set(false)
                 globalClass.let {
                     if (BuildConfig.DEBUG) {
@@ -100,6 +107,7 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                 Toast.makeText(globalClass, "OpenAd :: AdMob :: Request", Toast.LENGTH_SHORT).show()
             }
         }
+        fetchTimeoutHandler.postDelayed(fetchTimeoutRunnable, 20000)
     }
 
     fun showAdIfAvailable(onAdNotAvailableOrShown: (() -> Unit)? = null) {
@@ -146,7 +154,13 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
             isShowDialog = true
             showWaitDialog()
             Handler(Looper.getMainLooper()).postDelayed({
-                appOpenAd!!.show(currentActivity!!)
+                if (currentActivity != null && !(currentActivity as Activity).isFinishing) {
+                    appOpenAd!!.show(currentActivity!!)
+                } else {
+                    Log.i("DP_ADS_TAG", "Admob: Resume : skipped show(), currentActivity is null/finishing")
+                    showRequestInFlight.set(false)
+                    onAdNotAvailableOrShown?.invoke()
+                }
                 dismissWaitDialog()
             }, 1500)
         } else {

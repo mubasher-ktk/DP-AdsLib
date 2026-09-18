@@ -24,10 +24,12 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
     private var isShowingDialog = false
     var isShowingAd = false
     private var fullScreenContentCallback: FullScreenContentCallback? = null
+    private var isTimedOut = false
 
     private val timeoutHandler = Handler(Looper.getMainLooper())
     private val timeoutRunnable = Runnable {
         if (appOpenAd == null) {
+            isTimedOut = true
             onAdTimeout?.invoke()
             dismissWaitDialog()
             Log.i("DP_ADS_TAG", "Admob: Resume : Timeout()")
@@ -66,6 +68,10 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
 
         val loadCallback: AppOpenAd.AppOpenAdLoadCallback = object : AppOpenAd.AppOpenAdLoadCallback() {
             override fun onAdLoaded(ad: AppOpenAd) {
+                if (isTimedOut) {
+                    Log.i("DP_ADS_TAG", "Admob: Resume : onAdLoaded() arrived after timeout, discarding")
+                    return
+                }
                 Log.i("DP_ADS_TAG","Admob: Resume : onAdLoaded()")
                 appOpenAd = ad
                 if (currentActivity?.localClassName != null || currentActivity?.localClassName.equals("")) {
