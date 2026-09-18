@@ -24,6 +24,8 @@ class ConsentConfigurations private constructor(
     private val admobSdkReady = AtomicBoolean(false)
     private val metaSdkReady = AtomicBoolean(false)
     private val sdkInitProceeded = AtomicBoolean(false)
+    private val sdkInitResolved = AtomicBoolean(false)
+    private val pendingSdkInitCallbacks = java.util.concurrent.CopyOnWriteArrayList<() -> Unit>()
     private val slowInternetHandler = Handler()
     private val sdkInitFallbackHandler = Handler()
 
@@ -76,8 +78,13 @@ class ConsentConfigurations private constructor(
 
     private fun initializeMobileAdsSdk(initializeMobileAds: () -> Unit) {
         if (isMobileAdsInitializeCalled.getAndSet(true)) {
-            Log.i("ConsentMessage","initializeMobileAdsSdk()")
-            initializeMobileAds.invoke()
+            if (sdkInitResolved.get()) {
+                Log.i("ConsentMessage","initializeMobileAdsSdk()")
+                initializeMobileAds.invoke()
+            } else {
+                Log.i("ConsentMessage","initializeMobileAdsSdk(): SDK init still in progress, queuing callback")
+                pendingSdkInitCallbacks.add(initializeMobileAds)
+            }
             return
         }
         Log.i("ConsentMessage","initializeMobileAdsSdk(): rem")
@@ -86,6 +93,9 @@ class ConsentConfigurations private constructor(
             if (!sdkInitProceeded.getAndSet(true)) {
                 sdkInitFallbackHandler.removeCallbacksAndMessages(null)
                 initializeMobileAds.invoke()
+                sdkInitResolved.set(true)
+                pendingSdkInitCallbacks.forEach { it.invoke() }
+                pendingSdkInitCallbacks.clear()
             }
         }
 
@@ -122,6 +132,9 @@ class ConsentConfigurations private constructor(
                 .initialize()
         } else {
             initializeMobileAds.invoke()
+            sdkInitResolved.set(true)
+            pendingSdkInitCallbacks.forEach { it.invoke() }
+            pendingSdkInitCallbacks.clear()
         }
         slowInternetHandler.removeCallbacksAndMessages(null)
     }
