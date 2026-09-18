@@ -46,7 +46,17 @@ object MyLocaleHelper {
     @TargetApi(Build.VERSION_CODES.N)
     private fun updateResources(context: Context, language: String?): Context {
         val locale = Locale(language)
-        Locale.setDefault(locale)
+        // Locale.setDefault() is a process-wide mutation. Calling it unconditionally
+        // on every attachBaseContext (i.e. every Activity creation) is what triggers
+        // MIUI's config-change recreate mid-cold-start - confirmed via a duplicate
+        // DPStartActivity onCreate where the second call carried a non-null
+        // savedInstanceState, the signature of an OS-driven recreate rather than a
+        // second launch. createConfigurationContext() below is sufficient on its own
+        // for a correctly-localized Context; it doesn't need the JVM-wide default
+        // touched at all, so only touch it when the effective language actually differs.
+        if (Locale.getDefault().language != locale.language) {
+            Locale.setDefault(locale)
+        }
         Log.i("MyLocaleHelper", "updateResources(): $language")
         val configuration = context.resources.configuration
         configuration.setLocale(locale)
@@ -58,7 +68,9 @@ object MyLocaleHelper {
     @Suppress("deprecation")
     private fun updateResourcesLegacy(context: Context, language: String?): Context {
         val locale = Locale(language)
-        Locale.setDefault(locale)
+        if (Locale.getDefault().language != locale.language) {
+            Locale.setDefault(locale)
+        }
         Log.i("MyLocaleHelper", "updateResourcesLegacy(): $language")
         val resources = context.resources
 
