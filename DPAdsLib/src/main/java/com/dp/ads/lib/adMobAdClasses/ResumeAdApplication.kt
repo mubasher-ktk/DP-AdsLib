@@ -208,20 +208,25 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                     dismissWaitDialog()
                 }
             }
-            adVisible = true
             appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
-            isShowDialog = true
-            showWaitDialog()
-            Handler(Looper.getMainLooper()).postDelayed({
-                if (currentActivity != null && !(currentActivity as Activity).isFinishing) {
-                    appOpenAd!!.show(currentActivity!!)
-                } else {
-                    Log.i("DP_ADS_TAG", "Admob: Resume : skipped show(), currentActivity is null/finishing")
-                    showRequestInFlight.set(false)
-                    onAdNotAvailableOrShown?.invoke()
-                }
-                dismissWaitDialog()
-            }, 1500)
+            if (!AdMobInterstitialInside.isInterstitialAdVisible && !MetaInterstitialInside.isInterstitialAdVisible) {
+                adVisible = true
+                isShowDialog = true
+                showWaitDialog()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    if (currentActivity != null && !(currentActivity as Activity).isFinishing) {
+                        appOpenAd!!.show(currentActivity!!)
+                    } else {
+                        Log.i("DP_ADS_TAG", "Admob: Resume : skipped show(), currentActivity is null/finishing")
+                        showRequestInFlight.set(false)
+                        onAdNotAvailableOrShown?.invoke()
+                    }
+                    dismissWaitDialog()
+                }, 1500)
+            } else {
+                Log.i("DP_ADS_TAG", "ResumeAdApplication : skipped show(), currentActivity is null/finishing or an interstitial is visible")
+                showRequestInFlight.set(false)
+            }
         } else {
             isShowDialog = false
             dismissWaitDialog()

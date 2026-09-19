@@ -122,6 +122,7 @@ object AdMobInterstitialInside : CoroutineScope by MainScope() {
                 dismissWaitDialog()
                 val interstitialAd = interstitialAdMobHashMap[nameFragment]
                 if (interstitialAd != null) {
+                    isInterstitialAdVisible = true
                     interstitialAd.show(mContextAdmob as Activity)
                     interstitialAd.fullScreenContentCallback =
                         object : FullScreenContentCallback() {

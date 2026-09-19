@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.dp.ads.lib.BuildConfig
 import com.dp.ads.lib.R
 import com.dp.ads.lib.callingClasses.AdsFreeManager
+import com.dp.ads.lib.metaAdClasses.MetaInterstitialInside
 import com.dp.ads.lib.utils.AdLoadingDialog
 import com.dp.ads.lib.utils.NetworkCheck
 import com.google.android.gms.ads.AdError
@@ -150,14 +151,18 @@ class AdmobResumeAdSplash(activity: Activity?=null, val adId: String, onAdDismis
                 }
             }
             appOpenAd?.fullScreenContentCallback = fullScreenContentCallback
-            currentActivity?.let {
-                isShowDialog = true
-                showWaitDialog()
+            if (!AdMobInterstitialInside.isInterstitialAdVisible && !MetaInterstitialInside.isInterstitialAdVisible) {
+                currentActivity?.let {
+                    isShowDialog = true
+                    showWaitDialog()
 
-                Handler(Looper.getMainLooper()).postDelayed({
-                    appOpenAd!!.show(currentActivity!!)
-                    dismissWaitDialog()
-                },1500)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        appOpenAd!!.show(currentActivity!!)
+                        dismissWaitDialog()
+                    },1500)
+                }
+            } else {
+                Log.i("DP_ADS_TAG", "AdmobResumeAdSplash : skipped show(), an interstitial is visible")
             }
         }
     }
