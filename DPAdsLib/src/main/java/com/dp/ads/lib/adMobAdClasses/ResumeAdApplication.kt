@@ -41,7 +41,17 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
         fetchRequestInFlight.set(false)
     }
 
+    companion object {
+        // The single app-wide owner of the ADMOB_SPLASH_RESUME ad unit, once one is
+        // constructed. DPAdsConfigurations.showAdMobResumeAdSplash() routes through
+        // this instead of building its own separate AdmobResumeAdSplash, so the
+        // first-open flow and the background/foreground resume flow never load or
+        // show the same ad unit independently of each other.
+        @Volatile var instance: ResumeAdApplication? = null
+    }
+
     init {
+        instance = this
         globalClass.let {
             this.globalClass?.registerActivityLifecycleCallbacks(this)
             ProcessLifecycleOwner.get().lifecycle.addObserver(this)
@@ -51,6 +61,55 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
                 fetchAd()
             }
         }
+    }
+
+    // Called from the first-open flow (DPAdsConfigurations.showAdMobResumeAdSplash())
+    // instead of that flow building its own AdmobResumeAdSplash for the same ad unit.
+    // currentActivity is set here because on a genuine cold start this instance can be
+    // constructed before any ActivityLifecycleCallbacks/ProcessLifecycleOwner event has
+    // delivered an activity yet, which otherwise leaves fetchAd() a no-op from init{}.
+    fun showForFirstOpen(activity: Activity, timeoutMs: Long = 20000, onFinished: () -> Unit) {
+        currentActivity = activity
+        fetchAd()
+
+        val resolved = AtomicBoolean(false)
+        fun finishOnce() {
+            if (!resolved.getAndSet(true)) onFinished()
+        }
+        fun tryShowOrFinish() {
+            // isShowingAd/showRequestInFlight true means another path (e.g. the
+            // lifecycle-driven onAppForegrounded()) already owns showing this ad right
+            // now - showAdIfAvailable() would otherwise silently no-op without ever
+            // calling onFinished(), so treat that as an immediate resolution instead.
+            if (isShowingAd || showRequestInFlight.get()) {
+                finishOnce()
+                return
+            }
+            if (isAdAvailable()) {
+                showAdIfAvailable(onAdNotAvailableOrShown = { finishOnce() })
+            } else {
+                finishOnce()
+            }
+        }
+
+        if (isAdAvailable() || isShowingAd || showRequestInFlight.get()) {
+            tryShowOrFinish()
+            return
+        }
+
+        val waitHandler = Handler(Looper.getMainLooper())
+        val deadline = System.currentTimeMillis() + timeoutMs
+        val waitRunnable = object : Runnable {
+            override fun run() {
+                if (resolved.get()) return
+                when {
+                    isAdAvailable() || isShowingAd || showRequestInFlight.get() -> tryShowOrFinish()
+                    System.currentTimeMillis() >= deadline -> finishOnce()
+                    else -> waitHandler.postDelayed(this, 250)
+                }
+            }
+        }
+        waitHandler.postDelayed(waitRunnable, 250)
     }
 
     fun fetchAd() {

@@ -5,6 +5,7 @@ import android.util.Log
 import com.dp.ads.lib.adMobAdClasses.AdmobInterstitialAdSplash
 import com.dp.ads.lib.adMobAdClasses.AdmobResumeAdSplash
 import com.dp.ads.lib.adMobAdClasses.AdmobNativeAdManager
+import com.dp.ads.lib.adMobAdClasses.ResumeAdApplication
 import com.dp.ads.lib.metaAdClasses.MetaInterstitialAdSplash
 import com.dp.ads.lib.metaAdClasses.MetaNativeAdManager
 import com.dp.ads.lib.utils.NetworkCheck
@@ -135,19 +136,32 @@ class DPAdsConfigurations private constructor() {
         }
     }
     private fun showAdMobResumeAdSplash(activityContext: Activity) {
-        activityContext.let {
-            admobResumeAdSplash = AdmobResumeAdSplash(activityContext, firstOpenFlowAdIds.getValue("ADMOB_SPLASH_RESUME"),
-                onAdDismissed = {
-                    proceedNext(activityContext)
-                },
-                onAdFailed = {
-                    proceedNext(activityContext)
-                },
-                onAdTimeout = {
-                    proceedNext(activityContext)
-                },
-                onAdShowed = {}
-            )
+        val resumeAd = ResumeAdApplication.instance
+        if (resumeAd != null) {
+            // App-wide resume-ad owner already exists (ADMOB_RESUME_OVERALL is on) -
+            // route through it instead of also building a separate AdmobResumeAdSplash
+            // for the same ADMOB_SPLASH_RESUME ad unit, which is what let both load and
+            // show it independently of each other on first open.
+            resumeAd.showForFirstOpen(activityContext, timeoutMs = 20000) {
+                proceedNext(activityContext)
+            }
+        } else {
+            // No app-wide owner registered (e.g. ADMOB_RESUME_OVERALL is off, or the
+            // host app doesn't use ResumeAdApplication at all) - unchanged fallback.
+            activityContext.let {
+                admobResumeAdSplash = AdmobResumeAdSplash(activityContext, firstOpenFlowAdIds.getValue("ADMOB_SPLASH_RESUME"),
+                    onAdDismissed = {
+                        proceedNext(activityContext)
+                    },
+                    onAdFailed = {
+                        proceedNext(activityContext)
+                    },
+                    onAdTimeout = {
+                        proceedNext(activityContext)
+                    },
+                    onAdShowed = {}
+                )
+            }
         }
     }
     private fun showAdMobInterstitialAdSplash(activityContext: Activity) {

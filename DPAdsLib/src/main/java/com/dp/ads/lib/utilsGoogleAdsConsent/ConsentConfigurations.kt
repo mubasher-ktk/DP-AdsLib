@@ -23,14 +23,42 @@ class ConsentConfigurations private constructor(
     private val onConsentGatheredInvoked = AtomicBoolean(false)
     private val admobSdkReady = AtomicBoolean(false)
     private val metaSdkReady = AtomicBoolean(false)
+    private val metaInitStarted = AtomicBoolean(false)
     private val sdkInitProceeded = AtomicBoolean(false)
     private val sdkInitResolved = AtomicBoolean(false)
     private val pendingSdkInitCallbacks = java.util.concurrent.CopyOnWriteArrayList<() -> Unit>()
     private val slowInternetHandler = Handler()
     private val sdkInitFallbackHandler = Handler()
+    // Set by initializeMobileAdsSdk() while it is waiting on both SDKs, so Meta's own
+    // listener can resolve things if Meta finishes after AdMob rather than before it.
+    private var activeProceedOnce: (() -> Unit)? = null
 
     init {
+        // Meta gets no benefit from waiting on consent gathering or AdMob - it only
+        // needs to be told the result once ads are actually requested. Firing it here,
+        // at construction, gives it the whole consent-gathering wait (which can run
+        // several seconds) as head start instead of starting only after consent
+        // resolves. Fully async and fire-and-forget: nothing else in this class or in
+        // consentInitializationSetup() waits on it or is gated by it.
+        ensureMetaInitStarted()
         consentInitializationSetup()
+    }
+
+    private fun ensureMetaInitStarted() {
+        if (!metaInitStarted.compareAndSet(false, true)) return
+        AdSettings.addTestDevice("0984fdbc-e473-40e8-91f5-b6b46ebc85b5")
+        AdSettings.addTestDevice("240faf54-381a-4269-bbc6-713aed8a4b4b")
+        AdSettings.addTestDevice("0f01a5f6-802a-4743-ae14-8e6a7a360965")
+        AdSettings.addTestDevice("bba88f94-ecc3-4c56-bac8-8683f76946f9")
+        AdSettings.addTestDevice("67e557c7-c6ee-4209-9e84-7e5b60546400")
+        AdSettings.addTestDevice("937cc986-d628-450b-ae61-f6ad32e3b6a2")
+        AudienceNetworkAds.buildInitSettings(activityContext)
+            .withInitListener { result ->
+                Log.i("ConsentMessage", "ensureMetaInitStarted(): Meta initialized, success=${result.isSuccess}")
+                metaSdkReady.set(true)
+                if (admobSdkReady.get()) activeProceedOnce?.invoke()
+            }
+            .initialize()
     }
 
     private fun consentInitializationSetup() {
@@ -98,6 +126,7 @@ class ConsentConfigurations private constructor(
                 pendingSdkInitCallbacks.clear()
             }
         }
+        activeProceedOnce = { proceedOnce() }
 
         if (NetworkCheck.isNetworkAvailable(activityContext)) {
             activityContext.getSharedPreferences("ConsentMessage", MODE_PRIVATE).edit().putBoolean("FirstTime", true).apply()
@@ -117,19 +146,12 @@ class ConsentConfigurations private constructor(
                 admobSdkReady.set(true)
                 if (metaSdkReady.get()) proceedOnce()
             }
-            AdSettings.addTestDevice("0984fdbc-e473-40e8-91f5-b6b46ebc85b5")
-            AdSettings.addTestDevice("240faf54-381a-4269-bbc6-713aed8a4b4b")
-            AdSettings.addTestDevice("0f01a5f6-802a-4743-ae14-8e6a7a360965")
-            AdSettings.addTestDevice("bba88f94-ecc3-4c56-bac8-8683f76946f9")
-            AdSettings.addTestDevice("67e557c7-c6ee-4209-9e84-7e5b60546400")
-            AdSettings.addTestDevice("937cc986-d628-450b-ae61-f6ad32e3b6a2")
-            AudienceNetworkAds.buildInitSettings(activityContext)
-                .withInitListener { result ->
-                    Log.i("ConsentMessage", "initializeMobileAdsSdk(): Meta initialized, success=${result.isSuccess}")
-                    metaSdkReady.set(true)
-                    if (admobSdkReady.get()) proceedOnce()
-                }
-                .initialize()
+            // Meta init already started at construction (ensureMetaInitStarted()) so it
+            // gets the head start; this is only a safety net in case that early call
+            // somehow never fired, and metaInitStarted makes it a guaranteed no-op
+            // otherwise - it will never call AudienceNetworkAds.initialize() twice.
+            ensureMetaInitStarted()
+            if (metaSdkReady.get() && admobSdkReady.get()) proceedOnce()
         } else {
             initializeMobileAds.invoke()
             sdkInitResolved.set(true)
