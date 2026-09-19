@@ -137,6 +137,7 @@ object MetaInterstitialInside : CoroutineScope by MainScope() {
                 dismissWaitDialog()
                 val interstitialAd = interstitialMetaHashMap[nameFragment]
                 if (interstitialAd != null && interstitialAd.isAdLoaded) {
+                    isInterstitialAdVisible = true
                     interstitialAd.show()
                     onAdShowedCallBackMeta.invoke()
                 } else {

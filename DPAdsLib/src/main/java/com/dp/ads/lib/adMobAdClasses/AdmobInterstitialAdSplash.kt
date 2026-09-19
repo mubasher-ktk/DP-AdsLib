@@ -121,6 +121,7 @@ class AdmobInterstitialAdSplash(
                 override fun onAdDismissedFullScreenContent() {
                     Log.i("DP_ADS_TAG", "Admob: Interstitial : onAdDismissed()")
                     isShowingAd = false
+                    AdMobInterstitialInside.isInterstitialAdVisible = false
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                     dismissWaitDialog()
                     onAdDismissed?.invoke()
@@ -131,6 +132,7 @@ class AdmobInterstitialAdSplash(
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                     Log.i("DP_ADS_TAG", "Admob: Interstitial : onAdFailedToShow()")
                     isShowingAd = false
+                    AdMobInterstitialInside.isInterstitialAdVisible = false
                     timeoutHandler.removeCallbacks(timeoutRunnable)
                     dismissWaitDialog()
                     interstitialAd = null
@@ -148,21 +150,20 @@ class AdmobInterstitialAdSplash(
                 }
             }
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                currentActivity?.let { it1 ->
-                    if (!it1.isFinishing && !it1.isDestroyed && interstitialAd != null) {
-                        showWaitDialog()
+            currentActivity?.let { it1 ->
+                if (!it1.isFinishing && !it1.isDestroyed && interstitialAd != null) {
+                    AdMobInterstitialInside.isInterstitialAdVisible = true
+                    showWaitDialog()
 
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            currentActivity?.let { it2 ->
-                                if (!it2.isFinishing && !it2.isDestroyed && interstitialAd != null) {
-                                    interstitialAd?.show(currentActivity!!)
-                                }
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        currentActivity?.let { it2 ->
+                            if (!it2.isFinishing && !it2.isDestroyed && interstitialAd != null) {
+                                interstitialAd?.show(currentActivity!!)
                             }
-                        }, 1500)
-                    }
+                        }
+                    }, 1500)
                 }
-            },7000)
+            }
         }
     }
 

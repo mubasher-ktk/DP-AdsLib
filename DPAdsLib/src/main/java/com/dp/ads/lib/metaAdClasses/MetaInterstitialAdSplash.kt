@@ -91,12 +91,14 @@ class MetaInterstitialAdSplash(
                 dismissWaitDialog()
                 onAdDismissed?.invoke()
                 isShowingAd = false
+                MetaInterstitialInside.isInterstitialAdVisible = false
                 interstitialAd = null
             }
 
             override fun onError(ad: Ad?, adError: AdError) {
                 Log.i("DP_ADS_TAG", "Meta: Interstitial : onError() - ${adError.errorMessage}")
                 adLoadCompleted = true
+                MetaInterstitialInside.isInterstitialAdVisible = false
                 timeoutHandler.removeCallbacks(timeoutRunnable)
                 dismissWaitDialog()
                 onAdFailed?.invoke()
@@ -138,6 +140,7 @@ class MetaInterstitialAdSplash(
                 // AdmobInterstitialAdSplash already has.
                 currentActivity?.let { activity ->
                     if (!activity.isFinishing && !activity.isDestroyed) {
+                        MetaInterstitialInside.isInterstitialAdVisible = true
                         interstitialAd?.show()
                     }
                 }
