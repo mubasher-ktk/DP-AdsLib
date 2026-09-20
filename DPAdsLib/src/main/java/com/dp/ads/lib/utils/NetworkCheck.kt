@@ -2,20 +2,16 @@ package com.dp.ads.lib.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.NetworkCapabilities
 
 class NetworkCheck {
     companion object{
-        fun isNetworkAvailable(context: Context?):Boolean {
-            val connMgr: ConnectivityManager =
-                context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetworkInfo: NetworkInfo? = connMgr.activeNetworkInfo
-            if (activeNetworkInfo != null) {
-                return if (activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI) {
-                    true
-                } else activeNetworkInfo.type == ConnectivityManager.TYPE_MOBILE
-            }
-            return false
+        fun isNetworkAvailable(context: Context?): Boolean {
+            val connMgr = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+                ?: return false
+            val network = connMgr.activeNetwork ?: return false
+            val capabilities = connMgr.getNetworkCapabilities(network) ?: return false
+            return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
         }
     }
 }
