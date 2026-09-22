@@ -76,7 +76,7 @@ afterEvaluate {
 
                 groupId = 'com.github.mubasher-ktk'
                 artifactId = 'DP-AdsLib'
-                version = '4.0.0'
+                version = '4.0.1'
             }
         }
     }

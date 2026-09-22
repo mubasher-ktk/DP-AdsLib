@@ -69,6 +69,10 @@ class ResumeAdApplication(val globalClass: Application?=null, val adId: String) 
     // constructed before any ActivityLifecycleCallbacks/ProcessLifecycleOwner event has
     // delivered an activity yet, which otherwise leaves fetchAd() a no-op from init{}.
     fun showForFirstOpen(activity: Activity, timeoutMs: Long = 20000, onFinished: () -> Unit) {
+        if (globalClass != null && AdsFreeManager.isAdFreeActive(globalClass)) {
+            onFinished()
+            return
+        }
         currentActivity = activity
         fetchAd()
 
